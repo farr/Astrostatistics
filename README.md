@@ -1,5 +1,7 @@
 # Astrostatistics
 
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://farr.github.io/Astrostatistics)
+
 A romp through the field of contemporary astrostatistics.
 
 ## Usage
