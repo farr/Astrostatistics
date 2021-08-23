@@ -1,0 +1,10 @@
+name = "Astrostatistics688"
+uuid = "085d2733-bd12-45d8-916e-6d1689ffe6cb"
+authors = ["Will M. Farr <will.farr@stonybrook.edu>"]
+version = "0.1.0"
+
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
+Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
