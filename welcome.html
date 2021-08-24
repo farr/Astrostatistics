@@ -1,0 +1,735 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An Example to Set the Stage &#8212; Astrostatistics</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tips and Tricks" href="tips_and_tricks.html" />
+    <link rel="prev" title="PHY 688: Numerical Methods in Astrophysics." href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Astrostatistics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   PHY 688: Numerical Methods in Astrophysics.
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   An Example to Set the Stage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tips_and_tricks.html">
+   Tips and Tricks
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/welcome.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/farr/Astrostatistics"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/farr/Astrostatistics/issues/new?title=Issue%20on%20page%20%2Fwelcome.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/farr/Astrostatistics/main?urlpath=tree/astrostatistics/welcome.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#it-was-a-dark-and-stormy-night">
+   It Was a Dark and Stormy Night…
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="an-example-to-set-the-stage">
+<h1>An Example to Set the Stage<a class="headerlink" href="#an-example-to-set-the-stage" title="Permalink to this headline">¶</a></h1>
+<p>Before we start, here are some boring preliminaries to load the code to execute this notebook into your environment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Pkg</span>
+<span class="n">Pkg</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="n">joinpath</span><span class="p">(</span><span class="nd">@__DIR__</span><span class="p">,</span> <span class="s">&quot;..&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">DataFrames</span>
+<span class="k">using</span> <span class="n">LaTeXStrings</span>
+<span class="k">using</span> <span class="n">Logging</span>
+<span class="k">using</span> <span class="n">StatsBase</span>
+<span class="k">using</span> <span class="n">StatsPlots</span>
+<span class="k">using</span> <span class="n">Turing</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="it-was-a-dark-and-stormy-night">
+<h2>It Was a Dark and Stormy Night…<a class="headerlink" href="#it-was-a-dark-and-stormy-night" title="Permalink to this headline">¶</a></h2>
+<p>…in the middle of the COVID 19 pandemic.  You are facing an unpleasant task (writing a grant proposal, cleaning the kitchen, etc) when your colleague <a class="reference external" href="https://scholar.google.com/citations?user=IrkY3dQAAAAJ&amp;hl=en">Jeff Kissell</a> emails you, asking for help with the analysis of some measurements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">quad_data</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">([</span><span class="mf">10.300</span> <span class="mf">3.328e-11</span> <span class="mf">1.706e-12</span> <span class="mf">1.476e-12</span><span class="p">;</span>
+                       <span class="mf">15.600</span> <span class="mf">3.442e-11</span> <span class="mf">1.027e-12</span> <span class="mf">1.023e-12</span><span class="p">;</span>
+                       <span class="mf">17.100</span> <span class="mf">3.379e-11</span> <span class="mf">9.777e-13</span> <span class="mf">1.015e-12</span><span class="p">;</span>
+                       <span class="mf">19.112</span> <span class="mf">3.376e-11</span> <span class="mf">9.033e-13</span> <span class="mf">9.972e-13</span><span class="p">],</span>
+                      <span class="p">[</span><span class="ss">:freq</span><span class="p">,</span> <span class="ss">:response</span><span class="p">,</span> <span class="ss">:sigma_upper</span><span class="p">,</span> <span class="ss">:sigma_lower</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="data-frame"><p>4 rows × 4 columns</p><table class="data-frame"><thead><tr><th></th><th>freq</th><th>response</th><th>sigma_upper</th><th>sigma_lower</th></tr><tr><th></th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>10.3</td><td>3.328e-11</td><td>1.706e-12</td><td>1.476e-12</td></tr><tr><th>2</th><td>15.6</td><td>3.442e-11</td><td>1.027e-12</td><td>1.023e-12</td></tr><tr><th>3</th><td>17.1</td><td>3.379e-11</td><td>9.777e-13</td><td>1.015e-12</td></tr><tr><th>4</th><td>19.112</td><td>3.376e-11</td><td>9.033e-13</td><td>9.972e-13</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">quad_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="data-frame"><p>4 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>freq</td><td>15.528</td><td>10.3</td><td>16.35</td><td>19.112</td><td>0</td><td>Float64</td></tr><tr><th>2</th><td>response</td><td>3.38125e-11</td><td>3.328e-11</td><td>3.3775e-11</td><td>3.442e-11</td><td>0</td><td>Float64</td></tr><tr><th>3</th><td>sigma_upper</td><td>1.1535e-12</td><td>9.033e-13</td><td>1.00235e-12</td><td>1.706e-12</td><td>0</td><td>Float64</td></tr><tr><th>4</th><td>sigma_lower</td><td>1.1278e-12</td><td>9.972e-13</td><td>1.019e-12</td><td>1.476e-12</td><td>0</td><td>Float64</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">oct_data</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">([</span><span class="mf">12.500</span> <span class="mf">1.619e-11</span> <span class="mf">5.142e-13</span> <span class="mf">5.172e-13</span><span class="p">;</span>
+                      <span class="mf">15.500</span> <span class="mf">1.516e-11</span> <span class="mf">4.521e-13</span> <span class="mf">4.506e-13</span><span class="p">;</span>
+                      <span class="mf">23.400</span> <span class="mf">1.647e-11</span> <span class="mf">3.830e-13</span> <span class="mf">4.080e-13</span><span class="p">;</span>
+                      <span class="mf">25.700</span> <span class="mf">1.516e-11</span> <span class="mf">3.047e-13</span> <span class="mf">3.286e-13</span><span class="p">;</span>
+                      <span class="mf">28.700</span> <span class="mf">1.556e-11</span> <span class="mf">2.839e-13</span> <span class="mf">2.912e-13</span><span class="p">],</span>
+                     <span class="p">[</span><span class="ss">:freq</span><span class="p">,</span> <span class="ss">:response</span><span class="p">,</span> <span class="ss">:sigma_upper</span><span class="p">,</span> <span class="ss">:sigma_lower</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="data-frame"><p>5 rows × 4 columns</p><table class="data-frame"><thead><tr><th></th><th>freq</th><th>response</th><th>sigma_upper</th><th>sigma_lower</th></tr><tr><th></th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>12.5</td><td>1.619e-11</td><td>5.142e-13</td><td>5.172e-13</td></tr><tr><th>2</th><td>15.5</td><td>1.516e-11</td><td>4.521e-13</td><td>4.506e-13</td></tr><tr><th>3</th><td>23.4</td><td>1.647e-11</td><td>3.83e-13</td><td>4.08e-13</td></tr><tr><th>4</th><td>25.7</td><td>1.516e-11</td><td>3.047e-13</td><td>3.286e-13</td></tr><tr><th>5</th><td>28.7</td><td>1.556e-11</td><td>2.839e-13</td><td>2.912e-13</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">oct_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="data-frame"><p>4 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>freq</td><td>21.16</td><td>12.5</td><td>23.4</td><td>28.7</td><td>0</td><td>Float64</td></tr><tr><th>2</th><td>response</td><td>1.5708e-11</td><td>1.516e-11</td><td>1.556e-11</td><td>1.647e-11</td><td>0</td><td>Float64</td></tr><tr><th>3</th><td>sigma_upper</td><td>3.8758e-13</td><td>2.839e-13</td><td>3.83e-13</td><td>5.142e-13</td><td>0</td><td>Float64</td></tr><tr><th>4</th><td>sigma_lower</td><td>3.9912e-13</td><td>2.912e-13</td><td>4.08e-13</td><td>5.172e-13</td><td>0</td><td>Float64</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">plot_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">label</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">scatter!</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">response</span><span class="p">;</span> <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sigma_lower</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">xlabel!</span><span class="p">(</span><span class="sa">L</span><span class="s">&quot;f / \mathrm{Hz}&quot;</span><span class="p">)</span>
+    <span class="n">ylabel!</span><span class="p">(</span><span class="s">&quot;Response (arb. units)&quot;</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="n">plot</span><span class="p">()</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">quad_data</span><span class="p">,</span> <span class="s">&quot;Quadrupole&quot;</span><span class="p">)</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">oct_data</span><span class="p">,</span> <span class="s">&quot;Octupole&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_10_0.svg" src="_images/welcome_10_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">mean_response_and_uncertainty</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sigma_upper</span> <span class="o">.+</span> <span class="n">df</span><span class="o">.</span><span class="n">sigma_lower</span><span class="p">)</span> <span class="o">./</span> <span class="mi">2</span>
+    <span class="n">wts</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">./</span> <span class="p">(</span><span class="n">sigmas</span><span class="o">.*</span><span class="n">sigmas</span><span class="p">)</span>
+    <span class="n">mr</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">response</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">wts</span><span class="p">)</span> <span class="o">/</span> <span class="n">sum</span><span class="p">(</span><span class="n">wts</span><span class="p">)</span>
+    <span class="n">mr_uncert</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">sum</span><span class="p">(</span><span class="n">wts</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">mr</span><span class="p">,</span> <span class="n">mr_uncert</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean_response_and_uncertainty (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="n">qr</span><span class="p">,</span> <span class="n">qs</span><span class="p">),</span> <span class="p">(</span><span class="n">or</span><span class="p">,</span> <span class="n">os</span><span class="p">))</span> <span class="o">=</span> <span class="n">mean_response_and_uncertainty</span><span class="p">(</span><span class="n">quad_data</span><span class="p">),</span> <span class="n">mean_response_and_uncertainty</span><span class="p">(</span><span class="n">oct_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((3.3895423514377936e-11, 5.374742788398296e-13), (1.5620160113070848e-11, 1.6411225320059946e-13))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">plot_bands</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="p">;</span> <span class="n">color</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">xlims</span><span class="p">()</span>
+    <span class="n">plot!</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+    <span class="n">plot!</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="p">[</span><span class="n">r</span><span class="o">+</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="o">+</span><span class="n">s</span><span class="p">];</span> <span class="n">fillrange</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="o">-</span><span class="n">s</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">plot</span><span class="p">()</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">quad_data</span><span class="p">,</span> <span class="s">&quot;Quadrupole&quot;</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">qr</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_13_0.svg" src="_images/welcome_13_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">oct_data</span><span class="p">,</span> <span class="s">&quot;Octupole&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">or</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_14_0.svg" src="_images/welcome_14_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">responses</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+    <span class="n">r_unit</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">escale</span> <span class="o">~</span> <span class="n">LogNormal</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">r</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span> <span class="o">+</span> <span class="n">std</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span><span class="o">*</span><span class="n">r_unit</span>
+    
+    <span class="n">responses</span> <span class="o">~</span> <span class="n">arraydist</span><span class="p">([</span><span class="n">Normal</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">escale</span><span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="k">in</span> <span class="n">sigmas</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>scaled_errorbar (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_quad_model</span> <span class="o">=</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_lower</span> <span class="o">.+</span> <span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">))</span>
+<span class="n">scaled_quad_trace</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">scaled_quad_model</span><span class="p">,</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">scaled_quad_genq</span> <span class="o">=</span> <span class="n">with_logger</span><span class="p">(</span><span class="n">NullLogger</span><span class="p">())</span> <span class="k">do</span> <span class="c"># Sometimes this throws a lot of warnings that we don&#39;t care about.</span>
+    <span class="n">generated_quantities</span><span class="p">(</span><span class="n">scaled_quad_model</span><span class="p">,</span> <span class="n">scaled_quad_trace</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="n">scaled_quad_trace</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
+│   ϵ = 0.2
+└ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
+<span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×14×1 Array{Float64, 3}):
+
+Iterations        = 501:1:1500
+Number of chains  = 1
+Samples per chain = 1000
+Wall duration     = 0.11 seconds
+Compute duration  = 0.11 seconds
+parameters        = escale, r_unit
+internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
+
+Summary Statistics
+ <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span> <span class=" -Color -Color-Bold"> e</span> ⋯
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64     ⋯
+
+      r_unit    0.1655    0.9361     0.0296    0.0394   269.5161    0.9990     ⋯
+      escale    0.6207    0.4133     0.0131    0.0358   265.5180    1.0024     ⋯
+<span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
+
+Quantiles
+ <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
+      Symbol   Float64   Float64   Float64   Float64   Float64 
+
+      r_unit   -1.4451   -0.2620    0.1527    0.6021    2.0433
+      escale    0.2459    0.3892    0.5169    0.7099    1.5837
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@df</span> <span class="n">scaled_quad_trace</span> <span class="n">density</span><span class="p">(</span><span class="ss">:escale</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_17_0.svg" src="_images/welcome_17_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">rq</span> <span class="o">=</span> <span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">scaled_quad_genq</span><span class="p">])</span>
+<span class="n">plot</span><span class="p">()</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">quad_data</span><span class="p">,</span> <span class="nb">nothing</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">rq</span><span class="p">),</span> <span class="n">std</span><span class="p">(</span><span class="n">rq</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Scaled Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">qr</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Original Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">title!</span><span class="p">(</span><span class="s">&quot;Quadrupole&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_18_0.svg" src="_images/welcome_18_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_oct_model</span> <span class="o">=</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_lower</span> <span class="o">.+</span> <span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">))</span>
+<span class="n">scaled_oct_trace</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">scaled_oct_model</span><span class="p">,</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">scaled_oct_genq</span> <span class="o">=</span> <span class="n">with_logger</span><span class="p">(</span><span class="n">NullLogger</span><span class="p">())</span> <span class="k">do</span> <span class="c"># Sometimes this throws a lot of warnings that we don&#39;t care about.</span>
+    <span class="n">generated_quantities</span><span class="p">(</span><span class="n">scaled_oct_model</span><span class="p">,</span> <span class="n">scaled_oct_trace</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="n">scaled_oct_trace</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
+│   ϵ = 0.41250000000000003
+└ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
+<span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×14×1 Array{Float64, 3}):
+
+Iterations        = 501:1:1500
+Number of chains  = 1
+Samples per chain = 1000
+Wall duration     = 0.12 seconds
+Compute duration  = 0.12 seconds
+parameters        = escale, r_unit
+internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
+
+Summary Statistics
+ <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span> <span class=" -Color -Color-Bold"> e</span> ⋯
+      Symbol   Float64   Float64    Float64   Float64    Float64   Float64     ⋯
+
+      r_unit   -0.1470    0.5050     0.0160    0.0284   439.1369    1.0042     ⋯
+      escale    1.7111    0.7184     0.0227    0.0411   298.2938    0.9990     ⋯
+<span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
+
+Quantiles
+ <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
+      Symbol   Float64   Float64   Float64   Float64   Float64 
+
+      r_unit   -1.0477   -0.4417   -0.1417    0.1692    0.7407
+      escale    0.8846    1.2277    1.5299    1.9697    3.5499
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@df</span> <span class="n">scaled_oct_trace</span> <span class="n">density</span><span class="p">(</span><span class="ss">:escale</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_20_0.svg" src="_images/welcome_20_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ro</span> <span class="o">=</span> <span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">scaled_oct_genq</span><span class="p">])</span>
+<span class="n">plot</span><span class="p">()</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">oct_data</span><span class="p">,</span> <span class="nb">nothing</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">ro</span><span class="p">),</span> <span class="n">std</span><span class="p">(</span><span class="n">ro</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Scaled Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">or</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Original Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">title!</span><span class="p">(</span><span class="s">&quot;Octupole&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_21_0.svg" src="_images/welcome_21_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">normal_hierarchical</span><span class="p">(</span><span class="n">responses</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+    <span class="n">mu_r_unit</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_r_unit</span> <span class="o">~</span> <span class="n">truncated</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">Inf</span><span class="p">)</span>
+    <span class="n">r_unit</span> <span class="o">~</span> <span class="n">filldist</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">length</span><span class="p">(</span><span class="n">responses</span><span class="p">))</span>
+    
+    <span class="n">mu_r</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span> <span class="o">+</span> <span class="n">std</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span><span class="o">*</span><span class="n">mu_r_unit</span>
+    <span class="n">sigma_r</span> <span class="o">=</span> <span class="n">std</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span><span class="o">*</span><span class="n">sigma_r_unit</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">mu_r</span> <span class="o">.+</span> <span class="n">sigma_r</span><span class="o">.*</span><span class="n">r_unit</span>
+    
+    <span class="n">responses</span> <span class="o">~</span> <span class="n">arraydist</span><span class="p">([</span><span class="n">Normal</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">rr</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)])</span>
+    
+    <span class="p">(</span><span class="n">mu_r</span><span class="o">=</span><span class="n">mu_r</span><span class="p">,</span> <span class="n">sigma_r</span><span class="o">=</span><span class="n">sigma_r</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>normal_hierarchical (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">nhq</span> <span class="o">=</span> <span class="n">normal_hierarchical</span><span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_lower</span> <span class="o">.+</span> <span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">))</span>
+<span class="n">nht</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">nhq</span><span class="p">,</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">nhg</span> <span class="o">=</span> <span class="n">with_logger</span><span class="p">(</span><span class="n">NullLogger</span><span class="p">())</span> <span class="k">do</span> 
+    <span class="n">generated_quantities</span><span class="p">(</span><span class="n">nhq</span><span class="p">,</span> <span class="n">nht</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">nht</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
+│   ϵ = 0.8
+└ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×18×1 Array{Float64, 3}):
+
+Iterations        = 501:1:1500
+Number of chains  = 1
+Samples per chain = 1000
+Wall duration     = 3.26 seconds
+Compute duration  = 3.26 seconds
+parameters        = sigma_r_unit, mu_r_unit, r_unit[3], r_unit[2], r_unit[1], r_unit[4]
+internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
+
+Summary Statistics
+ <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">       ess </span> <span class=" -Color -Color-Bold">    rhat </span> ⋯
+        Symbol   Float64   Float64    Float64   Float64     Float64   Float64  ⋯
+
+     mu_r_unit    0.0547    0.7332     0.0232    0.0230    946.6228    1.0000  ⋯
+  sigma_r_unit    0.6681    0.5061     0.0160    0.0234    764.7821    0.9998  ⋯
+     r_unit[1]   -0.0695    0.9590     0.0303    0.0296   1142.4989    0.9990  ⋯
+     r_unit[2]    0.1227    0.9432     0.0298    0.0271   1068.9487    0.9998  ⋯
+     r_unit[3]    0.0127    0.9691     0.0306    0.0332    817.2020    1.0030  ⋯
+     r_unit[4]   -0.0594    0.9776     0.0309    0.0210   1019.6926    1.0001  ⋯
+<span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
+
+Quantiles
+ <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
+        Symbol   Float64   Float64   Float64   Float64   Float64 
+
+     mu_r_unit   -1.3514   -0.4591    0.0447    0.5788    1.4844
+  sigma_r_unit    0.0230    0.2790    0.5644    0.9617    1.8682
+     r_unit[1]   -1.9495   -0.6457   -0.0518    0.5336    1.8237
+     r_unit[2]   -1.6426   -0.5543    0.1158    0.7581    1.9692
+     r_unit[3]   -1.8465   -0.6075    0.0233    0.6682    1.9703
+     r_unit[4]   -1.9327   -0.7190   -0.0321    0.6050    1.8501
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">marginalkde</span><span class="p">(</span><span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">mu_r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">nhg</span><span class="p">]),</span> <span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">sigma_r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">nhg</span><span class="p">]),</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;\mu_r&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;\sigma_r&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_24_0.svg" src="_images/welcome_24_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">nho</span> <span class="o">=</span> <span class="n">normal_hierarchical</span><span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_lower</span> <span class="o">.+</span> <span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">))</span>
+<span class="n">nht</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">nho</span><span class="p">,</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">nhg</span> <span class="o">=</span> <span class="n">with_logger</span><span class="p">(</span><span class="n">NullLogger</span><span class="p">())</span> <span class="k">do</span> 
+    <span class="n">generated_quantities</span><span class="p">(</span><span class="n">nho</span><span class="p">,</span> <span class="n">nht</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">nht</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
+│   ϵ = 0.4
+└ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
+<span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×19×1 Array{Float64, 3}):
+
+Iterations        = 501:1:1500
+Number of chains  = 1
+Samples per chain = 1000
+Wall duration     = 0.27 seconds
+Compute duration  = 0.27 seconds
+parameters        = sigma_r_unit, mu_r_unit, r_unit[3], r_unit[2], r_unit[1], r_unit[4], r_unit[5]
+internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
+
+Summary Statistics
+ <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span>  ⋯
+        Symbol   Float64   Float64    Float64   Float64    Float64   Float64   ⋯
+
+     mu_r_unit   -0.0757    0.4044     0.0128    0.0167   418.1793    1.0002   ⋯
+  sigma_r_unit    0.6898    0.4226     0.0134    0.0289   358.6332    0.9994   ⋯
+     r_unit[1]    0.3608    0.8478     0.0268    0.0393   802.9353    0.9996   ⋯
+     r_unit[2]   -0.4208    0.7887     0.0249    0.0254   644.5201    0.9997   ⋯
+     r_unit[3]    0.8184    0.8362     0.0264    0.0372   546.5334    1.0007   ⋯
+     r_unit[4]   -0.6360    0.7514     0.0238    0.0318   590.0950    0.9999   ⋯
+     r_unit[5]   -0.1674    0.7101     0.0225    0.0314   475.1680    1.0001   ⋯
+<span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
+
+Quantiles
+ <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
+        Symbol   Float64   Float64   Float64   Float64   Float64 
+
+     mu_r_unit   -0.8641   -0.3380   -0.0743    0.1627    0.7675
+  sigma_r_unit    0.0349    0.3595    0.6603    0.9882    1.5586
+     r_unit[1]   -1.4017   -0.1686    0.3838    0.9057    2.0018
+     r_unit[2]   -1.9748   -0.8966   -0.4265    0.0884    1.1910
+     r_unit[3]   -0.9516    0.3186    0.8235    1.3589    2.4251
+     r_unit[4]   -2.0658   -1.1274   -0.6667   -0.1802    0.9097
+     r_unit[5]   -1.6971   -0.6423   -0.1684    0.3195    1.1431
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">marginalkde</span><span class="p">(</span><span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">mu_r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">nhg</span><span class="p">]),</span> <span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">sigma_r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">nhg</span><span class="p">]),</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;\mu_r&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;\sigma_r&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_26_0.svg" src="_images/welcome_26_0.svg" /></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">PHY 688: Numerical Methods in Astrophysics.</a>
+    <a class='right-next' id="next-link" href="tips_and_tricks.html" title="next page">Tips and Tricks</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Will M. Farr<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

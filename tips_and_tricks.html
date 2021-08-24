@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content in Jupyter Book &#8212; Astrostatistics</title>
+    <title>Tips and Tricks &#8212; Astrostatistics</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
-    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+    <link rel="prev" title="An Example to Set the Stage" href="welcome.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -85,32 +84,20 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   PHY 688: Numerical Methods in Astrophysics.
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active has-children">
-  <a class="current reference internal" href="#">
-   Content in Jupyter Book
+ <li class="toctree-l1">
+  <a class="reference internal" href="welcome.html">
+   An Example to Set the Stage
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="markdown.html">
-     Markdown Files
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="notebooks.html">
-     Content with notebooks
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Tips and Tricks
+  </a>
  </li>
 </ul>
 
@@ -153,9 +140,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/content.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/tips_and_tricks.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -173,7 +160,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/farr/Astrostatistics/issues/new?title=Issue%20on%20page%20%2Fcontent.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/farr/Astrostatistics/issues/new?title=Issue%20on%20page%20%2Ftips_and_tricks.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -189,6 +176,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/farr/Astrostatistics/main?urlpath=tree/astrostatistics/tips_and_tricks.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -202,12 +206,43 @@
         
               <div>
                 
-  <div class="section" id="content-in-jupyter-book">
-<h1>Content in Jupyter Book<a class="headerlink" href="#content-in-jupyter-book" title="Permalink to this headline">¶</a></h1>
-<p>There are many ways to write content in Jupyter Book. This short section
-covers a few tips for how to do so.</p>
-<div class="toctree-wrapper compound">
+  <div class="section" id="tips-and-tricks">
+<h1>Tips and Tricks<a class="headerlink" href="#tips-and-tricks" title="Permalink to this headline">¶</a></h1>
+<p>We are mostly using <a class="reference external" href="https://julialang.org/">Julia</a> in this class, though we will also show examples in <a class="reference external" href="https://www.python.org/">Python</a>.  Julia comes with its own package manager; for Python, I recommend using <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a>, which is a minimial set of packages based around the <code class="docutils literal notranslate"><span class="pre">conda</span></code> package manager.</p>
+<p>The <a class="reference external" href="https://github.com/farr/Astrostatistics">repository</a> containing these pages / chapters / notebooks is, itself, a Julia package.  Download or clone the repo, and then you can “enter” the environment by starting julia and then entering:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="p">]</span>
+<span class="n">Pkg</span><span class="o">&gt;</span> <span class="n">activate</span> <span class="n">PATH_TO_REPO_TOP_DIR</span>
+</pre></div>
 </div>
+<p>or (without entering “package mode”):</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">Pkg</span>
+<span class="o">&gt;</span> <span class="n">Pkg</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s">&quot;path/to/repo/top/dir&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;__DIR__</span></code> macro and the <code class="docutils literal notranslate"><span class="pre">joinpath</span></code> function are your friends here; <code class="docutils literal notranslate"><span class="pre">&#64;__DIR__</span></code> expands to whatever directory contains the current source file, and <code class="docutils literal notranslate"><span class="pre">joinpath</span></code> will let you “move around” from there to the package top-level directory.</p>
+<p>The first time you activate the Julia environment for this class, you will need to download and build all the relevant packages:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">Pkg</span>
+<span class="o">&gt;</span> <span class="n">Pkg</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s">&quot;path/to/repo/dir&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">Pkg</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once this has been done once you don’t need to do it again; you can update the packages in the environment (subject to any version constraints supplied in the <code class="docutils literal notranslate"><span class="pre">Package.toml</span></code> file in the top-level of the reop) by issuing</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">Pkg</span>
+<span class="o">&gt;</span> <span class="n">Pkg</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s">&quot;path/to/repo/dir&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">Pkg</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(if you are doing this all in one session, you only need to activate the environment once; subsequent commands will be interpreted in the context of the active environment).</p>
+<p>On the Python side, you can create a Conda environment for the entire class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">phy688</span> <span class="n">python</span><span class="o">=</span><span class="mi">3</span> <span class="n">jupyterlab</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">matplotlib</span> <span class="n">pip</span>
+</pre></div>
+</div>
+<p>and then activate it</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">phy688</span>
+</pre></div>
+</div>
+<p>after which you can play around.</p>
+<p>Of course, you only need to use Julia or Python if you want to execute the codes in the class notebooks; feel free to use your own favorite language and modelling languages.  (I love learning new languages, too, so if you find something I don’t know about already, I’ll be extra happy.)  Beware, though: the course moves fast, and we’re mostly interested in the <em>conceptual</em> issues around our statistical analyses, not the <em>computational</em> ones; so if you’re using a language / library stack where you have to start by writing your own MCMC kernels, you’ll probably not be able to keep up!</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -219,24 +254,23 @@ covers a few tips for how to do so.</p>
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "julia-1.6"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "julia-1.6",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'julia-1.6'</script>
 
               </div>
               
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Welcome to your Jupyter Book</a>
-    <a class='right-next' id="next-link" href="markdown.html" title="next page">Markdown Files</a>
+    <a class='left-prev' id="prev-link" href="welcome.html" title="previous page">An Example to Set the Stage</a>
 
         </div>
         
