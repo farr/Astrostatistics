@@ -216,6 +216,11 @@
    It Was a Dark and Stormy Night…
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-extensions-and-checking">
+   Model Extensions and Checking
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -397,6 +402,53 @@ w_i = \frac{1}{\sigma_i^2}
 <div class="cell_output docutils container">
 <img alt="_images/welcome_26_0.svg" src="_images/welcome_26_0.svg" /></div>
 </div>
+<p>But where do these formulas come from?  What are the assumptions behind them?</p>
+<p>If we imagine that:</p>
+<ul class="simple">
+<li><p>There is a single, true, response value <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
+<li><p>Each measurement of this value suffers from independent “noise” which induces a Gaussian-distributed measured value, <span class="math notranslate nohighlight">\(x_i\)</span>, that is unbaised (mean <span class="math notranslate nohighlight">\(r\)</span>) and s.d. <span class="math notranslate nohighlight">\(\sigma_i\)</span>.</p></li>
+</ul>
+<p>then we can write down the “joint probability distribution” over the unknown <span class="math notranslate nohighlight">\(r\)</span> and any measurement values that is</p>
+<div class="math notranslate nohighlight" id="equation-joint-gaussian-bayes">
+<span class="eqno">(4)<a class="headerlink" href="#equation-joint-gaussian-bayes" title="Permalink to this equation">¶</a></span>\[
+  \pi \left( \left\{ x_i \right\} , r \right) = p\left( \left\{ x_i \right\} \mid r \right) p\left( r \right)
+\]</div>
+<p>(This is Bayes theorem about factoring a joint probability into a product of a conditional and marginal probability.  Here <span class="math notranslate nohighlight">\(p\left( \left\{ x_i \right\} \mid r \right)\)</span> is the <em>conditional</em> probability of making the <span class="math notranslate nohighlight">\(x_i\)</span> measurements given a particular value of <span class="math notranslate nohighlight">\(r\)</span>, sometimes called the “likelihood” function for <span class="math notranslate nohighlight">\(r\)</span>; <span class="math notranslate nohighlight">\(p(r)\)</span> is a distribution that reflects our beliefs about the reasonable values of <span class="math notranslate nohighlight">\(r\)</span> before the measurement or the possible population of <span class="math notranslate nohighlight">\(r\)</span> values over all experiments, sometimes called the “prior.”)</p>
+<p>The first term in <a class="reference internal" href="#equation-joint-gaussian-bayes">(4)</a> becomes a product (independence assumption) of Gaussians (Gaussian-distributed assumption):</p>
+<div class="math notranslate nohighlight" id="equation-gaussian-likelihood">
+<span class="eqno">(5)<a class="headerlink" href="#equation-gaussian-likelihood" title="Permalink to this equation">¶</a></span>\[
+p\left( \left\{ x_i \right\} \mid r \right) = \prod_i \frac{1}{\sqrt{2\pi \sigma_i^2}} \exp\left( - \frac{\left( x_i - r \right)^2}{2 \sigma_i^2} \right)
+\]</div>
+<p>We can use Bayes’ theorem to “slice” the joint distribution the “other” way:</p>
+<div class="math notranslate nohighlight" id="equation-gaussian-posterior">
+<span class="eqno">(6)<a class="headerlink" href="#equation-gaussian-posterior" title="Permalink to this equation">¶</a></span>\[
+\pi \left(\left\{ x_i \right\}, r \right) = p\left( r \mid \left\{ x_i \right\} \right) p\left( \left\{ x_i \right\} \right)
+\]</div>
+<p>Once we have the measurement data <span class="math notranslate nohighlight">\(\left\{ x_i \right\}\)</span>, this form gives us (up to an annoying constant, <span class="math notranslate nohighlight">\(p\left( \left\{ x_i \right\} \right)\)</span>, that we will spend some time on later in the course) a “posterior” distribution over <span class="math notranslate nohighlight">\(r\)</span> reflecting our knowledge of <span class="math notranslate nohighlight">\(r\)</span> given the measurements we have made.  Equating Eq. <a class="reference internal" href="#equation-joint-gaussian-bayes">(4)</a> and Eq. <a class="reference internal" href="#equation-gaussian-posterior">(6)</a>, and using the form of the likelihood in Eq. <a class="reference internal" href="#equation-gaussian-likelihood">(5)</a>, and assuming that whatever distribution we use for <span class="math notranslate nohighlight">\(p(r)\)</span> will be much broader than the product of the likelihood functions (this is equivalent to saying that our measurement is <em>informative</em>) we have</p>
+<div class="math notranslate nohighlight" id="equation-posterior-weights">
+<span class="eqno">(7)<a class="headerlink" href="#equation-posterior-weights" title="Permalink to this equation">¶</a></span>\[
+p\left( r \mid \left\{ x_i \right\} \right) \propto \exp\left( -\frac{\left( r - \mu_r \right)^2}{2 \sigma_r^2} \right),
+\]</div>
+<p>where (check the algebra!)</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_r = \hat{r} = \frac{\sum_i w_i x_i}{\sum_i w_i}
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma_r^2 = \left( \sum_i w_i \right)^{-1}
+\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[
+w_i = \frac{1}{\sigma_i^2}.
+\]</div>
+<p>So, we see that the “standard” formulas for combining uncertain measurements correspond to computing the mean and s.d. of the posterior distribution on the single, true value <span class="math notranslate nohighlight">\(r\)</span> given the measurements.</p>
+</div>
+<div class="section" id="model-extensions-and-checking">
+<h2>Model Extensions and Checking<a class="headerlink" href="#model-extensions-and-checking" title="Permalink to this headline">¶</a></h2>
+<p>TBC.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">responses</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
@@ -471,7 +523,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_29_0.svg" src="_images/welcome_29_0.svg" /></div>
+<img alt="_images/welcome_47_0.svg" src="_images/welcome_47_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -485,7 +537,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_30_0.svg" src="_images/welcome_30_0.svg" /></div>
+<img alt="_images/welcome_48_0.svg" src="_images/welcome_48_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -540,7 +592,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_32_0.svg" src="_images/welcome_32_0.svg" /></div>
+<img alt="_images/welcome_50_0.svg" src="_images/welcome_50_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -554,7 +606,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_33_0.svg" src="_images/welcome_33_0.svg" /></div>
+<img alt="_images/welcome_51_0.svg" src="_images/welcome_51_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -641,7 +693,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_36_0.svg" src="_images/welcome_36_0.svg" /></div>
+<img alt="_images/welcome_54_0.svg" src="_images/welcome_54_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -707,7 +759,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_38_0.svg" src="_images/welcome_38_0.svg" /></div>
+<img alt="_images/welcome_56_0.svg" src="_images/welcome_56_0.svg" /></div>
 </div>
 </div>
 </div>
