@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@latest/lib/index.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tips and Tricks" href="tips_and_tricks.html" />
@@ -82,7 +82,7 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -209,7 +209,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#it-was-a-dark-and-stormy-night">
@@ -242,12 +242,18 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Teaching/astrostatistics/Project.toml`
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">DataFrames</span>
 <span class="k">using</span> <span class="n">LaTeXStrings</span>
 <span class="k">using</span> <span class="n">Logging</span>
+<span class="k">using</span> <span class="n">Printf</span>
 <span class="k">using</span> <span class="n">StatsBase</span>
 <span class="k">using</span> <span class="n">StatsPlots</span>
 <span class="k">using</span> <span class="n">Turing</span>
@@ -259,7 +265,7 @@
 <h2>It Was a Dark and Stormy Night…<a class="headerlink" href="#it-was-a-dark-and-stormy-night" title="Permalink to this headline">¶</a></h2>
 <p>…in the middle of the COVID 19 pandemic.  You are facing an unpleasant task (writing a grant proposal, cleaning the kitchen, etc) when your colleague <a class="reference external" href="https://scholar.google.com/citations?user=IrkY3dQAAAAJ&amp;hl=en">Jeff Kissell</a> emails you, asking for advice with the analysis of some measurements.  Jeff and his collaborators have been pushing on the LIGO mirrors gravitationally, using a rotating massive disk; they measure the response of the interferometer to the forcing at different frequencies, and can then calibrate the relation between mirror displacement (computed from the gravitational force law) and interferometer output.  Such calibration allows for accurate measurements of gravitational wave amplitudes.</p>
 <p>The project eventually grew into <span id="id1">[<a class="reference internal" href="bibliography.html#id2">Ross <em>et al.</em>, 2021</a>]</span>.  The data we have here are very preliminary versions of the data that can be found in that paper.</p>
-<p>One feature of the measurements of interferometer response here is that the uncertainty in the measurement is <em>asymmetric</em>.  The data below give the “upper” and “lower” 1-sigma values (together these enclose 68% of the confidence interval of the measurement).</p>
+<p>One feature of the measurements of interferometer response here is that the uncertainty in the measurement is <em>asymmetric</em>.  The data below give the “upper” and “lower” 1-sigma values (together these enclose 68% of the confidence interval of the measurement).  For now, we are going to ignore this, so we will construct a column called <code class="docutils literal notranslate"><span class="pre">:sigma</span></code> that averages the upper and lower uncertainties.</p>
 <p>There are two sets of measurements: one taken at the forcing frequencies of the rotor mass’s quadrupole mass moment and one taken at the forcing frequencies of the rotor mass’s octupole mass moment.  There are consistent units on the response and associated uncertainty, but we will ignore them for now; see <span id="id2">[<a class="reference internal" href="bibliography.html#id2">Ross <em>et al.</em>, 2021</a>]</span> for the details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -268,11 +274,12 @@
                        <span class="mf">17.100</span> <span class="mf">3.379e-11</span> <span class="mf">9.777e-13</span> <span class="mf">1.015e-12</span><span class="p">;</span>
                        <span class="mf">19.112</span> <span class="mf">3.376e-11</span> <span class="mf">9.033e-13</span> <span class="mf">9.972e-13</span><span class="p">],</span>
                       <span class="p">[</span><span class="ss">:freq</span><span class="p">,</span> <span class="ss">:response</span><span class="p">,</span> <span class="ss">:sigma_upper</span><span class="p">,</span> <span class="ss">:sigma_lower</span><span class="p">])</span>
+<span class="n">insertcols!</span><span class="p">(</span><span class="n">quad_data</span><span class="p">,</span> <span class="ss">:sigma</span> <span class="o">=&gt;</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_upper</span> <span class="o">.+</span> <span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_lower</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div class="data-frame"><p>4 rows × 4 columns</p><table class="data-frame"><thead><tr><th></th><th>freq</th><th>response</th><th>sigma_upper</th><th>sigma_lower</th></tr><tr><th></th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>10.3</td><td>3.328e-11</td><td>1.706e-12</td><td>1.476e-12</td></tr><tr><th>2</th><td>15.6</td><td>3.442e-11</td><td>1.027e-12</td><td>1.023e-12</td></tr><tr><th>3</th><td>17.1</td><td>3.379e-11</td><td>9.777e-13</td><td>1.015e-12</td></tr><tr><th>4</th><td>19.112</td><td>3.376e-11</td><td>9.033e-13</td><td>9.972e-13</td></tr></tbody></table></div></div></div>
+<div class="output text_html"><div class="data-frame"><p>4 rows × 5 columns</p><table class="data-frame"><thead><tr><th></th><th>freq</th><th>response</th><th>sigma_upper</th><th>sigma_lower</th><th>sigma</th></tr><tr><th></th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>10.3</td><td>3.328e-11</td><td>1.706e-12</td><td>1.476e-12</td><td>1.591e-12</td></tr><tr><th>2</th><td>15.6</td><td>3.442e-11</td><td>1.027e-12</td><td>1.023e-12</td><td>1.025e-12</td></tr><tr><th>3</th><td>17.1</td><td>3.379e-11</td><td>9.777e-13</td><td>1.015e-12</td><td>9.9635e-13</td></tr><tr><th>4</th><td>19.112</td><td>3.376e-11</td><td>9.033e-13</td><td>9.972e-13</td><td>9.5025e-13</td></tr></tbody></table></div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> can output summary statistics on the data:</p>
 <div class="cell docutils container">
@@ -282,7 +289,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div class="data-frame"><p>4 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>freq</td><td>15.528</td><td>10.3</td><td>16.35</td><td>19.112</td><td>0</td><td>Float64</td></tr><tr><th>2</th><td>response</td><td>3.38125e-11</td><td>3.328e-11</td><td>3.3775e-11</td><td>3.442e-11</td><td>0</td><td>Float64</td></tr><tr><th>3</th><td>sigma_upper</td><td>1.1535e-12</td><td>9.033e-13</td><td>1.00235e-12</td><td>1.706e-12</td><td>0</td><td>Float64</td></tr><tr><th>4</th><td>sigma_lower</td><td>1.1278e-12</td><td>9.972e-13</td><td>1.019e-12</td><td>1.476e-12</td><td>0</td><td>Float64</td></tr></tbody></table></div></div></div>
+<div class="output text_html"><div class="data-frame"><p>5 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>freq</td><td>15.528</td><td>10.3</td><td>16.35</td><td>19.112</td><td>0</td><td>Float64</td></tr><tr><th>2</th><td>response</td><td>3.38125e-11</td><td>3.328e-11</td><td>3.3775e-11</td><td>3.442e-11</td><td>0</td><td>Float64</td></tr><tr><th>3</th><td>sigma_upper</td><td>1.1535e-12</td><td>9.033e-13</td><td>1.00235e-12</td><td>1.706e-12</td><td>0</td><td>Float64</td></tr><tr><th>4</th><td>sigma_lower</td><td>1.1278e-12</td><td>9.972e-13</td><td>1.019e-12</td><td>1.476e-12</td><td>0</td><td>Float64</td></tr><tr><th>5</th><td>sigma</td><td>1.14065e-12</td><td>9.5025e-13</td><td>1.01067e-12</td><td>1.591e-12</td><td>0</td><td>Float64</td></tr></tbody></table></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -292,11 +299,12 @@
                       <span class="mf">25.700</span> <span class="mf">1.516e-11</span> <span class="mf">3.047e-13</span> <span class="mf">3.286e-13</span><span class="p">;</span>
                       <span class="mf">28.700</span> <span class="mf">1.556e-11</span> <span class="mf">2.839e-13</span> <span class="mf">2.912e-13</span><span class="p">],</span>
                      <span class="p">[</span><span class="ss">:freq</span><span class="p">,</span> <span class="ss">:response</span><span class="p">,</span> <span class="ss">:sigma_upper</span><span class="p">,</span> <span class="ss">:sigma_lower</span><span class="p">])</span>
+<span class="n">insertcols!</span><span class="p">(</span><span class="n">oct_data</span><span class="p">,</span> <span class="ss">:sigma</span> <span class="o">=&gt;</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_upper</span> <span class="o">.+</span> <span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_lower</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div class="data-frame"><p>5 rows × 4 columns</p><table class="data-frame"><thead><tr><th></th><th>freq</th><th>response</th><th>sigma_upper</th><th>sigma_lower</th></tr><tr><th></th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>12.5</td><td>1.619e-11</td><td>5.142e-13</td><td>5.172e-13</td></tr><tr><th>2</th><td>15.5</td><td>1.516e-11</td><td>4.521e-13</td><td>4.506e-13</td></tr><tr><th>3</th><td>23.4</td><td>1.647e-11</td><td>3.83e-13</td><td>4.08e-13</td></tr><tr><th>4</th><td>25.7</td><td>1.516e-11</td><td>3.047e-13</td><td>3.286e-13</td></tr><tr><th>5</th><td>28.7</td><td>1.556e-11</td><td>2.839e-13</td><td>2.912e-13</td></tr></tbody></table></div></div></div>
+<div class="output text_html"><div class="data-frame"><p>5 rows × 5 columns</p><table class="data-frame"><thead><tr><th></th><th>freq</th><th>response</th><th>sigma_upper</th><th>sigma_lower</th><th>sigma</th></tr><tr><th></th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>12.5</td><td>1.619e-11</td><td>5.142e-13</td><td>5.172e-13</td><td>5.157e-13</td></tr><tr><th>2</th><td>15.5</td><td>1.516e-11</td><td>4.521e-13</td><td>4.506e-13</td><td>4.5135e-13</td></tr><tr><th>3</th><td>23.4</td><td>1.647e-11</td><td>3.83e-13</td><td>4.08e-13</td><td>3.955e-13</td></tr><tr><th>4</th><td>25.7</td><td>1.516e-11</td><td>3.047e-13</td><td>3.286e-13</td><td>3.1665e-13</td></tr><tr><th>5</th><td>28.7</td><td>1.556e-11</td><td>2.839e-13</td><td>2.912e-13</td><td>2.8755e-13</td></tr></tbody></table></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -305,7 +313,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div class="data-frame"><p>4 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>freq</td><td>21.16</td><td>12.5</td><td>23.4</td><td>28.7</td><td>0</td><td>Float64</td></tr><tr><th>2</th><td>response</td><td>1.5708e-11</td><td>1.516e-11</td><td>1.556e-11</td><td>1.647e-11</td><td>0</td><td>Float64</td></tr><tr><th>3</th><td>sigma_upper</td><td>3.8758e-13</td><td>2.839e-13</td><td>3.83e-13</td><td>5.142e-13</td><td>0</td><td>Float64</td></tr><tr><th>4</th><td>sigma_lower</td><td>3.9912e-13</td><td>2.912e-13</td><td>4.08e-13</td><td>5.172e-13</td><td>0</td><td>Float64</td></tr></tbody></table></div></div></div>
+<div class="output text_html"><div class="data-frame"><p>5 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>freq</td><td>21.16</td><td>12.5</td><td>23.4</td><td>28.7</td><td>0</td><td>Float64</td></tr><tr><th>2</th><td>response</td><td>1.5708e-11</td><td>1.516e-11</td><td>1.556e-11</td><td>1.647e-11</td><td>0</td><td>Float64</td></tr><tr><th>3</th><td>sigma_upper</td><td>3.8758e-13</td><td>2.839e-13</td><td>3.83e-13</td><td>5.142e-13</td><td>0</td><td>Float64</td></tr><tr><th>4</th><td>sigma_lower</td><td>3.9912e-13</td><td>2.912e-13</td><td>4.08e-13</td><td>5.172e-13</td><td>0</td><td>Float64</td></tr><tr><th>5</th><td>sigma</td><td>3.9335e-13</td><td>2.8755e-13</td><td>3.955e-13</td><td>5.157e-13</td><td>0</td><td>Float64</td></tr></tbody></table></div></div></div>
 </div>
 <p>Let’s make a plot of the data, and see what it “looks like:”</p>
 <div class="cell docutils container">
@@ -324,7 +332,7 @@
 <div class="cell_output docutils container">
 <img alt="_images/welcome_12_0.svg" src="_images/welcome_12_0.svg" /></div>
 </div>
-<p>Looking at the above plot, it certainly seems reasonable enough to assume that there is one “quadrupole” and one “octupole” forcing response at all frequencies (i.e. that the measurements are all “consistent”—we will spend a long time discussing what that means in this course!—with each other).  Then you may remember formulas from your physics labs for combining the measurements.</p>
+<p>Looking at the above plot, it certainly seems reasonable enough to ignore the asymmetry in the measurement uncertainty.  It also seems reasonable that there is one “quadrupole” and one “octupole” forcing response at all frequencies (i.e. that the measurements are all “consistent”—we will spend a long time discussing what that means in this course!—with each other).  You may remember formulas from your physics labs for combining such measurements.</p>
 <p>If you don’t, here they are: for a set of measurements <span class="math notranslate nohighlight">\(\{x_i \mid i = 1, \ldots, N \}\)</span> with associated uncertainty <span class="math notranslate nohighlight">\(\{\sigma_i \mid i = 1, \ldots, N\}\)</span> (here each <span class="math notranslate nohighlight">\(\sigma_i\)</span> is assumed to be the square root of the measurement variance) of the same “true” quantity <span class="math notranslate nohighlight">\(x\)</span>, the “best” estimate of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(\hat{x}\)</span> is</p>
 <div class="math notranslate nohighlight" id="equation-weighted-mean">
 <span class="eqno">(1)<a class="headerlink" href="#equation-weighted-mean" title="Permalink to this equation">¶</a></span>\[
@@ -448,17 +456,42 @@ w_i = \frac{1}{\sigma_i^2}.
 </div>
 <div class="section" id="model-extensions-and-checking">
 <h2>Model Extensions and Checking<a class="headerlink" href="#model-extensions-and-checking" title="Permalink to this headline">¶</a></h2>
-<p>TBC.</p>
+<p>A striking feature of the plots above is that it seems that the uncertainty reported with the measurements is not a good match to the actual scatter about the inferred value of <span class="math notranslate nohighlight">\(r\)</span>.  In the quadrupolar measurements, the measured responses are “too close” to the truth relative to their errorbars; and the measured responses for the octupolar measurements seem like they could be too far from the truth.</p>
+<p>One reasonable extension to the model above could be to introduce a “fudge factor” or “scale factor” that re-scales the reported uncertainties to match the scatter in the data.  This model would trust the <em>relative</em> but not <em>absolute</em> errorbar sizes; such a fudge-factor is commonly used in photometry, for example.  We will denote the scale factor by <span class="math notranslate nohighlight">\(\nu\)</span>.</p>
+<p>The likelihood function in this case would be modified to</p>
+<div class="math notranslate nohighlight" id="equation-gaussian-likelihood-errorbar-scaling">
+<span class="eqno">(8)<a class="headerlink" href="#equation-gaussian-likelihood-errorbar-scaling" title="Permalink to this equation">¶</a></span>\[
+p\left( \left\{ x_i \right\} \mid r, \nu \right) = \prod_i \frac{1}{\sqrt{2\pi \nu^2 \sigma_i^2}} \exp\left( - \frac{\left( x_i - r \right)^2}{2 \nu^2 \sigma_i^2} \right)
+\]</div>
+<p>We will use the <a class="reference external" href="https://turing.ml/stable/"><code class="docutils literal notranslate"><span class="pre">Turing.jl</span></code></a> <span id="id3">[<a class="reference internal" href="bibliography.html#id5">Tarek <em>et al.</em>, 2020</a>]</span> package to implement this model and to draw samples from the posterior over the true response and scale factor given the data, <span class="math notranslate nohighlight">\(p\left( r, \nu \mid \left\{ x_i \right\} \right)\)</span> (analagous to Eq. <a class="reference internal" href="#equation-gaussian-posterior">(6)</a>, but incorporating our extra parameter).  This is worth elaborating on a bit.  Above, we were considering the <em>function</em> <span class="math notranslate nohighlight">\(p\left( r \mid \left\{ x_i \right\} \right)\)</span> that represented the posterior probability distribution function for <span class="math notranslate nohighlight">\(r\)</span> given our observations.  We found that the <em>function</em> takes a Gaussian form, with a given mean and standard deviation.</p>
+<p>In general, however, we may be able to compute arbitrary <em>values</em> (or, as above, values <em>up to a constant factor</em>) of the posterior density using a computer program, but the density won’t have a simple functional form.  It may be high dimensional, too (in this case we have only two parameters, but already the dimension is higher than the simpler model above with one parameter); in high dimensions it is cumbersome to work with the functional form of the posterior even if it is represented by simple functions.  In such cases it can be more convenient to work with <em>samples</em> drawn from the posterior probability distribution.  Such samples can be used to approximate integrals of the posterior: an integral of some function <span class="math notranslate nohighlight">\(f\)</span> over the posterior density <span class="math notranslate nohighlight">\(p\)</span> can be approximated by</p>
+<div class="math notranslate nohighlight">
+\[
+\int \mathrm{d} x f(x) p(x) = \left\langle f(x) \right\rangle_{p} \simeq \frac{1}{N} \sum_j f\left( x_j \right)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of samples <span class="math notranslate nohighlight">\(x_j \sim p(x)\)</span> we have available.  This formula works in any number of dimensions (we will study its error carefully later in the term).</p>
+<p>There are various algorithms for drawing samples from an arbitrary distribution that we will be discussing in the course; the <code class="docutils literal notranslate"><span class="pre">Turing</span></code> library implements several of them.  Here we will be using “No U-Turn Sampling” <span id="id4">[<a class="reference internal" href="bibliography.html#id3">Hoffman and Gelman, 2011</a>]</span> which is an automatically-tuned variant of the Hamiltonian Monte Carlo MCMC method <span id="id5">[<a class="reference internal" href="bibliography.html#id4">Neal, 2011</a>]</span>.  More on these sorts of algorithms later.  (The fact that samples can stand in for the posterior denisty itself is even more magical than it might appear at first; it has to do with the sorts of questions we like to ask using the posterior.  These tend to be “low dimensional” questions even if the posterior itself is high-dimensional.  Consder, for example, a posterior that is uniform on <code class="docutils literal notranslate"><span class="pre">(-1,</span> <span class="pre">1)</span></code> in 100 dimensions: <span class="math notranslate nohighlight">\(U(-1, 1)^{100}\)</span>.  To even have each “half” of each one-dimensional subspace represented in a set of samples would require <span class="math notranslate nohighlight">\(2^{100} \simeq 10^{30}\)</span> samples!  But even a few tens of samples is sufficient to discover, for example, that <span class="math notranslate nohighlight">\(\left\langle \vec{x} \right\rangle = \vec{0}\)</span> when <span class="math notranslate nohighlight">\(\vec{x} \sim U\left( -1, 1 \right)^{100}\)</span> to quite good accuracy.)</p>
+<p>Back to our specific example: the <code class="docutils literal notranslate"><span class="pre">Turing</span></code> library needs from us a description of the joint density on <span class="math notranslate nohighlight">\(\left\{ x_i \right\}\)</span> and <span class="math notranslate nohighlight">\(\left( r, \nu \right)\)</span>, and then the values of the <span class="math notranslate nohighlight">\(x_i\)</span>.  It then can draw samples of <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span> from the conditional posterior density (the <span class="math notranslate nohighlight">\(x_i\)</span> are fixed).</p>
+<p>One of the strengths of <code class="docutils literal notranslate"><span class="pre">Turing</span></code> and similar libraries like <code class="docutils literal notranslate"><span class="pre">numpyro</span></code>, <code class="docutils literal notranslate"><span class="pre">pymc3</span></code>, <code class="docutils literal notranslate"><span class="pre">stan</span></code>, …, is that we don’t have to write out the posterior function explicitly (as we have done above, in Eq. <a class="reference internal" href="#equation-gaussian-likelihood-errorbar-scaling">(8)</a>); instead we can specify that certain variables follow certain distributions, and <code class="docutils literal notranslate"><span class="pre">Turing</span></code> will build up the right density for us.  It can even handle constraints like the fact that <span class="math notranslate nohighlight">\(0 &lt; \nu &lt; \infty\)</span> elegantly.</p>
+<p>Of course, if we <em>do</em> want to write out our functions that go into the posterior distribution explicitly, there is a way to do that, too.  Stay tuned!</p>
+<p>The code for the <code class="docutils literal notranslate"><span class="pre">Turing</span></code> implementation of the scaled-errorbar model is in the next cell.  First, models are implemented as a macro (to introduce some extra syntax like the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator: writing <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">~</span> <span class="pre">Y(z)</span></code> means that the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> is distributed according to the distribution <code class="docutils literal notranslate"><span class="pre">Y</span></code> which can have parameters <code class="docutils literal notranslate"><span class="pre">z</span></code>) that closely follows the definition syntax for a function.  The arguments to the “function” are the data and whatever parameters on which the model is conditioned; here the measured responses and their uncertainties.  Within the function, we define distributions for parameters (i.e. priors, see Eq. <a class="reference internal" href="#equation-gaussian-posterior">(6)</a>) and also distributions for data (likelihood functions) that can depend on parameters and other data.  When <code class="docutils literal notranslate"><span class="pre">Turing</span></code> sees a “new” variable in a <code class="docutils literal notranslate"><span class="pre">~</span></code> statement (i.e. a variable that is not a function argument), then it treats it as the definition of a new parameter to be sampled over; when it sees an already-defined variable (i.e. a function argument) in a <code class="docutils literal notranslate"><span class="pre">~</span></code> statement, then it assumes that variable should be <em>conditioned on</em> and assumes the value that is passed to the model constructor when the model is instantiated; see comments in the model below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">responses</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
-    <span class="n">r_unit</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-    <span class="n">escale</span> <span class="o">~</span> <span class="n">LogNormal</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># The model depends on the measured responses and their uncertainties; these are the quantities &quot;to the right of the bar&quot; above</span>
+<span class="nd">@model</span> <span class="k">function</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">responses</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+    <span class="c"># It is inconvenient to work with quantities that are O(1e-11), so we define these &quot;unit-scale&quot; parameters from which the actual parameters are derived.</span>
+    <span class="n">r_unit</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c"># r_unit follows a Gaussian distribution with mean zero and width 10</span>
+    <span class="n">nu</span> <span class="o">~</span> <span class="n">LogNormal</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># the scale factor follows a log-normal distribution with mean (of the log) 0 and s.d. (of the log) 1.</span>
     
+    <span class="c"># If r_unit ~ N(0,10), then r ~ N(mean(response), 10*std(response)), which is a broad and uninformative prior for the parameter r</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span> <span class="o">+</span> <span class="n">std</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span><span class="o">*</span><span class="n">r_unit</span>
     
-    <span class="n">responses</span> <span class="o">~</span> <span class="n">arraydist</span><span class="p">([</span><span class="n">Normal</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">escale</span><span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="k">in</span> <span class="n">sigmas</span><span class="p">])</span>
+    <span class="c"># The likelihood function: we construct an array of Normal distributions with mean r and standard deviation nu*sigma_i;</span>
+    <span class="c"># the array of measurements is assumed drawn from this array of distributions.</span>
+    <span class="n">responses</span> <span class="o">~</span> <span class="n">arraydist</span><span class="p">([</span><span class="n">Normal</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">nu</span><span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="k">in</span> <span class="n">sigmas</span><span class="p">])</span>
     
+    <span class="c"># Parameters like r_unit and nu will automatically be captured in the fitting of the model; but additional &quot;generated&quot; quantities need to be explicitly </span>
+    <span class="c"># returned.  Here `r` is such a &quot;generated&quot; quantity, so we return it in a &quot;named tuple&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="p">)</span>
 <span class="k">end</span>
 </pre></div>
@@ -470,6 +503,7 @@ w_i = \frac{1}{\sigma_i^2}.
 </div>
 </div>
 </div>
+<p>Now we construct a model instance from the quadrupolar data, draw samples from it using 1000 steps of the NUTS algorithm (again, stay tuned!), generated the quantities like <span class="math notranslate nohighlight">\(r\)</span> that are defined in terms of more basic parameters, and display the MCMC “trace:”</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_quad_model</span> <span class="o">=</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_lower</span> <span class="o">.+</span> <span class="n">quad_data</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">))</span>
@@ -483,9 +517,12 @@ w_i = \frac{1}{\sigma_i^2}.
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
-│   ϵ = 0.2
+│   ϵ = 1.6
 └ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
-<span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
+┌ Warning: The current proposal will be rejected due to numerical error(s).
+│   isfinite.((θ, r, ℓπ, ℓκ)) = (true, true, true, false)
+└ @ AdvancedHMC /Users/wfarr/.julia/packages/AdvancedHMC/bv9VV/src/hamiltonian.jl:47
+<span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:01</span>
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×14×1 Array{Float64, 3}):
@@ -493,52 +530,72 @@ w_i = \frac{1}{\sigma_i^2}.
 Iterations        = 501:1:1500
 Number of chains  = 1
 Samples per chain = 1000
-Wall duration     = 0.11 seconds
-Compute duration  = 0.11 seconds
-parameters        = escale, r_unit
+Wall duration     = 12.74 seconds
+Compute duration  = 12.74 seconds
+parameters        = nu, r_unit
 internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
 
 Summary Statistics
  <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span> <span class=" -Color -Color-Bold"> e</span> ⋯
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64     ⋯
 
-      r_unit    0.1655    0.9361     0.0296    0.0394   269.5161    0.9990     ⋯
-      escale    0.6207    0.4133     0.0131    0.0358   265.5180    1.0024     ⋯
+      r_unit    0.1425    0.7424     0.0235    0.0405   336.9317    1.0011     ⋯
+          nu    0.5753    0.3025     0.0096    0.0155   366.4128    1.0025     ⋯
 <span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
 
 Quantiles
  <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
       Symbol   Float64   Float64   Float64   Float64   Float64 
 
-      r_unit   -1.4451   -0.2620    0.1527    0.6021    2.0433
-      escale    0.2459    0.3892    0.5169    0.7099    1.5837
+      r_unit   -1.4116   -0.2275    0.1510    0.5389    1.6798
+          nu    0.2290    0.3932    0.5024    0.6822    1.4416
 </pre></div>
 </div>
 </div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">StatsPlots</span></code> package knows how to plot MCMC traces:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@df</span> <span class="n">scaled_quad_trace</span> <span class="n">density</span><span class="p">(</span><span class="ss">:escale</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">scaled_quad_trace</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_47_0.svg" src="_images/welcome_47_0.svg" /></div>
+<img alt="_images/welcome_54_0.svg" src="_images/welcome_54_0.svg" /></div>
 </div>
+<p>What we see above in the left-hand column is the samples in each parameter that were drawn as a function of the iteration number.  We will talk in great detail about the NUTS/HMC algorithm and MCMC in general later in the course; for now, just know that the algorithm takes the “current” sample and evolves it according to a dynamical system to generate the “next” sample.  So there will be some degree of correlation from sample-to-sample; we want that to be as small as possible, so that the samples “mix” into the full posterior distribution (sometimes called the “target distribution”) quickly.  You can see in these plots that successive samples appear pretty random, so the mixing looks good.  This is also captured by the <code class="docutils literal notranslate"><span class="pre">ess</span></code> column in the textual output above, which gives (very roughly) the effective number of <em>independent</em> draws from the posterior distribution by estimating the sample-to-sample correlation.</p>
+<p>What we see in the right-hand column is an estimate of the 1D density of the samples in each parameter; these are the “marginal” distributions of <span class="math notranslate nohighlight">\(r\)</span> (marginalized over all possible values of <span class="math notranslate nohighlight">\(\nu\)</span>) and <span class="math notranslate nohighlight">\(\nu\)</span> (marginalized over all possible values of <span class="math notranslate nohighlight">\(r\)</span>).</p>
+<p>It is particularly interesting to look at the posterior density (i.e. our uncertainty about) the <span class="math notranslate nohighlight">\(\nu\)</span> parameter: it does not peak at <span class="math notranslate nohighlight">\(\nu = 1\)</span> (the point at which the quoted errorbars correctly represent the scatter in the observations).  In fact, <span class="math notranslate nohighlight">\(\nu = 1\)</span> lives quite far in the tail—only 7.1% of the posterior samples have <span class="math notranslate nohighlight">\(\nu &gt; 1\)</span>.</p>
+<p>It looks like our guess that the uncertainties were over-estimated is correct!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p_nu_gt_1</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">scaled_quad_trace</span><span class="p">[</span><span class="ss">:nu</span><span class="p">]</span> <span class="o">.&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">length</span><span class="p">(</span><span class="n">scaled_quad_trace</span><span class="p">)</span>
+<span class="nd">@df</span> <span class="n">scaled_quad_trace</span> <span class="n">density</span><span class="p">(</span><span class="ss">:nu</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+<span class="n">vline!</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+<span class="n">title!</span><span class="p">(</span><span class="nd">@sprintf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">P</span><span class="se">\\</span><span class="s">left( </span><span class="se">\\</span><span class="s">nu &gt; 1 </span><span class="se">\\</span><span class="s">right) = </span><span class="si">%.3f</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">p_nu_gt_1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_57_0.svg" src="_images/welcome_57_0.svg" /></div>
+</div>
+<p>Together with the re-scaled observational uncertainties, we can re-estimate the underlying response value; our estimate will become better, because the scale factor <span class="math notranslate nohighlight">\(\nu &lt; 1\)</span> so the errorbars that the model uses will be smaller than the quoted uncertainty.</p>
+<p>It is an annoying feature of <code class="docutils literal notranslate"><span class="pre">Turing</span></code> that generated quantities are treated differently than parameters in the trace; later in the class we will write some library code to <em>append</em> the generated quantities to the trace, but for now we extract them manually:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">rq</span> <span class="o">=</span> <span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">scaled_quad_genq</span><span class="p">])</span>
 <span class="n">plot</span><span class="p">()</span>
 <span class="n">plot_data</span><span class="p">(</span><span class="n">quad_data</span><span class="p">,</span> <span class="nb">nothing</span><span class="p">)</span>
 <span class="n">plot_bands</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">rq</span><span class="p">),</span> <span class="n">std</span><span class="p">(</span><span class="n">rq</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Scaled Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<span class="n">plot_bands</span><span class="p">(</span><span class="n">qr</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Original Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">qr</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Original Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">title!</span><span class="p">(</span><span class="s">&quot;Quadrupole&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_48_0.svg" src="_images/welcome_48_0.svg" /></div>
+<img alt="_images/welcome_59_0.svg" src="_images/welcome_59_0.svg" /></div>
 </div>
+<p>Now we can do the same thing for the octupole data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_oct_model</span> <span class="o">=</span> <span class="n">scaled_errorbar</span><span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">.*</span> <span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_lower</span> <span class="o">.+</span> <span class="n">oct_data</span><span class="o">.</span><span class="n">sigma_upper</span><span class="p">))</span>
@@ -552,9 +609,8 @@ Quantiles
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
-│   ϵ = 0.41250000000000003
+│   ϵ = 0.8
 └ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
-<span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×14×1 Array{Float64, 3}):
@@ -562,52 +618,66 @@ Quantiles
 Iterations        = 501:1:1500
 Number of chains  = 1
 Samples per chain = 1000
-Wall duration     = 0.12 seconds
-Compute duration  = 0.12 seconds
-parameters        = escale, r_unit
+Wall duration     = 0.07 seconds
+Compute duration  = 0.07 seconds
+parameters        = nu, r_unit
 internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
 
 Summary Statistics
  <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span> <span class=" -Color -Color-Bold"> e</span> ⋯
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64     ⋯
 
-      r_unit   -0.1470    0.5050     0.0160    0.0284   439.1369    1.0042     ⋯
-      escale    1.7111    0.7184     0.0227    0.0411   298.2938    0.9990     ⋯
+      r_unit   -0.1853    0.5099     0.0161    0.0217   309.3963    0.9995     ⋯
+          nu    1.6909    0.7165     0.0227    0.0372   418.4867    1.0025     ⋯
 <span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
 
 Quantiles
  <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
       Symbol   Float64   Float64   Float64   Float64   Float64 
 
-      r_unit   -1.0477   -0.4417   -0.1417    0.1692    0.7407
-      escale    0.8846    1.2277    1.5299    1.9697    3.5499
+      r_unit   -1.1959   -0.4733   -0.1865    0.1055    0.8143
+          nu    0.8790    1.2364    1.5161    1.9258    3.5406
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@df</span> <span class="n">scaled_oct_trace</span> <span class="n">density</span><span class="p">(</span><span class="ss">:escale</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">scaled_oct_trace</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_50_0.svg" src="_images/welcome_50_0.svg" /></div>
+<img alt="_images/welcome_62_0.svg" src="_images/welcome_62_0.svg" /></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p_nu_gt_1</span> <span class="o">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">scaled_oct_trace</span><span class="p">[</span><span class="ss">:nu</span><span class="p">]</span> <span class="o">.&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">length</span><span class="p">(</span><span class="n">scaled_oct_trace</span><span class="p">)</span>
+<span class="nd">@df</span> <span class="n">scaled_oct_trace</span> <span class="n">density</span><span class="p">(</span><span class="ss">:nu</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+<span class="n">vline!</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span>
+<span class="n">title!</span><span class="p">(</span><span class="nd">@sprintf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">P</span><span class="se">\\</span><span class="s">left( </span><span class="se">\\</span><span class="s">nu &gt; 1 </span><span class="se">\\</span><span class="s">right) = </span><span class="si">%.3f</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">p_nu_gt_1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_63_0.svg" src="_images/welcome_63_0.svg" /></div>
+</div>
+<p>It looks like our supposition that these errorbars were <em>underestimated</em> is correct!  Re-computing our estimate for <span class="math notranslate nohighlight">\(r\)</span>, we see that the uncertainty has <em>grown</em>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ro</span> <span class="o">=</span> <span class="n">vec</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">r</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">scaled_oct_genq</span><span class="p">])</span>
 <span class="n">plot</span><span class="p">()</span>
 <span class="n">plot_data</span><span class="p">(</span><span class="n">oct_data</span><span class="p">,</span> <span class="nb">nothing</span><span class="p">)</span>
 <span class="n">plot_bands</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">ro</span><span class="p">),</span> <span class="n">std</span><span class="p">(</span><span class="n">ro</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Scaled Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<span class="n">plot_bands</span><span class="p">(</span><span class="n">or</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Original Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plot_bands</span><span class="p">(</span><span class="n">or</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Original Errors&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">title!</span><span class="p">(</span><span class="s">&quot;Octupole&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_51_0.svg" src="_images/welcome_51_0.svg" /></div>
+<img alt="_images/welcome_65_0.svg" src="_images/welcome_65_0.svg" /></div>
 </div>
+<p>TBC…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">normal_hierarchical</span><span class="p">(</span><span class="n">responses</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
@@ -693,7 +763,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_54_0.svg" src="_images/welcome_54_0.svg" /></div>
+<img alt="_images/welcome_69_0.svg" src="_images/welcome_69_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -759,7 +829,7 @@ Quantiles
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/welcome_56_0.svg" src="_images/welcome_56_0.svg" /></div>
+<img alt="_images/welcome_71_0.svg" src="_images/welcome_71_0.svg" /></div>
 </div>
 </div>
 </div>
@@ -787,12 +857,32 @@ Quantiles
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">PHY 688: Numerical Methods in Astrophysics.</a>
-    <a class='right-next' id="next-link" href="tips_and_tricks.html" title="next page">Tips and Tricks</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="intro.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">PHY 688: Numerical Methods in Astrophysics.</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="tips_and_tricks.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Tips and Tricks</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
