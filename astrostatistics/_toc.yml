@@ -5,5 +5,11 @@ format: jb-book
 root: intro
 chapters:
 - file: welcome
+- file: regression_and_curve_fitting
+- file: colored_noise
+- file: gaussian_processes
+- file: populations
+- file: selection_effects
+- file: special_methods
 - file: tips_and_tricks
 - file: bibliography
