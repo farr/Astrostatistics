@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PHY 688: Numerical Methods in Astrophysics. &#8212; Astrostatistics</title>
+    <title>Regression and Curve Fitting &#8212; Astrostatistics</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="An Example to Set the Stage" href="welcome.html" />
+    <link rel="next" title="Colored Noise" href="colored_noise.html" />
+    <link rel="prev" title="An Example to Set the Stage" href="welcome.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -82,20 +83,20 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
    PHY 688: Numerical Methods in Astrophysics.
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="welcome.html">
    An Example to Set the Stage
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="regression_and_curve_fitting.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Regression and Curve Fitting
   </a>
  </li>
@@ -175,9 +176,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/regression_and_curve_fitting.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -195,7 +196,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/farr/Astrostatistics/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/farr/Astrostatistics/issues/new?title=Issue%20on%20page%20%2Fregression_and_curve_fitting.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -211,6 +212,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/farr/Astrostatistics/main?urlpath=tree/astrostatistics/regression_and_curve_fitting.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -224,11 +242,8 @@
         
               <div>
                 
-  <div class="section" id="phy-688-numerical-methods-in-astrophysics">
-<h1>PHY 688: Numerical Methods in Astrophysics.<a class="headerlink" href="#phy-688-numerical-methods-in-astrophysics" title="Permalink to this headline">¶</a></h1>
-<p>This book collects content for the 2021-2022 academic year of PHY 688: Special Topics in Astrophysics: Numerical Methods for Astrophysics.  We will be focusing on computational astrostatistics.</p>
-<div class="toctree-wrapper compound">
-</div>
+  <div class="section" id="regression-and-curve-fitting">
+<h1>Regression and Curve Fitting<a class="headerlink" href="#regression-and-curve-fitting" title="Permalink to this headline">¶</a></h1>
 </div>
 
     <script type="text/x-thebe-config">
@@ -260,11 +275,20 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="welcome.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">An Example to Set the Stage</p>
+            </div>
+        </a>
+    </div>
      <div id="next">
-        <a class="right-next" href="welcome.html" title="next page">
+        <a class="right-next" href="colored_noise.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">An Example to Set the Stage</p>
+                <p class="prevnext-title">Colored Noise</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

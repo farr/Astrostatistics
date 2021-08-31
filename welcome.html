@@ -53,7 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tips and Tricks" href="tips_and_tricks.html" />
+    <link rel="next" title="Regression and Curve Fitting" href="regression_and_curve_fitting.html" />
     <link rel="prev" title="PHY 688: Numerical Methods in Astrophysics." href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -95,6 +95,36 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    An Example to Set the Stage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression_and_curve_fitting.html">
+   Regression and Curve Fitting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="colored_noise.html">
+   Colored Noise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_processes.html">
+   Gaussian Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="populations.html">
+   Populations and Catalogs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="selection_effects.html">
+   Selection Effects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="special_methods.html">
+   Special Methods
   </a>
  </li>
  <li class="toctree-l1">
@@ -247,11 +277,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Teaching/astrostatistics/Project.toml`
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -267,7 +292,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Precompiling Astrostatistics688 [085d2733-bd12-45d8-916e-6d1689ffe6cb]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Precompiling StatsPlots [f3b207a7-027a-5e70-b257-86293d7955fd]
+└ @ Base loading.jl:1342
+┌ Info: Precompiling Turing [fce5fe82-541a-59a6-adf8-730c64b5f9a0]
 └ @ Base loading.jl:1342
 </pre></div>
 </div>
@@ -530,7 +557,7 @@ p\left( \left\{ x_i \right\} \mid r, \nu \right) = \prod_i \frac{1}{\sqrt{2\pi \
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
-│   ϵ = 1.6
+│   ϵ = 0.8
 └ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
 <span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
 </pre></div>
@@ -547,16 +574,16 @@ Summary Statistics
  <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span>
       Symbol   Float64   Float64    Float64   Float64    Float64   Float64 
 
-      r_unit    0.2096    0.7765     0.0246    0.0326   322.0360    0.9991
-          nu    0.5877    0.3387     0.0107    0.0213   285.6369    1.0016
-           r    0.0000    0.0000     0.0000    0.0000   322.0360    0.9991
+      r_unit    0.1848    0.6805     0.0215    0.0262   460.7023    1.0068
+          nu    0.5830    0.3024     0.0096    0.0176   254.7408    0.9991
+           r    0.0000    0.0000     0.0000    0.0000   460.7023    1.0068
 
 Quantiles
  <span class=" -Color -Color-Bold"> parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
       Symbol   Float64   Float64   Float64   Float64   Float64 
 
-      r_unit   -1.2651   -0.2415    0.1991    0.6187    1.9147
-          nu    0.2350    0.3811    0.4905    0.6896    1.5181
+      r_unit   -1.1717   -0.2107    0.1758    0.5655    1.5847
+          nu    0.2478    0.3897    0.5052    0.6998    1.3493
            r    0.0000    0.0000    0.0000    0.0000    0.0000
 </pre></div>
 </div>
@@ -894,10 +921,10 @@ Quantiles
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="tips_and_tricks.html" title="next page">
+        <a class="right-next" href="regression_and_curve_fitting.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Tips and Tricks</p>
+                <p class="prevnext-title">Regression and Curve Fitting</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
