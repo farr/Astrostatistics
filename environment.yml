@@ -1,0 +1,15 @@
+name: Astrostatistics688
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy
+  - seaborn
+  - scipy
+  - pip
+  - matplotlib
+  - python=3
+  - pandas
+  - jupyterlab
+  - exoplanet
+prefix: /Users/wfarr/miniconda3/envs/Astrostatistics688
