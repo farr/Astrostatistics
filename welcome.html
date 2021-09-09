@@ -277,6 +277,11 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Teaching/astrostatistics/Project.toml`
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -292,7 +297,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Precompiling StatsPlots [f3b207a7-027a-5e70-b257-86293d7955fd]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Precompiling Astrostatistics688 [085d2733-bd12-45d8-916e-6d1689ffe6cb]
+└ @ Base loading.jl:1342
+┌ Info: Precompiling StatsPlots [f3b207a7-027a-5e70-b257-86293d7955fd]
 └ @ Base loading.jl:1342
 ┌ Info: Precompiling Turing [fce5fe82-541a-59a6-adf8-730c64b5f9a0]
 └ @ Base loading.jl:1342
@@ -739,7 +746,9 @@ Quantiles
     
     <span class="n">responses</span> <span class="o">~</span> <span class="n">arraydist</span><span class="p">([</span><span class="n">Normal</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">rr</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)])</span>
     
-    <span class="p">(</span><span class="n">mu_r</span><span class="o">=</span><span class="n">mu_r</span><span class="p">,</span> <span class="n">sigma_r</span><span class="o">=</span><span class="n">sigma_r</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">r_pop</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">mu_r</span><span class="p">,</span> <span class="n">sigma_r</span><span class="p">))</span>
+    
+    <span class="p">(</span><span class="n">mu_r</span><span class="o">=</span><span class="n">mu_r</span><span class="p">,</span> <span class="n">sigma_r</span><span class="o">=</span><span class="n">sigma_r</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">r_pop</span><span class="o">=</span><span class="n">r_pop</span><span class="p">)</span>
 <span class="k">end</span>
 </pre></div>
 </div>
@@ -758,48 +767,65 @@ Quantiles
     <span class="n">generated_quantities</span><span class="p">(</span><span class="n">nhq</span><span class="p">,</span> <span class="n">nht</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="n">nht</span>
+<span class="n">nht</span> <span class="o">=</span> <span class="n">append_generated_quantities</span><span class="p">(</span><span class="n">nht</span><span class="p">,</span> <span class="n">nhg</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
-│   ϵ = 0.8
+│   ϵ = 0.4
 └ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×18×1 Array{Float64, 3}):
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×25×1 Array{Float64, 3}):
 
-Iterations        = 501:1:1500
+Iterations        = 1:1:1000
 Number of chains  = 1
 Samples per chain = 1000
-Wall duration     = 3.26 seconds
-Compute duration  = 3.26 seconds
-parameters        = sigma_r_unit, mu_r_unit, r_unit[3], r_unit[2], r_unit[1], r_unit[4]
+parameters        = sigma_r_unit, mu_r_unit, r_unit[3], r_unit[2], r_unit[1], r_unit[4], mu_r, sigma_r, r[3], r[1], r[4], r[2], r_pop
 internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
 
 Summary Statistics
- <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">       ess </span> <span class=" -Color -Color-Bold">    rhat </span> ⋯
-        Symbol   Float64   Float64    Float64   Float64     Float64   Float64  ⋯
+ <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span>
+        Symbol   Float64   Float64    Float64   Float64    Float64   Float64 
 
-     mu_r_unit    0.0547    0.7332     0.0232    0.0230    946.6228    1.0000  ⋯
-  sigma_r_unit    0.6681    0.5061     0.0160    0.0234    764.7821    0.9998  ⋯
-     r_unit[1]   -0.0695    0.9590     0.0303    0.0296   1142.4989    0.9990  ⋯
-     r_unit[2]    0.1227    0.9432     0.0298    0.0271   1068.9487    0.9998  ⋯
-     r_unit[3]    0.0127    0.9691     0.0306    0.0332    817.2020    1.0030  ⋯
-     r_unit[4]   -0.0594    0.9776     0.0309    0.0210   1019.6926    1.0001  ⋯
-<span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
+     mu_r_unit    0.0329    0.7962     0.0252    0.0310   946.4034    0.9996
+  sigma_r_unit    0.6229    0.4965     0.0157    0.0218   698.3802    0.9998
+     r_unit[1]   -0.0653    0.9955     0.0315    0.0243   844.0865    0.9990
+     r_unit[2]    0.1735    1.0120     0.0320    0.0426   857.4261    1.0047
+     r_unit[3]   -0.0336    0.9204     0.0291    0.0428   679.6046    0.9995
+     r_unit[4]    0.0067    0.9357     0.0296    0.0299   989.4566    1.0006
+          mu_r    0.0000    0.0000     0.0000    0.0000   946.4034    0.9996
+       sigma_r    0.0000    0.0000     0.0000    0.0000   698.3802    0.9998
+          r[1]    0.0000    0.0000     0.0000    0.0000   885.1013    0.9991
+          r[2]    0.0000    0.0000     0.0000    0.0000   925.2406    0.9997
+          r[3]    0.0000    0.0000     0.0000    0.0000   942.6550    0.9997
+          r[4]    0.0000    0.0000     0.0000    0.0000   917.9220    0.9993
+         r_pop    0.0000    0.0000     0.0000    0.0000   908.9306    1.0005
 
 Quantiles
  <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
         Symbol   Float64   Float64   Float64   Float64   Float64 
 
-     mu_r_unit   -1.3514   -0.4591    0.0447    0.5788    1.4844
-  sigma_r_unit    0.0230    0.2790    0.5644    0.9617    1.8682
-     r_unit[1]   -1.9495   -0.6457   -0.0518    0.5336    1.8237
-     r_unit[2]   -1.6426   -0.5543    0.1158    0.7581    1.9692
-     r_unit[3]   -1.8465   -0.6075    0.0233    0.6682    1.9703
-     r_unit[4]   -1.9327   -0.7190   -0.0321    0.6050    1.8501
+     mu_r_unit   -1.4754   -0.5302    0.0193    0.6045    1.5260
+  sigma_r_unit    0.0214    0.2424    0.5027    0.8960    1.8236
+     r_unit[1]   -2.0881   -0.7378   -0.0871    0.5763    1.9590
+     r_unit[2]   -1.8452   -0.5425    0.1676    0.8680    2.1519
+     r_unit[3]   -1.6986   -0.6855   -0.0231    0.5826    1.8020
+     r_unit[4]   -1.8289   -0.6199    0.0025    0.6280    1.8441
+          mu_r    0.0000    0.0000    0.0000    0.0000    0.0000
+       sigma_r    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[1]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[2]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[3]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[4]    0.0000    0.0000    0.0000    0.0000    0.0000
+         r_pop    0.0000    0.0000    0.0000    0.0000    0.0000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Warning: timestamp of type Missing unknown
+└ @ MCMCChains /Users/wfarr/.julia/packages/MCMCChains/tfR90/src/chains.jl:364
+┌ Warning: timestamp of type Missing unknown
+└ @ MCMCChains /Users/wfarr/.julia/packages/MCMCChains/tfR90/src/chains.jl:364
 </pre></div>
 </div>
 </div>
@@ -821,51 +847,70 @@ Quantiles
     <span class="n">generated_quantities</span><span class="p">(</span><span class="n">nho</span><span class="p">,</span> <span class="n">nht</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="n">nht</span>
+<span class="n">nht</span> <span class="o">=</span> <span class="n">append_generated_quantities</span><span class="p">(</span><span class="n">nht</span><span class="p">,</span> <span class="n">nhg</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Found initial step size
-│   ϵ = 0.4
+│   ϵ = 0.05
 └ @ Turing.Inference /Users/wfarr/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:188
 <span class=" -Color -Color-Green">Sampling: 100%|█████████████████████████████████████████| Time: 0:00:00</span>
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×19×1 Array{Float64, 3}):
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chains MCMC chain (1000×27×1 Array{Float64, 3}):
 
-Iterations        = 501:1:1500
+Iterations        = 1:1:1000
 Number of chains  = 1
 Samples per chain = 1000
-Wall duration     = 0.27 seconds
-Compute duration  = 0.27 seconds
-parameters        = sigma_r_unit, mu_r_unit, r_unit[3], r_unit[2], r_unit[1], r_unit[4], r_unit[5]
+parameters        = sigma_r_unit, mu_r_unit, r_unit[3], r_unit[2], r_unit[1], r_unit[4], r_unit[5], mu_r, sigma_r, r[3], r[1], r[4], r[2], r[5], r_pop
 internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size
 
 Summary Statistics
- <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span>  ⋯
-        Symbol   Float64   Float64    Float64   Float64    Float64   Float64   ⋯
+ <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    mean </span> <span class=" -Color -Color-Bold">     std </span> <span class=" -Color -Color-Bold"> naive_se </span> <span class=" -Color -Color-Bold">    mcse </span> <span class=" -Color -Color-Bold">      ess </span> <span class=" -Color -Color-Bold">    rhat </span>
+        Symbol   Float64   Float64    Float64   Float64    Float64   Float64 
 
-     mu_r_unit   -0.0757    0.4044     0.0128    0.0167   418.1793    1.0002   ⋯
-  sigma_r_unit    0.6898    0.4226     0.0134    0.0289   358.6332    0.9994   ⋯
-     r_unit[1]    0.3608    0.8478     0.0268    0.0393   802.9353    0.9996   ⋯
-     r_unit[2]   -0.4208    0.7887     0.0249    0.0254   644.5201    0.9997   ⋯
-     r_unit[3]    0.8184    0.8362     0.0264    0.0372   546.5334    1.0007   ⋯
-     r_unit[4]   -0.6360    0.7514     0.0238    0.0318   590.0950    0.9999   ⋯
-     r_unit[5]   -0.1674    0.7101     0.0225    0.0314   475.1680    1.0001   ⋯
-<span class=" -Color -Color-Cyan">                                                                1 column omitted</span>
+     mu_r_unit   -0.0661    0.3927     0.0124    0.0243   168.2363    1.0062
+  sigma_r_unit    0.6694    0.3896     0.0123    0.0235   214.4093    1.0055
+     r_unit[1]    0.4198    0.8212     0.0260    0.0226   439.1814    0.9996
+     r_unit[2]   -0.4937    0.8593     0.0272    0.0457   344.1892    0.9990
+     r_unit[3]    0.8513    0.8241     0.0261    0.0362   359.4401    0.9990
+     r_unit[4]   -0.7009    0.7872     0.0249    0.0325   296.5321    1.0023
+     r_unit[5]   -0.2066    0.7640     0.0242    0.0288   313.1333    0.9996
+          mu_r    0.0000    0.0000     0.0000    0.0000   168.2363    1.0062
+       sigma_r    0.0000    0.0000     0.0000    0.0000   214.4093    1.0055
+          r[1]    0.0000    0.0000     0.0000    0.0000   354.5386    1.0086
+          r[2]    0.0000    0.0000     0.0000    0.0000   483.6084    0.9991
+          r[3]    0.0000    0.0000     0.0000    0.0000   463.7658    1.0053
+          r[4]    0.0000    0.0000     0.0000    0.0000   540.4770    0.9991
+          r[5]    0.0000    0.0000     0.0000    0.0000   598.2623    0.9992
+         r_pop    0.0000    0.0000     0.0000    0.0000   490.6647    0.9991
 
 Quantiles
  <span class=" -Color -Color-Bold">   parameters </span> <span class=" -Color -Color-Bold">    2.5% </span> <span class=" -Color -Color-Bold">   25.0% </span> <span class=" -Color -Color-Bold">   50.0% </span> <span class=" -Color -Color-Bold">   75.0% </span> <span class=" -Color -Color-Bold">   97.5% </span>
         Symbol   Float64   Float64   Float64   Float64   Float64 
 
-     mu_r_unit   -0.8641   -0.3380   -0.0743    0.1627    0.7675
-  sigma_r_unit    0.0349    0.3595    0.6603    0.9882    1.5586
-     r_unit[1]   -1.4017   -0.1686    0.3838    0.9057    2.0018
-     r_unit[2]   -1.9748   -0.8966   -0.4265    0.0884    1.1910
-     r_unit[3]   -0.9516    0.3186    0.8235    1.3589    2.4251
-     r_unit[4]   -2.0658   -1.1274   -0.6667   -0.1802    0.9097
-     r_unit[5]   -1.6971   -0.6423   -0.1684    0.3195    1.1431
+     mu_r_unit   -1.0071   -0.3077   -0.0615    0.2143    0.6558
+  sigma_r_unit    0.0675    0.3825    0.6133    0.9014    1.5988
+     r_unit[1]   -1.1885   -0.1144    0.4366    0.9790    2.0127
+     r_unit[2]   -2.1261   -1.0774   -0.5138    0.0378    1.3036
+     r_unit[3]   -0.7318    0.2898    0.8219    1.3855    2.5939
+     r_unit[4]   -2.2427   -1.1916   -0.7097   -0.2236    0.9162
+     r_unit[5]   -1.6660   -0.6929   -0.2081    0.2580    1.5107
+          mu_r    0.0000    0.0000    0.0000    0.0000    0.0000
+       sigma_r    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[1]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[2]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[3]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[4]    0.0000    0.0000    0.0000    0.0000    0.0000
+          r[5]    0.0000    0.0000    0.0000    0.0000    0.0000
+         r_pop    0.0000    0.0000    0.0000    0.0000    0.0000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Warning: timestamp of type Missing unknown
+└ @ MCMCChains /Users/wfarr/.julia/packages/MCMCChains/tfR90/src/chains.jl:364
+┌ Warning: timestamp of type Missing unknown
+└ @ MCMCChains /Users/wfarr/.julia/packages/MCMCChains/tfR90/src/chains.jl:364
 </pre></div>
 </div>
 </div>
@@ -878,6 +923,18 @@ Quantiles
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/welcome_72_0.svg" src="_images/welcome_72_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">density</span><span class="p">(</span><span class="n">nht</span><span class="p">[</span><span class="s">&quot;r[3]&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;r_3&quot;</span><span class="p">)</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="mf">1.5e-11</span><span class="o">:</span><span class="mf">1e-13</span><span class="o">:</span><span class="mf">1.75e-11</span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">pdf</span><span class="o">.</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">oct_data</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">oct_data</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="n">rs</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;x_3&quot;</span><span class="p">)</span>
+<span class="n">density!</span><span class="p">(</span><span class="n">nht</span><span class="p">[</span><span class="ss">:r_pop</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/welcome_73_0.svg" src="_images/welcome_73_0.svg" /></div>
 </div>
 </div>
 </div>
