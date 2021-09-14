@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Colored Noise" href="colored_noise.html" />
-    <link rel="prev" title="An Example to Set the Stage" href="welcome.html" />
+    <link rel="prev" title="PHY 688: Computational Astrophysics Syllabus" href="syllabus.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -95,6 +95,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="welcome.html">
    An Example to Set the Stage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="syllabus.html">
+   PHY 688: Computational Astrophysics Syllabus
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -608,7 +613,7 @@ There were 11 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div><i>Table length=256</i>
-<table id="table5544340064" class="table-striped table-bordered table-condensed">
+<table id="table5145762976" class="table-striped table-bordered table-condensed">
 <thead><tr><th>JD</th><th>Radial_Velocity</th><th>Radial_Velocity_Uncertainty</th></tr></thead>
 <thead><tr><th>days</th><th>m / s</th><th>m / s</th></tr></thead>
 <thead><tr><th>float64</th><th>float64</th><th>float64</th></tr></thead>
@@ -741,7 +746,7 @@ where</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv</span><span class="p">:</span>
-    <span class="n">map_soln</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">test_point</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">t0_frac</span><span class="p">])</span>
+    <span class="n">map_soln</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">basic_rv</span><span class="o">.</span><span class="n">test_point</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">t0_frac</span><span class="p">])</span>
     <span class="n">map_soln</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">map_soln</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">t0_frac</span><span class="p">,</span> <span class="n">dP</span><span class="p">])</span>
     <span class="n">map_soln</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">map_soln</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">t0_frac</span><span class="p">,</span> <span class="n">dP</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">A</span><span class="p">])</span>
 </pre></div>
@@ -1069,11 +1074,11 @@ NUTS: [t0_frac, A, dP, K]
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="welcome.html" title="previous page">
+        <a class="left-prev" href="syllabus.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">An Example to Set the Stage</p>
+                <p class="prevnext-title">PHY 688: Computational Astrophysics Syllabus</p>
             </div>
         </a>
     </div>

@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHY 688: Computational Astrophysics Syllabus &#8212; Astrostatistics</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Regression and Curve Fitting" href="regression_and_curve_fitting.html" />
+    <link rel="prev" title="An Example to Set the Stage" href="welcome.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Astrostatistics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   PHY 688: Numerical Methods in Astrophysics.
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="welcome.html">
+   An Example to Set the Stage
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   PHY 688: Computational Astrophysics Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression_and_curve_fitting.html">
+   Regression and Curve Fitting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="colored_noise.html">
+   Colored Noise
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_processes.html">
+   Gaussian Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="populations.html">
+   Populations and Catalogs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="selection_effects.html">
+   Selection Effects
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="special_methods.html">
+   Special Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tips_and_tricks.html">
+   Tips and Tricks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="project_ideas.html">
+   Project Ideas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/syllabus.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/farr/Astrostatistics"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/farr/Astrostatistics/issues/new?title=Issue%20on%20page%20%2Fsyllabus.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-information">
+   Course Information
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instructor-information">
+   Instructor Information
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-learning-objectives">
+   Course Learning Objectives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#course-topics">
+   Course Topics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grading-attendance-late-work">
+   Grading, Attendance, Late Work
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#university-and-course-policies">
+   University and Course Policies
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#student-accessibility-support-center-statement">
+     Student Accessibility Support Center Statement
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#academic-integrity-statement">
+     Academic Integrity Statement
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#critical-incident-management">
+     Critical Incident Management
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="phy-688-computational-astrophysics-syllabus">
+<h1>PHY 688: Computational Astrophysics Syllabus<a class="headerlink" href="#phy-688-computational-astrophysics-syllabus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="course-information">
+<h2>Course Information<a class="headerlink" href="#course-information" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Title: PHY 688: Special Topics in Astrophysics: Computational Astrophysics</p></li>
+<li><p>Meets Tu-Th 1315 to 1435 in Frey Hall Room 326</p></li>
+<li><p>Description: Course in computational astrophysics focusing on modeling and data analysis.  We will be exploring analysis of astrophysical data sets using specialized computational tools and domain specific languages.  We will focus on model building, model checking, and model extension to capture information about the relevant physics and data generation process for a data set.</p></li>
+<li><p>Course Material will be posted on blackboard, and lecture materials will be collected <a class="reference external" href="https://farr.github.io/Astrostatistics/intro.html">online</a> and associated code can be found <a class="reference external" href="https://github.com/farr/Astrostatistics">here</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="instructor-information">
+<h2>Instructor Information<a class="headerlink" href="#instructor-information" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Instructor: Will M. Farr <a class="reference external" href="mailto:will&#46;farr&#37;&#52;&#48;stonybrook&#46;edu">mailto:will<span>&#46;</span>farr<span>&#64;</span>stonybrook<span>&#46;</span>edu</a></p></li>
+<li><p>Office Hours: By appointment.</p></li>
+</ul>
+</div>
+<div class="section" id="course-learning-objectives">
+<h2>Course Learning Objectives<a class="headerlink" href="#course-learning-objectives" title="Permalink to this headline">¶</a></h2>
+<p>Upon completion of the course, students will</p>
+<ul class="simple">
+<li><p>Be able to build, check, and extend models of astrophysical data generating processes to extract physical understanding.</p></li>
+<li><p>Be able to fit models so constructed to realistic data sets using modern computational tools and languages.</p></li>
+<li><p>Be able to explore and assess engineering tradeoffs between model complexity / realism and analysis efficiency.</p></li>
+<li><p>Be able to clearly and meaningfully extract and present results from model fits.</p></li>
+<li><p>Be able to collaboratively critique and build fitting code and results.</p></li>
+</ul>
+</div>
+<div class="section" id="course-topics">
+<h2>Course Topics<a class="headerlink" href="#course-topics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Regression and curve fitting.</p></li>
+<li><p>Colored noise.</p></li>
+<li><p>Gaussian processes and regression.</p></li>
+<li><p>Populations and catalogs of objects.</p></li>
+<li><p>Selection Effects.</p></li>
+<li><p>Special methods: variational inference, likelihood-free/simulation-based inference, ….</p></li>
+</ul>
+</div>
+<div class="section" id="grading-attendance-late-work">
+<h2>Grading, Attendance, Late Work<a class="headerlink" href="#grading-attendance-late-work" title="Permalink to this headline">¶</a></h2>
+<p>The course grade will be determined by a weighted average of homework (40% weight), project (40% weight), and participation (20% weight) grades.  Points and feedback for graded activities will be posted to the My Grades area on Blackboard.</p>
+<p>Periodic assignments will be announced on blackboard.</p>
+<p>The course will involve a project: an extensive analysis of an astronomical data set with a presentation and writeup of the results.</p>
+<p>Attendance and participation in class is expected; nevertheless students are permitted to miss class occasionally without penalty for professional (conference attendance, collaboration meetings, etc) or personal (family situation, transportation difficulties, etc) reasons.  Excessive absences will impact the student’s participation grade; additionally some material appears only during the in-class discussion and will be missed.  In the midst of a global pandemic, students are <em>required</em> to miss class and isolate should they be exhibiting symptoms of or test positive for COVID-19; make-up discussions with the instructor and materials will be arranged.</p>
+<p>Assignments and projects are expected to be completed and handed in by the due date; reasonable requests for extensions for professional and personal reasons (see above) will be entertained generously.</p>
+</div>
+<div class="section" id="university-and-course-policies">
+<h2>University and Course Policies<a class="headerlink" href="#university-and-course-policies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="student-accessibility-support-center-statement">
+<h3>Student Accessibility Support Center Statement<a class="headerlink" href="#student-accessibility-support-center-statement" title="Permalink to this headline">¶</a></h3>
+<p>If you have a physical, psychological, medical, or learning disability that may impact your course work, please contact the Student Accessibility Support Center, Stony Brook Inion Suite 107, (631) 632-6748, or at <a class="reference external" href="mailto:sasc&#37;&#52;&#48;stonybrook&#46;edu">sasc<span>&#64;</span>stonybrook<span>&#46;</span>edu</a>. They will determine with you what accommodations are necessary and appropriate. All information and documentation is confidential.</p>
+<p>Students who require assistance during emergency evacuation are encouraged to discuss their needs with their professors and the Student Accessibility Support Center. For procedures and information go to the following website: <a class="reference external" href="https://ehs.stonybrook.edu/programs/fire-safety/emergency-evacuation/evacuation-guide-people-physical-disabilities">https://ehs.stonybrook.edu/programs/fire-safety/emergency-evacuation/evacuation-guide-people-physical-disabilities</a> and search Fire Safety and Evacuation and Disabilities.</p>
+</div>
+<div class="section" id="academic-integrity-statement">
+<h3>Academic Integrity Statement<a class="headerlink" href="#academic-integrity-statement" title="Permalink to this headline">¶</a></h3>
+<p>Each student must pursue his or her academic goals honestly and be personally accountable for all submitted work. Representing another person’s work as your own is always wrong. Faculty is required to report any suspected instances of academic dishonesty to the Academic Judiciary. Faculty in the Health Sciences Center (School of Health Technology &amp; Management, Nursing, Social Welfare, Dental Medicine) and School of Medicine are required to follow their school-specific procedures. For more comprehensive information on academic integrity, including categories of academic dishonesty please refer to the academic judiciary website at <a class="reference external" href="http://www.stonybrook.edu/commcms/academic_integrity/index.html">http://www.stonybrook.edu/commcms/academic_integrity/index.html</a></p>
+<p>Any form of academic dishonesty, including cheating and plagiarism, will be reported to the Academic Judiciary</p>
+</div>
+<div class="section" id="critical-incident-management">
+<h3>Critical Incident Management<a class="headerlink" href="#critical-incident-management" title="Permalink to this headline">¶</a></h3>
+<p>Stony Brook University expects students to respect the rights, privileges, and property of other people. Faculty are required to report to the Office of University Community Standards any disruptive behavior that interrupts their ability to teach, compromises the safety of the learning environment, or inhibits students’ ability to learn. Faculty in the HSC Schools and the School of Medicine are required to follow their school-specific procedures. Further information about most academic matters can be found in the Undergraduate Bulletin, the Undergraduate Class Schedule, and the Faculty-Employee Handbook.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="welcome.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">An Example to Set the Stage</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="regression_and_curve_fitting.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Regression and Curve Fitting</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Will M. Farr<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
