@@ -5,6 +5,7 @@ format: jb-book
 root: intro
 chapters:
 - file: welcome
+- file: syllabus
 - file: regression_and_curve_fitting
 - file: colored_noise
 - file: gaussian_processes
