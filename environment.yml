@@ -7,6 +7,9 @@ dependencies:
   - seaborn
   - scipy
   - pip
+  - pip:
+    - jupyter-book
+    - daft
   - matplotlib
   - python=3
   - pandas
