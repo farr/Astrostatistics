@@ -469,7 +469,29 @@ NUTS: [b, m]
 </div>
 <img alt="_images/regression_and_curve_fitting_18_1.svg" src="_images/regression_and_curve_fitting_18_1.svg" /></div>
 </div>
-<p>The inferences about <span class="math notranslate nohighlight">\(y\)</span> become less and certain near the “edges” of the domain.  This is a general feature of regressions: because all the <span class="math notranslate nohighlight">\(y\)</span> are “linked” through the regression formula, nearby (or even distant!) observations inform our estimate of any particular <span class="math notranslate nohighlight">\(y_i\)</span>.  But because of the interaction of uncertainties in our inferences about the slope <span class="math notranslate nohighlight">\(m\)</span> and intercept <span class="math notranslate nohighlight">\(b\)</span></p>
+<p>The inferences about <span class="math notranslate nohighlight">\(y\)</span> become less and certain near the “edges” of the domain.  This is a general feature of regressions: because all the <span class="math notranslate nohighlight">\(y\)</span> are “linked” through the regression formula, nearby (or even distant!) observations inform our estimate of any particular <span class="math notranslate nohighlight">\(y_i\)</span>.  But because of the interaction of uncertainties in our inferences about the slope <span class="math notranslate nohighlight">\(m\)</span> and intercept <span class="math notranslate nohighlight">\(b\)</span> the points in the “middle” are the most constrained, while the ones at the “edges” are less so.  This is particularly clear when we plot “traces” of the fitted lines: for each sample of <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(b\)</span>, we draw the corresponding line:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">trace_linear</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">trace_linear</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">xs</span> <span class="o">+</span> <span class="n">trace_linear</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$y$&#39;)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_20_1.svg" src="_images/regression_and_curve_fitting_20_1.svg" /></div>
+</div>
+<p>In class, we discussed how we could extend this model; here we added a quadratic term to the regression function, fitting
+$<span class="math notranslate nohighlight">\(
+y = a x^2 + b x + c.
+\)</span>$
+In a real-life situation, whether this is a natural model extension depends on the physics of the situation; if we, for example, are dealing with a physical environment where a Taylor series is appropriate, then the quadratic function is the “next” natural extension beyond the linear.  In other cases, however, it may not be “natural.”</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">quadratic_model</span><span class="p">:</span>
@@ -491,7 +513,7 @@ NUTS: [b, m]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_6359/2923709653.py:2: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_4687/2923709653.py:2: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   quadratic_trace = pm.sample()
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -514,10 +536,10 @@ NUTS: [a, b, c]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 00:03<00:00 Sampling 2 chains, 0 divergences]
+  100.00% [4000/4000 00:04<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 13 seconds.
-The acceptance probability does not match the target. It is 0.8884432826837806, but should be close to 0.8. Try to increase the number of tuning steps.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 23 seconds.
+The acceptance probability does not match the target. It is 0.8832404931929227, but should be close to 0.8. Try to increase the number of tuning steps.
 </pre></div>
 </div>
 </div>
@@ -543,24 +565,96 @@ The acceptance probability does not match the target. It is 0.8884432826837806, 
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;ys_true&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_22_2.png" src="_images/regression_and_curve_fitting_22_2.png" />
+<img alt="_images/regression_and_curve_fitting_24_2.svg" src="_images/regression_and_curve_fitting_24_2.svg" /></div>
 </div>
-</div>
+<p>Here you can see a similar traceplot of the fitted functions; the “broadening” at the ends of the range is even more apparent.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">mean</span><span class="p">(</span><span class="n">quadratic_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">std</span><span class="p">(</span><span class="n">quadratic_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">quadratic_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">][</span><span class="n">randint</span><span class="p">(</span><span class="mi">2000</span><span class="p">),</span> <span class="p">:],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">quadratic_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">][</span><span class="n">randint</span><span class="p">(</span><span class="n">quadratic_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">:],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ErrorbarContainer object of 3 artists&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$y$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_23_1.png" src="_images/regression_and_curve_fitting_23_1.png" />
+<img alt="_images/regression_and_curve_fitting_26_1.svg" src="_images/regression_and_curve_fitting_26_1.svg" /></div>
 </div>
+<p>We find that the new “coefficient” is consistent with zero, but not terribly well constrained (the natural “scale” of the data is <span class="math notranslate nohighlight">\(\left| x \right| \simeq 1\)</span>, so <span class="math notranslate nohighlight">\(\left| a \right| \simeq 1\)</span> induces a variation in <span class="math notranslate nohighlight">\(y\)</span> that is also <span class="math notranslate nohighlight">\(\mathcal{O}(1)\)</span> (as can be seen on the above plot).  We “know” that <span class="math notranslate nohighlight">\(a = 0\)</span> because of the way we generated our data; at least the fit is consistent with that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">quadratic_trace</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;$a$&#39;)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_28_1.svg" src="_images/regression_and_curve_fitting_28_1.svg" /></div>
+</div>
+<p>Another possible model extension is to relax our assumption that the true value of <span class="math notranslate nohighlight">\(y\)</span> is given exactly by the fitting formula (<span class="math notranslate nohighlight">\(y = m x + b\)</span> or <span class="math notranslate nohighlight">\(y = a x^2 + b x + c\)</span>); instead, maybe we can assume that the fitting formula gives the <em>average</em> value of <span class="math notranslate nohighlight">\(y\)</span>, but the true value is a random variable distributed normally about the fitting formula.  For simplicity’s sake, we will assume that the scatter around the fitting formula is the same at all values of <span class="math notranslate nohighlight">\(x\)</span>.  Our model is now
+$<span class="math notranslate nohighlight">\(
+y_i \sim N\left( m x_i + b, \sigma \right)
+\)</span><span class="math notranslate nohighlight">\(
+and then we have a noisy observation 
+\)</span><span class="math notranslate nohighlight">\(
+y_{i,\mathrm{obs}} \sim N\left( y_i, \sigma_i \right).
+\)</span>$</p>
+<p>Graphically, this becomes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pgm</span> <span class="o">=</span> <span class="n">daft</span><span class="o">.</span><span class="n">PGM</span><span class="p">()</span>
+
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$m$&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$b$&#39;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;sigma&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\sigma$&#39;</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$x_i$&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$y_i$&#39;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;y_obs&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$y_{i,\mathrm</span><span class="si">{obs}</span><span class="s1">}$&#39;</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.25</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;sigma_i&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\sigma_i$&#39;</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_plate</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$i = 1, \ldots, N$&#39;</span><span class="p">)</span>
+
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;sigma&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;y_obs&#39;</span><span class="p">)</span>
+<span class="n">pgm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;sigma_i&#39;</span><span class="p">,</span> <span class="s1">&#39;y_obs&#39;</span><span class="p">)</span>
+
+<span class="n">pgm</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes:&gt;
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_30_1.svg" src="_images/regression_and_curve_fitting_30_1.svg" /></div>
+</div>
+<p>We can learn the “intrinsic scatter” about the fitting relation from this model; the <span class="math notranslate nohighlight">\(\sigma\)</span> parameter represents any extra observed scatter beyond what is supported by the observational uncertainty.  In the limit that <span class="math notranslate nohighlight">\(\sigma \to 0\)</span> we recover the original model above, where the true values of <span class="math notranslate nohighlight">\(y\)</span> follow the fitting relation perfectly.</p>
+<p>In many settings (econometrics, for example), there may not be <em>any</em> measurement error (i.e. our <span class="math notranslate nohighlight">\(\sigma_i = 0\)</span>), but nevertheless there can be effects in the system being modeled that are not captured by the fitting formula; to the extent that such effects are “random” in the <span class="math notranslate nohighlight">\(x_i\)</span>, a model such as this one, with intrinsic scatter, can be appropriate.  Even if the effects <em>are</em> dependent on <span class="math notranslate nohighlight">\(x_i\)</span>, including the extra flexibility to permit scatter off the relation can lead to more robust inferences than a model that forces <span class="math notranslate nohighlight">\(y_i = m x_i + b\)</span>.</p>
+<p>The <span class="math notranslate nohighlight">\(\sigma \to 0\)</span> limit is also tricky for the sampler; when <span class="math notranslate nohighlight">\(\sigma \to 0\)</span> all the true <span class="math notranslate nohighlight">\(y\)</span> values are constrained <em>exactly</em> to the fitting relation, while with <span class="math notranslate nohighlight">\(\sigma \gg 0\)</span> they are free to scatter far from it.  This introduces a non-linear correlation between <span class="math notranslate nohighlight">\(\sigma\)</span> and the true <span class="math notranslate nohighlight">\(y\)</span> values that takes on a funnel shape; it is known as <a class="reference external" href="https://mc-stan.org/docs/2_18/stan-users-guide/reparameterization-section.html">Neal’s funnel</a> after <span id="id1">[<a class="reference internal" href="bibliography.html#id8">Neal, 2000</a>]</span>.  We can eliminate this correlation by sampling instead over a variable, <span class="math notranslate nohighlight">\(\delta \hat{y}_i\)</span>, which represents the deviation in each <span class="math notranslate nohighlight">\(y_i\)</span> from the fitting relation in units of the scatter <span class="math notranslate nohighlight">\(\sigma\)</span>:
+$<span class="math notranslate nohighlight">\(
+y_i = m x_i + b + \sigma \delta \hat{y}_i.
+\)</span><span class="math notranslate nohighlight">\(
+Appling a standard normal distribution to \)</span>\hat{y}_i<span class="math notranslate nohighlight">\( induces a \)</span>N\left( m x_i + b, \sigma \right)<span class="math notranslate nohighlight">\( distribution on \)</span>y_i$.  The re-parameterization replaces the commented-out line</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># ys_true = pm.Normal(&quot;ys_true&quot;, mu=m*xs+b, sigma=sigma)</span>
+</pre></div>
+</div>
+<p>with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">dy_unit</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;dy_unit&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">ys_obs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">ys_true</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;ys_true&quot;</span><span class="p">,</span> <span class="n">m</span><span class="o">*</span><span class="n">xs</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="n">sigma</span><span class="o">*</span><span class="n">dy_unit</span><span class="p">)</span>
+</pre></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -587,7 +681,7 @@ The acceptance probability does not match the target. It is 0.8884432826837806, 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_6359/2730893626.py:2: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_4687/2730893626.py:2: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_intrinsic = pm.sample()
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -610,11 +704,12 @@ NUTS: [dy_unit, sigma, b, m]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 00:04<00:00 Sampling 2 chains, 17 divergences]
+  100.00% [4000/4000 00:06<00:00 Sampling 2 chains, 7 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 13 seconds.
-There were 6 divergences after tuning. Increase `target_accept` or reparameterize.
-There were 11 divergences after tuning. Increase `target_accept` or reparameterize.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 23 seconds.
+There were 3 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 4 divergences after tuning. Increase `target_accept` or reparameterize.
+The number of effective samples is smaller than 25% for some parameters.
 </pre></div>
 </div>
 </div>
@@ -642,37 +737,55 @@ There were 11 divergences after tuning. Increase `target_accept` or reparameteri
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;ys_true&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_26_2.png" src="_images/regression_and_curve_fitting_26_2.png" />
+<img alt="_images/regression_and_curve_fitting_34_2.svg" src="_images/regression_and_curve_fitting_34_2.svg" /></div>
 </div>
-</div>
+<p>Now we can look at the inferences about the true <span class="math notranslate nohighlight">\(y_i\)</span> in this model.  We see that they follow, more or less, the linear relation, but there is “structure” from the random observational scatter imprinted in their inferences.  The “intrinsic scatter” model weighs the scatter inferred about the relation represented by <span class="math notranslate nohighlight">\(\sigma\)</span> against the observational uncertainties <span class="math notranslate nohighlight">\(\sigma_i\)</span> for each data point.  The true value is a compromise between the relation and the observation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">trace_intrinsic</span><span class="p">[</span><span class="s2">&quot;ys_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">trace_intrinsic</span><span class="p">[</span><span class="s2">&quot;ys_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Posterior&quot;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ErrorbarContainer object of 3 artists&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$y$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_27_1.png" src="_images/regression_and_curve_fitting_27_1.png" />
-</div>
+<img alt="_images/regression_and_curve_fitting_36_1.svg" src="_images/regression_and_curve_fitting_36_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">trace_intrinsic</span><span class="p">[</span><span class="s2">&quot;ys_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">trace_intrinsic</span><span class="p">[</span><span class="s2">&quot;ys_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Posterior&quot;</span><span class="p">)</span>
 <span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observations&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ErrorbarContainer object of 3 artists&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1508adc10&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_28_1.png" src="_images/regression_and_curve_fitting_28_1.png" />
+<img alt="_images/regression_and_curve_fitting_37_1.svg" src="_images/regression_and_curve_fitting_37_1.svg" /></div>
+</div>
+<p>Our inference about <span class="math notranslate nohighlight">\(\sigma\)</span> suggests that it is rather small (considerably smaller than the observational uncertainty).  In truth <span class="math notranslate nohighlight">\(\sigma = 0\)</span> (our data were generated from a strictly-linear model); with enough observations we could eventually constrain <span class="math notranslate nohighlight">\(\sigma\)</span> to be quite small.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">trace_intrinsic</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">])</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\sigma$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$p\left( \sigma \right)$&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
-<p>51 Peg RV data, from <a class="reference external" href="https://exoplanetarchive.ipac.caltech.edu/overview/51%20Peg%20b#overview">IPAC Exoplanet Archive</a>.  These data are reported in <span id="id1">Butler <em>et al.</em> [<a class="reference internal" href="bibliography.html#id6">2006</a>]</span>.</p>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$p\\left( \\sigma \\right)$&#39;)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_39_1.svg" src="_images/regression_and_curve_fitting_39_1.svg" /></div>
+</div>
+<p>51 Peg RV data, from <a class="reference external" href="https://exoplanetarchive.ipac.caltech.edu/overview/51%20Peg%20b#overview">IPAC Exoplanet Archive</a>.  These data are reported in <span id="id2">Butler <em>et al.</em> [<a class="reference internal" href="bibliography.html#id6">2006</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fopeg_data</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;data/ButlerEtAl200651PegUID_0113357_RVC_001.tbl.txt&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
@@ -701,7 +814,7 @@ There were 11 divergences after tuning. Increase `target_accept` or reparameteri
 <tr><td>2452189.707882</td><td>-46.2</td><td>6.0</td></tr>
 </table></div></div></div>
 </div>
-<p>This is the period reported by <span id="id2">Butler <em>et al.</em> [<a class="reference internal" href="bibliography.html#id6">2006</a>]</span>:</p>
+<p>This is the period reported by <span id="id3">Butler <em>et al.</em> [<a class="reference internal" href="bibliography.html#id6">2006</a>]</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_fop</span> <span class="o">=</span> <span class="mf">4.230785</span> <span class="c1"># (36) uncertainty in the last two digits!</span>
@@ -730,7 +843,7 @@ There were 11 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_33_0.png" src="_images/regression_and_curve_fitting_33_0.png" />
+<img alt="_images/regression_and_curve_fitting_44_0.png" src="_images/regression_and_curve_fitting_44_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -740,10 +853,10 @@ There were 11 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_34_0.png" src="_images/regression_and_curve_fitting_34_0.png" />
+<img alt="_images/regression_and_curve_fitting_45_0.png" src="_images/regression_and_curve_fitting_45_0.png" />
 </div>
 </div>
-<p>Note Kepler’s equations (e.g. <span id="id3">Fulton <em>et al.</em> [<a class="reference internal" href="bibliography.html#id7">2018</a>]</span>):
+<p>Note Kepler’s equations (e.g. <span id="id4">Fulton <em>et al.</em> [<a class="reference internal" href="bibliography.html#id7">2018</a>]</span>):
 $<span class="math notranslate nohighlight">\(
 \frac{2 \pi \left( t - t_0 \right)}{P} = M = E - e \sin E
 \)</span><span class="math notranslate nohighlight">\(
@@ -809,7 +922,7 @@ where</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_37_0.png" src="_images/regression_and_curve_fitting_37_0.png" />
+<img alt="_images/regression_and_curve_fitting_48_0.png" src="_images/regression_and_curve_fitting_48_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -909,7 +1022,7 @@ logp: -892.0967029641428 -&gt; -889.7860524910117
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_39_0.png" src="_images/regression_and_curve_fitting_39_0.png" />
+<img alt="_images/regression_and_curve_fitting_50_0.png" src="_images/regression_and_curve_fitting_50_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -997,7 +1110,7 @@ NUTS: [t0_frac, A, dP, K]
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_41_2.png" src="_images/regression_and_curve_fitting_41_2.png" />
+<img alt="_images/regression_and_curve_fitting_52_2.png" src="_images/regression_and_curve_fitting_52_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1022,7 +1135,7 @@ NUTS: [t0_frac, A, dP, K]
       dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_42_2.png" src="_images/regression_and_curve_fitting_42_2.png" />
+<img alt="_images/regression_and_curve_fitting_53_2.png" src="_images/regression_and_curve_fitting_53_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1039,7 +1152,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_43_2.png" src="_images/regression_and_curve_fitting_43_2.png" />
+<img alt="_images/regression_and_curve_fitting_54_2.png" src="_images/regression_and_curve_fitting_54_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1056,7 +1169,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_44_2.png" src="_images/regression_and_curve_fitting_44_2.png" />
+<img alt="_images/regression_and_curve_fitting_55_2.png" src="_images/regression_and_curve_fitting_55_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1074,7 +1187,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14e2f9610&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_45_1.png" src="_images/regression_and_curve_fitting_45_1.png" />
+<img alt="_images/regression_and_curve_fitting_56_1.png" src="_images/regression_and_curve_fitting_56_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1105,9 +1218,9 @@ NUTS: [t0_frac, A, dP, K]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_46_0.png" src="_images/regression_and_curve_fitting_46_0.png" />
-<img alt="_images/regression_and_curve_fitting_46_1.png" src="_images/regression_and_curve_fitting_46_1.png" />
-<img alt="_images/regression_and_curve_fitting_46_2.png" src="_images/regression_and_curve_fitting_46_2.png" />
+<img alt="_images/regression_and_curve_fitting_57_0.png" src="_images/regression_and_curve_fitting_57_0.png" />
+<img alt="_images/regression_and_curve_fitting_57_1.png" src="_images/regression_and_curve_fitting_57_1.png" />
+<img alt="_images/regression_and_curve_fitting_57_2.png" src="_images/regression_and_curve_fitting_57_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1124,7 +1237,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14e0f6af0&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_47_1.png" src="_images/regression_and_curve_fitting_47_1.png" />
+<img alt="_images/regression_and_curve_fitting_58_1.png" src="_images/regression_and_curve_fitting_58_1.png" />
 </div>
 </div>
 </div>
