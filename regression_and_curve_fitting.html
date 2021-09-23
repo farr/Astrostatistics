@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -72,6 +72,10 @@
     
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
       
       <img src="_static/logo.png" class="logo" alt="logo">
       
@@ -260,6 +264,28 @@
   <a class="reference internal nav-link" href="#radial-velocity-curves-and-exoplanet-orbital-parameters">
    Radial Velocity Curves and Exoplanet Orbital Parameters
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problems">
+   Problems
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-regression">
+     Linear Regression
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hd126614a">
+     HD126614A
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-planet-of-your-choosing">
+     A Planet of Your Choosing
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -832,7 +858,7 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div><i>Table length=256</i>
-<table id="table5646824736" class="table-striped table-bordered table-condensed">
+<table id="table4372257280" class="table-striped table-bordered table-condensed">
 <thead><tr><th>JD</th><th>Radial_Velocity</th><th>Radial_Velocity_Uncertainty</th></tr></thead>
 <thead><tr><th>days</th><th>m / s</th><th>m / s</th></tr></thead>
 <thead><tr><th>float64</th><th>float64</th><th>float64</th></tr></thead>
@@ -1078,7 +1104,7 @@ logp: -892.0967029641428 -&gt; -889.7860524910117
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_31725/3110477701.py:2: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_40610/3110477701.py:2: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   basic_rv_trace = pm.sample(tune=1000, draws=1000)
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -1101,9 +1127,9 @@ NUTS: [t0_frac, A, dP, K]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 00:10<00:00 Sampling 2 chains, 0 divergences]
+  100.00% [4000/4000 00:18<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 20 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 30 seconds.
 </pre></div>
 </div>
 </div>
@@ -1151,26 +1177,26 @@ NUTS: [t0_frac, A, dP, K]
   <tbody>
     <tr>
       <th>dP</th>
-      <td>-2.459</td>
-      <td>0.999</td>
-      <td>-4.405</td>
-      <td>-0.649</td>
-      <td>0.022</td>
-      <td>0.016</td>
-      <td>2052.0</td>
-      <td>1548.0</td>
+      <td>-2.494</td>
+      <td>0.952</td>
+      <td>-4.308</td>
+      <td>-0.796</td>
+      <td>0.021</td>
+      <td>0.015</td>
+      <td>2145.0</td>
+      <td>1346.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>K</th>
-      <td>56.072</td>
-      <td>0.538</td>
-      <td>55.049</td>
-      <td>57.056</td>
-      <td>0.012</td>
-      <td>0.009</td>
-      <td>2009.0</td>
-      <td>1663.0</td>
+      <td>56.065</td>
+      <td>0.500</td>
+      <td>55.194</td>
+      <td>57.071</td>
+      <td>0.010</td>
+      <td>0.007</td>
+      <td>2298.0</td>
+      <td>1412.0</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -1181,32 +1207,32 @@ NUTS: [t0_frac, A, dP, K]
       <td>4.231</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>2052.0</td>
-      <td>1548.0</td>
+      <td>2145.0</td>
+      <td>1346.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>A[0]</th>
       <td>0.006</td>
       <td>0.010</td>
-      <td>-0.012</td>
-      <td>0.025</td>
+      <td>-0.013</td>
+      <td>0.024</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>1237.0</td>
-      <td>1213.0</td>
+      <td>1152.0</td>
+      <td>1308.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>A[1]</th>
       <td>0.010</td>
-      <td>0.010</td>
-      <td>-0.006</td>
-      <td>0.029</td>
+      <td>0.009</td>
+      <td>-0.008</td>
+      <td>0.026</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>2019.0</td>
-      <td>1314.0</td>
+      <td>2099.0</td>
+      <td>1485.0</td>
       <td>1.0</td>
     </tr>
     <tr>
@@ -1223,62 +1249,62 @@ NUTS: [t0_frac, A, dP, K]
     </tr>
     <tr>
       <th>v_r[251]</th>
-      <td>-41.532</td>
-      <td>1.020</td>
-      <td>-43.396</td>
-      <td>-39.427</td>
-      <td>0.021</td>
-      <td>0.015</td>
-      <td>2416.0</td>
-      <td>1537.0</td>
+      <td>-41.531</td>
+      <td>0.989</td>
+      <td>-43.424</td>
+      <td>-39.763</td>
+      <td>0.020</td>
+      <td>0.014</td>
+      <td>2366.0</td>
+      <td>1529.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>v_r[252]</th>
-      <td>15.124</td>
-      <td>1.427</td>
-      <td>12.395</td>
-      <td>17.751</td>
-      <td>0.030</td>
-      <td>0.021</td>
-      <td>2330.0</td>
-      <td>1384.0</td>
+      <td>15.099</td>
+      <td>1.401</td>
+      <td>12.631</td>
+      <td>17.772</td>
+      <td>0.029</td>
+      <td>0.020</td>
+      <td>2329.0</td>
+      <td>1591.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>v_r[253]</th>
-      <td>12.631</td>
-      <td>1.429</td>
-      <td>10.128</td>
-      <td>15.522</td>
+      <td>12.608</td>
+      <td>1.408</td>
+      <td>10.103</td>
+      <td>15.262</td>
       <td>0.029</td>
       <td>0.021</td>
-      <td>2362.0</td>
-      <td>1402.0</td>
+      <td>2326.0</td>
+      <td>1564.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>v_r[254]</th>
-      <td>-39.607</td>
-      <td>1.093</td>
-      <td>-41.630</td>
-      <td>-37.590</td>
-      <td>0.022</td>
-      <td>0.016</td>
-      <td>2384.0</td>
-      <td>1781.0</td>
+      <td>-39.599</td>
+      <td>1.097</td>
+      <td>-41.616</td>
+      <td>-37.520</td>
+      <td>0.024</td>
+      <td>0.017</td>
+      <td>2158.0</td>
+      <td>1319.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>v_r[255]</th>
-      <td>-41.275</td>
+      <td>-41.266</td>
       <td>1.068</td>
-      <td>-43.318</td>
-      <td>-39.342</td>
-      <td>0.022</td>
+      <td>-43.159</td>
+      <td>-39.159</td>
+      <td>0.023</td>
       <td>0.016</td>
-      <td>2338.0</td>
-      <td>1748.0</td>
+      <td>2128.0</td>
+      <td>1330.0</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -1364,6 +1390,19 @@ NUTS: [t0_frac, A, dP, K]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">basic_rv_trace</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_62_1.png" src="_images/regression_and_curve_fitting_62_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_density</span><span class="p">(</span><span class="n">basic_rv_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">],</span> <span class="n">hdi_prob</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1376,7 +1415,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_62_2.png" src="_images/regression_and_curve_fitting_62_2.png" />
+<img alt="_images/regression_and_curve_fitting_63_2.png" src="_images/regression_and_curve_fitting_63_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1393,7 +1432,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_63_2.png" src="_images/regression_and_curve_fitting_63_2.png" />
+<img alt="_images/regression_and_curve_fitting_64_2.png" src="_images/regression_and_curve_fitting_64_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1424,7 +1463,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1545ffd00&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_65_1.png" src="_images/regression_and_curve_fitting_65_1.png" />
+<img alt="_images/regression_and_curve_fitting_66_1.png" src="_images/regression_and_curve_fitting_66_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1461,9 +1500,9 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{km} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_66_1.png" src="_images/regression_and_curve_fitting_66_1.png" />
-<img alt="_images/regression_and_curve_fitting_66_2.png" src="_images/regression_and_curve_fitting_66_2.png" />
-<img alt="_images/regression_and_curve_fitting_66_3.png" src="_images/regression_and_curve_fitting_66_3.png" />
+<img alt="_images/regression_and_curve_fitting_67_1.png" src="_images/regression_and_curve_fitting_67_1.png" />
+<img alt="_images/regression_and_curve_fitting_67_2.png" src="_images/regression_and_curve_fitting_67_2.png" />
+<img alt="_images/regression_and_curve_fitting_67_3.png" src="_images/regression_and_curve_fitting_67_3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1480,11 +1519,197 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1546a0cd0&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_67_1.png" src="_images/regression_and_curve_fitting_67_1.png" />
+<img alt="_images/regression_and_curve_fitting_68_1.png" src="_images/regression_and_curve_fitting_68_1.png" />
 </div>
 </div>
-<p><strong>put lecture code here</strong></p>
-<p>Let’s try another planet.  This is HD126614A, from <span id="id5">[<a class="reference internal" href="bibliography.html#id9">Howard <em>et al.</em>, 2010</a>]</span> (the data come from an “electronic table” <a class="reference external" href="https://iopscience.iop.org/0004-637X/721/2/1467/suppdata/apj319972t5_ascii.txt?doi=10.1088/0004-637X/721/2/1467">here</a>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    
+    <span class="n">K</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mf">55.0</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    
+    <span class="n">dP</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;dP&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="n">P_fop</span> <span class="o">+</span> <span class="n">sigma_P_fop</span><span class="o">*</span><span class="n">dP</span><span class="p">)</span>
+    
+    <span class="c1"># Eccentricity vector:</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">UnitDisk</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;omega&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+    <span class="n">t0_frac</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s2">&quot;t0_frac&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;t0&quot;</span><span class="p">,</span> <span class="n">tmid</span> <span class="o">+</span> <span class="n">P</span><span class="o">*</span><span class="n">t0_frac</span><span class="p">)</span>
+    
+    <span class="n">orbit</span> <span class="o">=</span> <span class="n">xo</span><span class="o">.</span><span class="n">orbits</span><span class="o">.</span><span class="n">KeplerianOrbit</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">P</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="n">t0</span><span class="p">,</span> <span class="n">ecc</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="n">omega</span><span class="p">)</span>
+    
+    <span class="n">rv_kepler</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;v_r_kepler&quot;</span><span class="p">,</span> <span class="n">orbit</span><span class="o">.</span><span class="n">get_radial_velocity</span><span class="p">(</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;JD&#39;</span><span class="p">],</span> <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">rv_linear</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_linear&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;JD&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">tmid</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r&#39;</span><span class="p">,</span> <span class="n">rv_kepler</span> <span class="o">+</span> <span class="n">rv_linear</span><span class="p">)</span>
+    
+    <span class="n">_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;v_r_obs&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">rv</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity_Uncertainty&#39;</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity&#39;</span><span class="p">])</span>
+    
+    <span class="n">basic_rv_linear_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_40610/281116389.py:26: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+  basic_rv_linear_trace = pm.sample(draws=1000, tune=1000)
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [t0_frac, A, dP, K, b, a]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [4000/4000 00:22<00:00 Sampling 2 chains, 0 divergences]
+</div>
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 43 seconds.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/arviz/data/io_pymc3.py:96: FutureWarning: Using `from_pymc3` without the model will be deprecated in a future release. Not using the model will return less accurate and less useful results. Make sure you use the model argument or call from_pymc3 within a model context.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;b&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;b&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;dP&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;dP&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;K&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;K&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;A&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;A&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;omega&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;omega&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;t0_frac&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;t0_frac&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;t0&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;t0&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_kepler&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_kepler&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_linear&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_linear&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;]], dtype=object)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_70_2.png" src="_images/regression_and_curve_fitting_70_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+<span class="n">plot_data</span><span class="p">(</span><span class="n">P</span> <span class="o">=</span> <span class="n">P</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plot_rv_curve</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">P</span><span class="o">=</span><span class="n">P</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fit&#39;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14e474d90&gt;
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_71_1.png" src="_images/regression_and_curve_fitting_71_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_residuals</span><span class="p">(</span><span class="n">rvs</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">P</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;JD&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">tmid</span>
+        <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t - t_\mathrm</span><span class="si">{ref}</span><span class="s1"> / \mathrm</span><span class="si">{d}</span><span class="s1">$&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="p">(</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;JD&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">tmid</span><span class="p">)</span> <span class="o">%</span> <span class="n">P</span>
+        <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$ \left( t - t_\mathrm</span><span class="si">{ref}</span><span class="s1"> \right) \, \mathrm</span><span class="si">{mod}</span><span class="s1"> \, P / \mathrm</span><span class="si">{d}</span><span class="s1">$&#39;</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">rvs</span> <span class="o">-</span> <span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity_Uncertainty&#39;</span><span class="p">]</span>
+        <span class="n">sigma_r</span> <span class="o">=</span> <span class="n">ones_like</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sigma_r</span> <span class="o">=</span> <span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity_Uncertainty&#39;</span><span class="p">]</span>
+        
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;fmt&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">errorbar</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">sigma_r</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">plot_residuals</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">P</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">basic_rv_trace</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">]))</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r / \sigma_</span><span class="si">{v_r}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">figure</span><span class="p">()</span>
+<span class="n">plot_residuals</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r / \sigma_</span><span class="si">{v_r}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">figure</span><span class="p">()</span>
+<span class="n">plot_residuals</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r / \mathrm</span><span class="si">{km}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{km} \\, \\mathrm{s}^{-1}$&#39;)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_72_1.png" src="_images/regression_and_curve_fitting_72_1.png" />
+<img alt="_images/regression_and_curve_fitting_72_2.png" src="_images/regression_and_curve_fitting_72_2.png" />
+<img alt="_images/regression_and_curve_fitting_72_3.png" src="_images/regression_and_curve_fitting_72_3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">((</span><span class="n">mean</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity_Uncertainty&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r / \mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$&#39;</span><span class="p">)</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">xs</span><span class="o">*</span><span class="n">xs</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$N(0,1)$&#39;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14ebaad00&gt;
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_73_1.png" src="_images/regression_and_curve_fitting_73_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="problems">
+<h2>Problems<a class="headerlink" href="#problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="linear-regression">
+<h3>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this headline">¶</a></h3>
+<p>Read <span id="id5">[<a class="reference internal" href="bibliography.html#id10">Hogg <em>et al.</em>, 2010</a>]</span> (you can find it <a class="reference external" href="https://arxiv.org/abs/1008.4686">here</a>), and do Exercises 6 and 7 (you may wish to warm up on the earlier exercises, too—they should be pretty trivial given what we have been doing for examples in this class).</p>
+</div>
+<div class="section" id="hd126614a">
+<h3>HD126614A<a class="headerlink" href="#hd126614a" title="Permalink to this headline">¶</a></h3>
+<p>Let’s try another planet.  This is HD126614A, from <span id="id6">[<a class="reference internal" href="bibliography.html#id9">Howard <em>et al.</em>, 2010</a>]</span> (the data come from an “electronic table” <a class="reference external" href="https://iopscience.iop.org/0004-637X/721/2/1467/suppdata/apj319972t5_ascii.txt?doi=10.1088/0004-637X/721/2/1467">here</a>).  Fit this data to a Keplerian orbit (plus maybe some other terms in the RV?) and compare your fit for the Keplerian parameters to the fit in <span id="id7">[<a class="reference internal" href="bibliography.html#id9">Howard <em>et al.</em>, 2010</a>]</span>.  Be sure to pay attention to setting up the problem for the model so that the variables that are actually sampled over are unit-scale (see above, e.g., the <code class="docutils literal notranslate"><span class="pre">dP</span></code> parameter, etc).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hd126614A_data</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;data/HowardEtAl2010-HD126614A-apj319972t5_ascii.txt&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="n">header_start</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">data_start</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
@@ -1526,8 +1751,13 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{m} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_71_1.png" src="_images/regression_and_curve_fitting_71_1.png" />
+<img alt="_images/regression_and_curve_fitting_80_1.png" src="_images/regression_and_curve_fitting_80_1.png" />
 </div>
+</div>
+</div>
+<div class="section" id="a-planet-of-your-choosing">
+<h3>A Planet of Your Choosing<a class="headerlink" href="#a-planet-of-your-choosing" title="Permalink to this headline">¶</a></h3>
+<p>Fit your favorite planet’s orbital parameters, paying careful attention to describing and assessing the components of the model you are building to represent the data.  Convince me, via appropriate plots / description, that you have accounted for all non-Keplerian effects in the data with your model.</p>
 </div>
 </div>
 </div>
@@ -1584,7 +1814,7 @@ NUTS: [t0_frac, A, dP, K]
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
