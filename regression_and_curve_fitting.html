@@ -1075,8 +1075,14 @@ The number of effective samples is smaller than 25% for some parameters.
     
     <span class="n">ys_true</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;ys_true&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">*</span><span class="n">xs</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
     
-    <span class="n">_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Mixture</span><span class="p">(</span><span class="s1">&#39;ys_obs&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">P_bad</span><span class="p">,</span> <span class="n">P_bad</span><span class="p">],</span> <span class="p">[</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">ys_true</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">)),</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">mu_b</span><span class="o">*</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_b</span><span class="p">)],</span>
-                   <span class="n">observed</span><span class="o">=</span><span class="n">ys_obs</span><span class="p">)</span>
+    <span class="n">logp_good</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="o">-</span><span class="n">P_bad</span><span class="p">)</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">ys_true</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">))</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">)</span>
+    <span class="n">logp_bad</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">P_bad</span><span class="p">)</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">mu_b</span><span class="o">*</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_b</span><span class="p">)</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="n">ys_obs</span><span class="p">)</span>
+
+    <span class="n">log_odds</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;log_odds&#39;</span><span class="p">,</span> <span class="n">logp_good</span> <span class="o">-</span> <span class="n">logp_bad</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;likelihood&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">logaddexp</span><span class="p">(</span><span class="n">logp_good</span><span class="p">,</span> <span class="n">logp_bad</span><span class="p">)))</span>
+
+<span class="c1">#      _ = pm.Mixture(&#39;ys_obs&#39;, [1-P_bad, P_bad], [pm.Normal.dist(mu=ys_true, sigma=ones_like(ys_obs)), pm.Normal.dist(mu=mu_b*ones_like(ys_obs), sigma=sigma_b)],</span>
+<span class="c1">#                     observed=ys_obs)</span>
 </pre></div>
 </div>
 </div>
@@ -1112,9 +1118,9 @@ NUTS: [P_bad, sigma_b, mu_b, b, m]
         }
     </style>
   <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [2000/2000 00:02<00:00 Sampling chain 0, 0 divergences]
+  100.00% [2000/2000 00:08<00:00 Sampling chain 0, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 1 chain for 1_000 tune and 1_000 draw iterations (1_000 + 1_000 draws total) took 3 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 1 chain for 1_000 tune and 1_000 draw iterations (1_000 + 1_000 draws total) took 8 seconds.
 Only one chain was sampled, this makes it impossible to run some convergence checks
 </pre></div>
 </div>
@@ -1142,7 +1148,9 @@ Only one chain was sampled, this makes it impossible to run some convergence che
        [&lt;AxesSubplot:title={&#39;center&#39;:&#39;P_bad&#39;}&gt;,
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;P_bad&#39;}&gt;],
        [&lt;AxesSubplot:title={&#39;center&#39;:&#39;ys_true&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;ys_true&#39;}&gt;]], dtype=object)
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;ys_true&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;log_odds&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;log_odds&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
 <img alt="_images/regression_and_curve_fitting_56_2.png" src="_images/regression_and_curve_fitting_56_2.png" />
@@ -1165,6 +1173,128 @@ Only one chain was sampled, this makes it impossible to run some convergence che
 </pre></div>
 </div>
 <img alt="_images/regression_and_curve_fitting_57_1.png" src="_images/regression_and_curve_fitting_57_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_good</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">mix_trace</span><span class="p">[</span><span class="s1">&#39;log_odds&#39;</span><span class="p">])),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)):</span>
+    <span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ys_obs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">P_good</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">))</span>
+    <span class="n">errorbar</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">mean</span><span class="p">(</span><span class="n">mix_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">][:,</span><span class="n">i</span><span class="p">]),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">std</span><span class="p">(</span><span class="n">mix_trace</span><span class="p">[</span><span class="s1">&#39;ys_true&#39;</span><span class="p">][:,</span><span class="n">i</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">P_good</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">))</span>
+
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y_\mathrm</span><span class="si">{obs}</span><span class="s1">$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$y_\\mathrm{obs}$&#39;)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_58_1.png" src="_images/regression_and_curve_fitting_58_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">mix_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/arviz/plots/jointplot.py:144: UserWarning: plot_joint will be deprecated. Please use plot_pair instead.
+  warnings.warn(&quot;plot_joint will be deprecated. Please use plot_pair instead.&quot;)
+/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/arviz/data/io_pymc3.py:96: FutureWarning: Using `from_pymc3` without the model will be deprecated in a future release. Not using the model will return less accurate and less useful results. Make sure you use the model argument or call from_pymc3 within a model context.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&lt;AxesSubplot:xlabel=&#39;m&#39;, ylabel=&#39;b&#39;&gt;, &lt;AxesSubplot:&gt;,
+       &lt;AxesSubplot:&gt;], dtype=object)
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_59_2.png" src="_images/regression_and_curve_fitting_59_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ms</span><span class="p">,</span> <span class="n">bs</span> <span class="o">=</span> <span class="n">mix_trace</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">],</span> <span class="n">mix_trace</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">ss</span>
+<span class="n">kde</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">vstack</span><span class="p">((</span><span class="n">ms</span><span class="p">,</span> <span class="n">bs</span><span class="p">)))</span>
+
+<span class="n">scatter</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">M</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">meshgrid</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">kde</span><span class="p">(</span><span class="n">vstack</span><span class="p">((</span><span class="n">M</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">flatten</span><span class="p">())))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">argmax</span><span class="p">(</span><span class="n">density</span><span class="p">)],</span> <span class="n">B</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">argmax</span><span class="p">(</span><span class="n">density</span><span class="p">)])</span>
+
+<span class="n">contour</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">density</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.9292929292929295 -1.3055118110236221
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.contour.QuadContourSet at 0x157578850&gt;
+</pre></div>
+</div>
+<img alt="_images/regression_and_curve_fitting_60_2.png" src="_images/regression_and_curve_fitting_60_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">mix_model</span><span class="p">:</span>
+    <span class="n">MAP_pt</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">find_MAP</span><span class="p">()</span>
+<span class="n">MAP_pt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='24' class='' max='24' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [24/24 00:00<00:00 logp = -54.226, ||grad|| = 0.017729]
+</div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;m&#39;: array(3.00571774),
+ &#39;b&#39;: array(-1.34153256),
+ &#39;mu_b&#39;: array(1.76066136),
+ &#39;sigma_b_log__&#39;: array(0.18795398),
+ &#39;P_bad_logodds__&#39;: array(-1.79905388),
+ &#39;sigma_b&#39;: array(1.20677798),
+ &#39;P_bad&#39;: array(0.14196627),
+ &#39;ys_true&#39;: array([-4.3472503 , -4.09677382, -3.84629734, -3.59582086, -3.34534438,
+        -3.09486791, -2.84439143, -2.59391495, -2.34343847, -2.09296199,
+        -1.84248551, -1.59200903, -1.34153256, -1.09105608, -0.8405796 ,
+        -0.59010312, -0.33962664, -0.08915016,  0.16132632,  0.4118028 ,
+         0.66227927,  0.91275575,  1.16323223,  1.41370871,  1.66418519,
+        -2.90456182, -3.89660144,  0.72168068, -4.30292635,  1.26868037]),
+ &#39;log_odds&#39;: array([ 17.33499756,   9.71660512,  10.73547833,   6.0082969 ,
+         12.65725767,   6.97471402,   7.03448011,   8.60013597,
+          8.47445965,   3.3531636 ,   5.49202821,   4.58622312,
+         -1.13299217,   1.49187735,   1.80105317,   3.43673745,
+          1.30612868,   1.26443755,   0.35826066,   1.562798  ,
+          1.02777543,   0.40732039,  -0.16790211,   0.17051891,
+          0.17556296, -13.46745012, -10.92788985,  -0.51394857,
+        -29.38412408,   0.16946925])}
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1231,7 +1361,7 @@ Only one chain was sampled, this makes it impossible to run some convergence che
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_63_0.png" src="_images/regression_and_curve_fitting_63_0.png" />
+<img alt="_images/regression_and_curve_fitting_67_0.png" src="_images/regression_and_curve_fitting_67_0.png" />
 </div>
 </div>
 <p>Doesn’t look like much, but if we fold on the orbital period:</p>
@@ -1242,7 +1372,7 @@ Only one chain was sampled, this makes it impossible to run some convergence che
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_65_0.png" src="_images/regression_and_curve_fitting_65_0.png" />
+<img alt="_images/regression_and_curve_fitting_69_0.png" src="_images/regression_and_curve_fitting_69_0.png" />
 </div>
 </div>
 <p>Note Kepler’s equations (e.g. <span id="id5">Fulton <em>et al.</em> [<a class="reference internal" href="bibliography.html#id7">2018</a>]</span>):
@@ -1313,7 +1443,7 @@ where</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_68_0.png" src="_images/regression_and_curve_fitting_68_0.png" />
+<img alt="_images/regression_and_curve_fitting_72_0.png" src="_images/regression_and_curve_fitting_72_0.png" />
 </div>
 </div>
 <p>The above plot shows a “guess” at the RV curve with some reasonable, but hardly “optimal” parameters.  We will improve it by optimizing the posterior density (obtaining the (M)aximum (AP)osteriori parameter values) in stages—first we optimize with respect to the phase of pericentre alone, then take that solution and optimize with respect to the phase of pericentre and period, and then finally take that solution and optimize with respect to all variables.  Such “staged” optimization can help avoid falling into a “local maximum” in complicated problems.</p>
@@ -1415,7 +1545,7 @@ logp: -892.0967029641428 -&gt; -889.7860524910117
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/regression_and_curve_fitting_72_0.png" src="_images/regression_and_curve_fitting_72_0.png" />
+<img alt="_images/regression_and_curve_fitting_76_0.png" src="_images/regression_and_curve_fitting_76_0.png" />
 </div>
 </div>
 <p>Now we sample from the posterior over planet parameters.</p>
@@ -1666,7 +1796,7 @@ NUTS: [t0_frac, A, dP, K]
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_76_2.png" src="_images/regression_and_curve_fitting_76_2.png" />
+<img alt="_images/regression_and_curve_fitting_80_2.png" src="_images/regression_and_curve_fitting_80_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1691,7 +1821,7 @@ NUTS: [t0_frac, A, dP, K]
       dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_77_2.png" src="_images/regression_and_curve_fitting_77_2.png" />
+<img alt="_images/regression_and_curve_fitting_81_2.png" src="_images/regression_and_curve_fitting_81_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1708,7 +1838,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;A\n0&#39;, ylabel=&#39;A\n1&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_78_2.png" src="_images/regression_and_curve_fitting_78_2.png" />
+<img alt="_images/regression_and_curve_fitting_82_2.png" src="_images/regression_and_curve_fitting_82_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1721,7 +1851,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;Count&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_79_1.png" src="_images/regression_and_curve_fitting_79_1.png" />
+<img alt="_images/regression_and_curve_fitting_83_1.png" src="_images/regression_and_curve_fitting_83_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1738,7 +1868,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_80_2.png" src="_images/regression_and_curve_fitting_80_2.png" />
+<img alt="_images/regression_and_curve_fitting_84_2.png" src="_images/regression_and_curve_fitting_84_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1755,7 +1885,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_81_2.png" src="_images/regression_and_curve_fitting_81_2.png" />
+<img alt="_images/regression_and_curve_fitting_85_2.png" src="_images/regression_and_curve_fitting_85_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1786,7 +1916,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1545ffd00&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_83_1.png" src="_images/regression_and_curve_fitting_83_1.png" />
+<img alt="_images/regression_and_curve_fitting_87_1.png" src="_images/regression_and_curve_fitting_87_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1823,9 +1953,9 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{km} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_84_1.png" src="_images/regression_and_curve_fitting_84_1.png" />
-<img alt="_images/regression_and_curve_fitting_84_2.png" src="_images/regression_and_curve_fitting_84_2.png" />
-<img alt="_images/regression_and_curve_fitting_84_3.png" src="_images/regression_and_curve_fitting_84_3.png" />
+<img alt="_images/regression_and_curve_fitting_88_1.png" src="_images/regression_and_curve_fitting_88_1.png" />
+<img alt="_images/regression_and_curve_fitting_88_2.png" src="_images/regression_and_curve_fitting_88_2.png" />
+<img alt="_images/regression_and_curve_fitting_88_3.png" src="_images/regression_and_curve_fitting_88_3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1842,7 +1972,7 @@ NUTS: [t0_frac, A, dP, K]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1546a0cd0&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_85_1.png" src="_images/regression_and_curve_fitting_85_1.png" />
+<img alt="_images/regression_and_curve_fitting_89_1.png" src="_images/regression_and_curve_fitting_89_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1946,7 +2076,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_87_2.png" src="_images/regression_and_curve_fitting_87_2.png" />
+<img alt="_images/regression_and_curve_fitting_91_2.png" src="_images/regression_and_curve_fitting_91_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1964,7 +2094,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14e474d90&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_88_1.png" src="_images/regression_and_curve_fitting_88_1.png" />
+<img alt="_images/regression_and_curve_fitting_92_1.png" src="_images/regression_and_curve_fitting_92_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2001,9 +2131,9 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{km} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_89_1.png" src="_images/regression_and_curve_fitting_89_1.png" />
-<img alt="_images/regression_and_curve_fitting_89_2.png" src="_images/regression_and_curve_fitting_89_2.png" />
-<img alt="_images/regression_and_curve_fitting_89_3.png" src="_images/regression_and_curve_fitting_89_3.png" />
+<img alt="_images/regression_and_curve_fitting_93_1.png" src="_images/regression_and_curve_fitting_93_1.png" />
+<img alt="_images/regression_and_curve_fitting_93_2.png" src="_images/regression_and_curve_fitting_93_2.png" />
+<img alt="_images/regression_and_curve_fitting_93_3.png" src="_images/regression_and_curve_fitting_93_3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2020,7 +2150,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14ebaad00&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_90_1.png" src="_images/regression_and_curve_fitting_90_1.png" />
+<img alt="_images/regression_and_curve_fitting_94_1.png" src="_images/regression_and_curve_fitting_94_1.png" />
 </div>
 </div>
 </div>
@@ -2074,7 +2204,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{m} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_97_1.png" src="_images/regression_and_curve_fitting_97_1.png" />
+<img alt="_images/regression_and_curve_fitting_101_1.png" src="_images/regression_and_curve_fitting_101_1.png" />
 </div>
 </div>
 </div>
