@@ -3,16 +3,26 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - mkl-service
+  - pandas
   - numpy
+  - exoplanet
+  - pymc3
+  - arviz
+  - pip
+  - python=3
+  - jupyterlab
   - seaborn
   - scipy
-  - pip
+  - matplotlib
+  - astropy
+  - mkl
+  - h5py
   - pip:
     - jupyter-book
     - daft
-  - matplotlib
-  - python=3
-  - pandas
-  - jupyterlab
-  - exoplanet
+    - pymc3_ext
+    - exoplanet
+    - pystan
+    - pystan-jupyter
 prefix: /Users/wfarr/miniconda3/envs/Astrostatistics688
