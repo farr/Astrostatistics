@@ -337,7 +337,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
 
 <span class="n">sigma2</span> <span class="o">=</span> <span class="mf">10.0</span>
-<span class="n">lambda2</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">lambda2</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="k">def</span> <span class="nf">k</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">xj</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sigma2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">xi</span><span class="o">-</span><span class="n">xj</span><span class="p">)</span><span class="o">/</span><span class="n">lambda2</span><span class="p">)</span>
 
@@ -351,7 +351,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x13ee59ca0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x147ec4d00&gt;
 </pre></div>
 </div>
 <img alt="_images/colored_noise_7_1.svg" src="_images/colored_noise_7_1.svg" /></div>
@@ -366,12 +366,16 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 <div class="cell_output docutils container">
 <img alt="_images/colored_noise_8_0.svg" src="_images/colored_noise_8_0.svg" /></div>
 </div>
+<div class="math notranslate nohighlight">
+\[
+\rho(\tau) = \sigma^2 \exp\left( -\frac{\left| \tau \right|}{\lambda} \right)
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
 
 <span class="n">sigma2</span> <span class="o">=</span> <span class="mf">10.0</span>
-<span class="n">tau</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="k">def</span> <span class="nf">k</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">xj</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sigma2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xi</span><span class="o">-</span><span class="n">xj</span><span class="p">)</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span>
 
@@ -385,10 +389,10 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x13f05e490&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1480b0a60&gt;
 </pre></div>
 </div>
-<img alt="_images/colored_noise_9_1.svg" src="_images/colored_noise_9_1.svg" /></div>
+<img alt="_images/colored_noise_10_1.svg" src="_images/colored_noise_10_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -398,7 +402,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/colored_noise_10_0.svg" src="_images/colored_noise_10_0.svg" /></div>
+<img alt="_images/colored_noise_11_0.svg" src="_images/colored_noise_11_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="an-example-from-ligo">
@@ -437,7 +441,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$h(t)$&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_15_1.svg" src="_images/colored_noise_15_1.svg" /></div>
+<img alt="_images/colored_noise_16_1.svg" src="_images/colored_noise_16_1.svg" /></div>
 </div>
 <p>We know the 150914 signal ends at low frequency (&lt; 500 Hz), so we will decimate this data to 1024 sample rate (i.e. by a factor of 4):</p>
 <div class="cell docutils container">
@@ -470,7 +474,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$P(f) / \\mathrm{strain}^2 \\, \\mathrm{Hz}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_19_1.svg" src="_images/colored_noise_19_1.svg" /></div>
+<img alt="_images/colored_noise_20_1.svg" src="_images/colored_noise_20_1.svg" /></div>
 </div>
 <p>Let’s whiten the data: the PSD measures the density of the variance in frequency space, so the s.d. in a frequency bin is <span class="math notranslate nohighlight">\(\sqrt{P(f)*\delta f}\)</span>:</p>
 <div class="cell docutils container">
@@ -503,10 +507,10 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1435283d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x147bf1c40&gt;]
 </pre></div>
 </div>
-<img alt="_images/colored_noise_23_1.svg" src="_images/colored_noise_23_1.svg" /></div>
+<img alt="_images/colored_noise_24_1.svg" src="_images/colored_noise_24_1.svg" /></div>
 </div>
 <p>Funky things happen at the end of the segment.  Why is that?  (Periodicity.)  It’s better to whiten a <em>windowed</em> version of the data that enforces periodicity.  Here we use a Tukey window (which tapers off to zero on either end over one-second intervals):</p>
 <div class="cell docutils container">
@@ -517,10 +521,10 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x14356cdf0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x147c3d940&gt;]
 </pre></div>
 </div>
-<img alt="_images/colored_noise_25_1.svg" src="_images/colored_noise_25_1.svg" /></div>
+<img alt="_images/colored_noise_26_1.svg" src="_images/colored_noise_26_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -536,10 +540,10 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1435d7bb0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x147ca8910&gt;]
 </pre></div>
 </div>
-<img alt="_images/colored_noise_27_1.svg" src="_images/colored_noise_27_1.svg" /></div>
+<img alt="_images/colored_noise_28_1.svg" src="_images/colored_noise_28_1.svg" /></div>
 </div>
 <p>And here’s our merger:</p>
 <div class="cell docutils container">
@@ -556,11 +560,11 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$h(t)$ (whitened)&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_29_1.svg" src="_images/colored_noise_29_1.svg" /></div>
+<img alt="_images/colored_noise_30_1.svg" src="_images/colored_noise_30_1.svg" /></div>
 </div>
 <p>A good place to go for discussions like what we are about to have is the <a class="reference external" href="https://arxiv.org/abs/1608.01940">“GW150914 basic physics” paper</a> <span id="id2">[<a class="reference internal" href="bibliography.html#id13">Abbott <em>et al.</em>, 2016</a>]</span>; for “real” post Newtonian expansions, see <span id="id3">[<a class="reference internal" href="bibliography.html#id14">Blanchet, 2014</a>]</span>.  The basic physics paper gives the evolution of the <em>inspiral</em> phase with time:
 $<span class="math notranslate nohighlight">\(
-f_\mathrm{GW} = \frac{5^{3/8}}{\left( 8 \pi \right)} \left( \frac{G M_c}{c^3} \right)^{-5/8} \left( t - t_c \right)^{-3/8}
+\frac{1}{2\pi} \frac{\mathrm{d} \Phi}{\mathrm{d} t} = f_\mathrm{GW} = \frac{5^{3/8}}{\left( 8 \pi \right)} \left( \frac{G M_c}{c^3} \right)^{-5/8} \left( t - t_c \right)^{-3/8}
 \)</span>$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -573,14 +577,14 @@ f_\mathrm{GW} = \frac{5^{3/8}}{\left( 8 \pi \right)} \left( \frac{G M_c}{c^3} \r
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_60841/3102124229.py:2: RuntimeWarning: invalid value encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_6604/3102124229.py:2: RuntimeWarning: invalid value encountered in power
   fs = (1100.0*(4.9e-6*20.0)**(5.0/3.0)*(-ts))**(-3.0/8.0)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$f_{\\mathrm{GW}} / \\mathrm{Hz}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_31_2.svg" src="_images/colored_noise_31_2.svg" /></div>
+<img alt="_images/colored_noise_32_2.svg" src="_images/colored_noise_32_2.svg" /></div>
 </div>
 <p>Because the inspiral frequency reaches <span class="math notranslate nohighlight">\(\infty\)</span> in finite time, we will have to do something.  Here’s something:</p>
 <ul class="simple">
@@ -632,16 +636,16 @@ f_\mathrm{max} &amp; \mathrm{otherwise}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_60841/4150586030.py:4: RuntimeWarning: invalid value encountered in power
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_6604/4150586030.py:4: RuntimeWarning: invalid value encountered in power
   fs = (1100.0*(4.9e-6*Mc)**(5.0/3.0)*(tc-ts))**(-3.0/8.0)
-/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_60841/4150586030.py:8: RuntimeWarning: invalid value encountered in power
+/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_6604/4150586030.py:8: RuntimeWarning: invalid value encountered in power
   Phiinsp = 2.0*pi*8.0/5.0*(1100.0*(4.9e-6*Mc)**(5.0/3.0))**(-3.0/8.0)*(tc - ts)**(5.0/8.0)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Whitened Strain&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_34_2.svg" src="_images/colored_noise_34_2.svg" /></div>
+<img alt="_images/colored_noise_35_2.svg" src="_images/colored_noise_35_2.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -657,1097 +661,7 @@ f_\mathrm{max} &amp; \mathrm{otherwise}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 0.4s
-<span class=" -Color -Color-Cyan">Building:</span> 0.5s
-<span class=" -Color -Color-Cyan">Building:</span> 0.6s
-<span class=" -Color -Color-Cyan">Building:</span> 0.7s
-<span class=" -Color -Color-Cyan">Building:</span> 0.9s
-<span class=" -Color -Color-Cyan">Building:</span> 1.0s
-<span class=" -Color -Color-Cyan">Building:</span> 1.1s
-<span class=" -Color -Color-Cyan">Building:</span> 1.2s
-<span class=" -Color -Color-Cyan">Building:</span> 1.3s
-<span class=" -Color -Color-Cyan">Building:</span> 1.5s
-<span class=" -Color -Color-Cyan">Building:</span> 1.6s
-<span class=" -Color -Color-Cyan">Building:</span> 1.7s
-<span class=" -Color -Color-Cyan">Building:</span> 1.8s
-<span class=" -Color -Color-Cyan">Building:</span> 1.9s
-<span class=" -Color -Color-Cyan">Building:</span> 2.0s
-<span class=" -Color -Color-Cyan">Building:</span> 2.2s
-<span class=" -Color -Color-Cyan">Building:</span> 2.3s
-<span class=" -Color -Color-Cyan">Building:</span> 2.4s
-<span class=" -Color -Color-Cyan">Building:</span> 2.5s
-<span class=" -Color -Color-Cyan">Building:</span> 2.6s
-<span class=" -Color -Color-Cyan">Building:</span> 2.7s
-<span class=" -Color -Color-Cyan">Building:</span> 2.9s
-<span class=" -Color -Color-Cyan">Building:</span> 3.0s
-<span class=" -Color -Color-Cyan">Building:</span> 3.1s
-<span class=" -Color -Color-Cyan">Building:</span> 3.2s
-<span class=" -Color -Color-Cyan">Building:</span> 3.3s
-<span class=" -Color -Color-Cyan">Building:</span> 3.5s
-<span class=" -Color -Color-Cyan">Building:</span> 3.6s
-<span class=" -Color -Color-Cyan">Building:</span> 3.7s
-<span class=" -Color -Color-Cyan">Building:</span> 3.8s
-<span class=" -Color -Color-Cyan">Building:</span> 3.9s
-<span class=" -Color -Color-Cyan">Building:</span> 4.0s
-<span class=" -Color -Color-Cyan">Building:</span> 4.1s
-<span class=" -Color -Color-Cyan">Building:</span> 4.3s
-<span class=" -Color -Color-Cyan">Building:</span> 4.4s
-<span class=" -Color -Color-Cyan">Building:</span> 4.5s
-<span class=" -Color -Color-Cyan">Building:</span> 4.6s
-<span class=" -Color -Color-Cyan">Building:</span> 4.7s
-<span class=" -Color -Color-Cyan">Building:</span> 4.8s
-<span class=" -Color -Color-Cyan">Building:</span> 5.0s
-<span class=" -Color -Color-Cyan">Building:</span> 5.1s
-<span class=" -Color -Color-Cyan">Building:</span> 5.2s
-<span class=" -Color -Color-Cyan">Building:</span> 5.3s
-<span class=" -Color -Color-Cyan">Building:</span> 5.5s
-<span class=" -Color -Color-Cyan">Building:</span> 5.6s
-<span class=" -Color -Color-Cyan">Building:</span> 5.7s
-<span class=" -Color -Color-Cyan">Building:</span> 5.8s
-<span class=" -Color -Color-Cyan">Building:</span> 5.9s
-<span class=" -Color -Color-Cyan">Building:</span> 6.0s
-<span class=" -Color -Color-Cyan">Building:</span> 6.1s
-<span class=" -Color -Color-Cyan">Building:</span> 6.2s
-<span class=" -Color -Color-Cyan">Building:</span> 6.3s
-<span class=" -Color -Color-Cyan">Building:</span> 6.4s
-<span class=" -Color -Color-Cyan">Building:</span> 6.6s
-<span class=" -Color -Color-Cyan">Building:</span> 6.7s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:28:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_addition.hpp:6:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_matching_dims.hpp:33:8: warning: unused variable &#39;error&#39; [-Wunused-variable]
-  bool error = false;
-       ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_matching_dims.hpp:57:23: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-    for (int i = 0; i &lt; y1_d.size(); i++) {
-                    ~ ^ ~~~~~~~~~~~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 6.8s
-<span class=" -Color -Color-Cyan">Building:</span> 6.9s
-<span class=" -Color -Color-Cyan">Building:</span> 7.0s
-<span class=" -Color -Color-Cyan">Building:</span> 7.1s
-<span class=" -Color -Color-Cyan">Building:</span> 7.2s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:53:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/profiling.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err.hpp:50:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/hmm_check.hpp:33:7: warning: unused variable &#39;n_transitions&#39; [-Wunused-variable]
-  int n_transitions = log_omegas.cols() - 1;
-      ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 7.3s
-<span class=" -Color -Color-Cyan">Building:</span> 7.5s
-<span class=" -Color -Color-Cyan">Building:</span> 7.6s
-<span class=" -Color -Color-Cyan">Building:</span> 7.7s
-<span class=" -Color -Color-Cyan">Building:</span> 7.8s
-<span class=" -Color -Color-Cyan">Building:</span> 7.9s
-<span class=" -Color -Color-Cyan">Building:</span> 8.0s
-<span class=" -Color -Color-Cyan">Building:</span> 8.1s
-<span class=" -Color -Color-Cyan">Building:</span> 8.2s
-<span class=" -Color -Color-Cyan">Building:</span> 8.3s
-<span class=" -Color -Color-Cyan">Building:</span> 8.5s
-<span class=" -Color -Color-Cyan">Building:</span> 8.6s
-<span class=" -Color -Color-Cyan">Building:</span> 8.7s
-<span class=" -Color -Color-Cyan">Building:</span> 8.8s
-<span class=" -Color -Color-Cyan">Building:</span> 8.9s
-<span class=" -Color -Color-Cyan">Building:</span> 9.0s
-<span class=" -Color -Color-Cyan">Building:</span> 9.1s
-<span class=" -Color -Color-Cyan">Building:</span> 9.2s
-<span class=" -Color -Color-Cyan">Building:</span> 9.4s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:26:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/beta.hpp:70:32: warning: lambda capture &#39;b&#39; is not used [-Wunused-lambda-capture]
-                           [a, b, digamma_ab](auto&amp; vi) mutable {
-                             ~~^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/beta.hpp:96:39: warning: lambda capture &#39;a&#39; is not used [-Wunused-lambda-capture]
-  return make_callback_var(beta_val, [a, b, digamma_ab](auto&amp; vi) mutable {
-                                      ^~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 9.5s
-<span class=" -Color -Color-Cyan">Building:</span> 9.6s
-<span class=" -Color -Color-Cyan">Building:</span> 9.7s
-<span class=" -Color -Color-Cyan">Building:</span> 9.9s
-<span class=" -Color -Color-Cyan">Building:</span> 10.0s
-<span class=" -Color -Color-Cyan">Building:</span> 10.1s
-<span class=" -Color -Color-Cyan">Building:</span> 10.2s
-<span class=" -Color -Color-Cyan">Building:</span> 10.3s
-<span class=" -Color -Color-Cyan">Building:</span> 10.4s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:54:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/elt_multiply.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/multiply.hpp:7:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/fun.hpp:120:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/fun/gp_matern52_cov.hpp:304:10: warning: unused variable &#39;neg_root_5&#39; [-Wunused-variable]
-  double neg_root_5 = -root_5;
-         ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 10.6s
-<span class=" -Color -Color-Cyan">Building:</span> 10.7s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:54:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/elt_multiply.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/multiply.hpp:7:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/fun.hpp:185:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/fun/log_mix.hpp:86:13: warning: unused variable &#39;N&#39; [-Wunused-variable]
-  const int N = stan::math::size(theta);
-            ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 10.8s
-<span class=" -Color -Color-Cyan">Building:</span> 10.9s
-<span class=" -Color -Color-Cyan">Building:</span> 11.0s
-<span class=" -Color -Color-Cyan">Building:</span> 11.2s
-<span class=" -Color -Color-Cyan">Building:</span> 11.3s
-<span class=" -Color -Color-Cyan">Building:</span> 11.4s
-<span class=" -Color -Color-Cyan">Building:</span> 11.5s
-<span class=" -Color -Color-Cyan">Building:</span> 11.6s
-<span class=" -Color -Color-Cyan">Building:</span> 11.7s
-<span class=" -Color -Color-Cyan">Building:</span> 11.9s
-<span class=" -Color -Color-Cyan">Building:</span> 12.0s
-<span class=" -Color -Color-Cyan">Building:</span> 12.1s
-<span class=" -Color -Color-Cyan">Building:</span> 12.2s
-<span class=" -Color -Color-Cyan">Building:</span> 12.3s
-<span class=" -Color -Color-Cyan">Building:</span> 12.4s
-<span class=" -Color -Color-Cyan">Building:</span> 12.6s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:121:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/matrix_power.hpp:52:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;const int&#39; [-Wsign-compare]
-  for (size_t i = 2; i &lt;= n; ++i) {
-                     ~ ^  ~
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:132:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/ordered_constrain.hpp:40:30: warning: comparison of integers of different signs: &#39;Eigen::Index&#39; (aka &#39;long&#39;) and &#39;size_t&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (Eigen::Index n = 1; n &lt; N; ++n) {
-                           ~ ^ ~
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:135:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/positive_ordered_constrain.hpp:40:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;size_t&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int n = 1; n &lt; N; ++n) {
-                  ~ ^ ~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 12.7s
-<span class=" -Color -Color-Cyan">Building:</span> 12.8s
-<span class=" -Color -Color-Cyan">Building:</span> 12.9s
-<span class=" -Color -Color-Cyan">Building:</span> 13.0s
-<span class=" -Color -Color-Cyan">Building:</span> 13.2s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:153:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/simplex_constrain.hpp:40:30: warning: comparison of integers of different signs: &#39;Eigen::Index&#39; (aka &#39;long&#39;) and &#39;size_t&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (Eigen::Index k = 0; k &lt; N; ++k) {
-                           ~ ^ ~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/simplex_constrain.hpp:94:30: warning: comparison of integers of different signs: &#39;Eigen::Index&#39; (aka &#39;long&#39;) and &#39;size_t&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (Eigen::Index k = 0; k &lt; N; ++k) {
-                           ~ ^ ~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 13.3s
-<span class=" -Color -Color-Cyan">Building:</span> 13.4s
-<span class=" -Color -Color-Cyan">Building:</span> 13.5s
-<span class=" -Color -Color-Cyan">Building:</span> 13.6s
-<span class=" -Color -Color-Cyan">Building:</span> 13.8s
-<span class=" -Color -Color-Cyan">Building:</span> 13.9s
-<span class=" -Color -Color-Cyan">Building:</span> 14.0s
-<span class=" -Color -Color-Cyan">Building:</span> 14.1s
-<span class=" -Color -Color-Cyan">Building:</span> 14.2s
-<span class=" -Color -Color-Cyan">Building:</span> 14.3s
-<span class=" -Color -Color-Cyan">Building:</span> 14.4s
-<span class=" -Color -Color-Cyan">Building:</span> 14.5s
-<span class=" -Color -Color-Cyan">Building:</span> 14.6s
-<span class=" -Color -Color-Cyan">Building:</span> 14.7s
-<span class=" -Color -Color-Cyan">Building:</span> 14.9s
-<span class=" -Color -Color-Cyan">Building:</span> 15.0s
-<span class=" -Color -Color-Cyan">Building:</span> 15.1s
-<span class=" -Color -Color-Cyan">Building:</span> 15.2s
-<span class=" -Color -Color-Cyan">Building:</span> 15.3s
-<span class=" -Color -Color-Cyan">Building:</span> 15.4s
-<span class=" -Color -Color-Cyan">Building:</span> 15.5s
-<span class=" -Color -Color-Cyan">Building:</span> 15.7s
-<span class=" -Color -Color-Cyan">Building:</span> 15.8s
-<span class=" -Color -Color-Cyan">Building:</span> 15.9s
-<span class=" -Color -Color-Cyan">Building:</span> 16.0s
-<span class=" -Color -Color-Cyan">Building:</span> 16.1s
-<span class=" -Color -Color-Cyan">Building:</span> 16.2s
-<span class=" -Color -Color-Cyan">Building:</span> 16.3s
-<span class=" -Color -Color-Cyan">Building:</span> 16.4s
-<span class=" -Color -Color-Cyan">Building:</span> 16.5s
-<span class=" -Color -Color-Cyan">Building:</span> 16.6s
-<span class=" -Color -Color-Cyan">Building:</span> 16.8s
-<span class=" -Color -Color-Cyan">Building:</span> 16.9s
-<span class=" -Color -Color-Cyan">Building:</span> 17.0s
-<span class=" -Color -Color-Cyan">Building:</span> 17.1s
-<span class=" -Color -Color-Cyan">Building:</span> 17.2s
-<span class=" -Color -Color-Cyan">Building:</span> 17.3s
-<span class=" -Color -Color-Cyan">Building:</span> 17.4s
-<span class=" -Color -Color-Cyan">Building:</span> 17.5s
-<span class=" -Color -Color-Cyan">Building:</span> 17.6s
-<span class=" -Color -Color-Cyan">Building:</span> 17.8s
-<span class=" -Color -Color-Cyan">Building:</span> 17.9s
-<span class=" -Color -Color-Cyan">Building:</span> 18.0s
-<span class=" -Color -Color-Cyan">Building:</span> 18.1s
-<span class=" -Color -Color-Cyan">Building:</span> 18.2s
-<span class=" -Color -Color-Cyan">Building:</span> 18.3s
-<span class=" -Color -Color-Cyan">Building:</span> 18.4s
-<span class=" -Color -Color-Cyan">Building:</span> 18.5s
-<span class=" -Color -Color-Cyan">Building:</span> 18.6s
-<span class=" -Color -Color-Cyan">Building:</span> 18.7s
-<span class=" -Color -Color-Cyan">Building:</span> 18.9s
-<span class=" -Color -Color-Cyan">Building:</span> 19.0s
-<span class=" -Color -Color-Cyan">Building:</span> 19.1s
-<span class=" -Color -Color-Cyan">Building:</span> 19.3s
-<span class=" -Color -Color-Cyan">Building:</span> 19.4s
-<span class=" -Color -Color-Cyan">Building:</span> 19.5s
-<span class=" -Color -Color-Cyan">Building:</span> 19.6s
-<span class=" -Color -Color-Cyan">Building:</span> 19.7s
-<span class=" -Color -Color-Cyan">Building:</span> 19.8s
-<span class=" -Color -Color-Cyan">Building:</span> 19.9s
-<span class=" -Color -Color-Cyan">Building:</span> 20.1s
-<span class=" -Color -Color-Cyan">Building:</span> 20.2s
-<span class=" -Color -Color-Cyan">Building:</span> 20.3s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:29:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, var&gt; {
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:177:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, std::vector&lt;var&gt;&gt; {
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:199:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, Op, require_eigen_st&lt;is_var, Op&gt;&gt; {
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:219:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, var_value&lt;Op&gt;, require_eigen_t&lt;Op&gt;&gt; {
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:245:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, std::vector&lt;Eigen::Matrix&lt;var, R, C&gt;&gt;&gt; {
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:274:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, std::vector&lt;std::vector&lt;var&gt;&gt;&gt; {
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/operands_and_partials.hpp:300:1: warning: &#39;ops_partials_edge&#39; defined as a class template here but previously declared as a struct template; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
-class ops_partials_edge&lt;double, std::vector&lt;var_value&lt;Op&gt;&gt;,
-^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/functor/operands_and_partials.hpp:21:1: note: did you mean class here?
-struct ops_partials_edge;
-^~~~~~
-class
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:11:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor.hpp:30:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/finite_diff_hessian_auto.hpp:61:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;int&#39; [-Wsign-compare]
-  for (size_t i = 0; i &lt; d; ++i) {
-                     ~ ^ ~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/functor/finite_diff_hessian_auto.hpp:69:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;int&#39; [-Wsign-compare]
-  for (size_t i = 0; i &lt; d; ++i) {
-                     ~ ^ ~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 20.4s
-<span class=" -Color -Color-Cyan">Building:</span> 20.5s
-<span class=" -Color -Color-Cyan">Building:</span> 20.6s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:87:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/double_exponential_cdf.hpp:77:10: warning: unused variable &#39;N&#39; [-Wunused-variable]
-  size_t N = max_size(y, mu, sigma);
-         ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:128:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/gaussian_dlm_obs_rng.hpp:41:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;size_t&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int i = 0; i &lt; M; i++) {
-                  ~ ^ ~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/gaussian_dlm_obs_rng.hpp:98:7: warning: unused variable &#39;n&#39; [-Wunused-variable]
-  int n = G.rows();  // number of states
-      ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 20.8s
-<span class=" -Color -Color-Cyan">Building:</span> 20.9s
-<span class=" -Color -Color-Cyan">Building:</span> 21.0s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:139:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/hmm_marginal.hpp:26:13: warning: unused variable &#39;n_states&#39; [-Wunused-variable]
-  const int n_states = omegas.rows();
-            ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 21.2s
-<span class=" -Color -Color-Cyan">Building:</span> 21.3s
-<span class=" -Color -Color-Cyan">Building:</span> 21.5s
-<span class=" -Color -Color-Cyan">Building:</span> 21.6s
-<span class=" -Color -Color-Cyan">Building:</span> 21.7s
-<span class=" -Color -Color-Cyan">Building:</span> 21.8s
-<span class=" -Color -Color-Cyan">Building:</span> 21.9s
-<span class=" -Color -Color-Cyan">Building:</span> 22.0s
-<span class=" -Color -Color-Cyan">Building:</span> 22.1s
-<span class=" -Color -Color-Cyan">Building:</span> 22.2s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:307:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/skew_double_exponential_ccdf_log.hpp:5:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/skew_double_exponential_lccdf.hpp:78:13: warning: unused variable &#39;size_sigma&#39; [-Wunused-variable]
-  const int size_sigma = stan::math::size(sigma);
-            ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:308:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/skew_double_exponential_cdf.hpp:80:13: warning: unused variable &#39;size_sigma&#39; [-Wunused-variable]
-  const int size_sigma = stan::math::size(sigma);
-            ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:309:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/skew_double_exponential_cdf_log.hpp:5:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/skew_double_exponential_lcdf.hpp:81:13: warning: unused variable &#39;size_sigma&#39; [-Wunused-variable]
-  const int size_sigma = stan::math::size(sigma);
-            ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:330:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/std_normal_rng.hpp:23:22: warning: unused variable &#39;function&#39; [-Wunused-variable]
-  static const char* function = &quot;std_normal_rng&quot;;
-                     ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:13:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim.hpp:16:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob.hpp:350:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/von_mises_cdf.hpp:72:10: warning: unused variable &#39;ck&#39; [-Wunused-variable]
-  double ck = 50;
-         ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:7:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/io/dump.hpp:694:52: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;double, std::__1::allocator&lt;double&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-      for (comp_iter = 0, real_iter = 0; real_iter &lt; val_r-&gt;second.first.size();
-                                         ~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/io/dump.hpp:707:24: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-             real_iter &lt; val_i-&gt;second.first.size();
-             ~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 22.3s
-<span class=" -Color -Color-Cyan">Building:</span> 22.4s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:8:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/io/deserializer.hpp:337:28: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;Eigen::Index&#39; (aka &#39;long&#39;) [-Wsign-compare]
-      for (size_t i = 0; i &lt; m; ++i) {
-                         ~ ^ ~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 22.5s
-<span class=" -Color -Color-Cyan">Building:</span> 22.6s
-<span class=" -Color -Color-Cyan">Building:</span> 22.8s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:17:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing.hpp:6:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/assign.hpp:270:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int i = 0; i &lt; idx.ns_.size(); ++i) {
-                  ~ ^ ~~~~~~~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/assign.hpp:538:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int i = 0; i &lt; col_idx.ns_.size(); ++i) {
-                  ~ ^ ~~~~~~~~~~~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/assign.hpp:637:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int j = 0; j &lt; col_idx.ns_.size(); ++j) {
-                  ~ ^ ~~~~~~~~~~~~~~~~~~
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:17:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:7:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue.hpp:266:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int i = 0; i &lt; idx.ns_.size(); ++i) {
-                  ~ ^ ~~~~~~~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue.hpp:569:13: warning: unused variable &#39;cols&#39; [-Wunused-variable]
-  const int cols = rvalue_index_size(col_idx, x_ref.cols());
-            ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue.hpp:571:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;std::__1::vector&lt;int, std::__1::allocator&lt;int&gt;&gt;::size_type&#39; (aka &#39;unsigned long&#39;) [-Wsign-compare]
-  for (int j = 0; j &lt; col_idx.ns_.size(); ++j) {
-                  ~ ^ ~~~~~~~~~~~~~~~~~~
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:17:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing.hpp:9:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:66:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int i = 0; i &lt; ret_size; ++i) {
-                  ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:102:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int i = 0; i &lt; ret_rows; ++i) {
-                  ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:142:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int j = 0; j &lt; ret_size; ++j) {
-                  ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:183:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int i = 0; i &lt; ret_size; ++i) {
-                  ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:222:22: warning: unused variable &#39;x_cols&#39; [-Wunused-variable]
-  const Eigen::Index x_cols = x.cols();
-                     ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:227:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int i = 0; i &lt; ret_rows; ++i) {
-                  ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:231:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int j = 0; j &lt; ret_cols; ++j) {
-                  ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:235:23: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-    for (int i = 0; i &lt; ret_rows; ++i) {
-                    ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/rvalue_varmat.hpp:278:21: warning: comparison of integers of different signs: &#39;int&#39; and &#39;const unsigned long&#39; [-Wsign-compare]
-  for (int j = 0; j &lt; ret_cols; ++j) {
-                  ~ ^ ~~~~~~~~
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 22.9s
-<span class=" -Color -Color-Cyan">Building:</span> 23.0s
-<span class=" -Color -Color-Cyan">Building:</span> 23.1s
-<span class=" -Color -Color-Cyan">Building:</span> 23.2s
-<span class=" -Color -Color-Cyan">Building:</span> 23.3s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:29:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_divide_equal.hpp:5:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_division.hpp:14:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_subtraction.hpp:84:21: warning: lambda capture &#39;b&#39; is not used [-Wunused-lambda-capture]
-      [avi = a.vi_, b](const auto&amp; vi) mutable { avi-&gt;adj_ += vi.adj_; });
-                    ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_minus_equal.hpp:24:16: note: in instantiation of function template specialization &#39;stan::math::operator-&lt;double, nullptr&gt;&#39; requested here
-  vi_ = (*this - b).vi_;
-               ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/core/complex_base.hpp:136:9: note: in instantiation of member function &#39;stan::math::var_value&lt;double, void&gt;::operator-=&#39; requested here
-    re_ -= x;
-        ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/core/operator_subtraction.hpp:24:5: note: in instantiation of function template specialization &#39;stan::math::complex_base&lt;stan::math::var_value&lt;double, void&gt;&gt;::operator-=&lt;int&gt;&#39; requested here
-  y -= rhs;
-    ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/core/operator_subtraction.hpp:55:20: note: in instantiation of function template specialization &#39;stan::math::internal::complex_subtract&lt;std::__1::complex&lt;stan::math::var&gt;, int&gt;&#39; requested here
-  return internal::complex_subtract(x, y);
-                   ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/fun/acosh.hpp:105:31: note: in instantiation of function template specialization &#39;stan::math::operator-&lt;stan::math::var_value&lt;double, void&gt;, int&gt;&#39; requested here
-  auto y = log(z + sqrt(z * z - 1));
-                              ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/acosh.hpp:94:32: note: in instantiation of function template specialization &#39;stan::math::internal::complex_acosh&lt;stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-  return stan::math::internal::complex_acosh(z);
-                               ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 23.4s
-<span class=" -Color -Color-Cyan">Building:</span> 23.5s
-<span class=" -Color -Color-Cyan">Building:</span> 23.6s
-<span class=" -Color -Color-Cyan">Building:</span> 23.8s
-<span class=" -Color -Color-Cyan">Building:</span> 23.9s
-<span class=" -Color -Color-Cyan">Building:</span> 24.0s
-<span class=" -Color -Color-Cyan">Building:</span> 24.1s
-<span class=" -Color -Color-Cyan">Building:</span> 24.2s
-<span class=" -Color -Color-Cyan">Building:</span> 24.3s
-<span class=" -Color -Color-Cyan">Building:</span> 24.4s
-<span class=" -Color -Color-Cyan">Building:</span> 24.5s
-<span class=" -Color -Color-Cyan">Building:</span> 24.6s
-<span class=" -Color -Color-Cyan">Building:</span> 24.8s
-<span class=" -Color -Color-Cyan">Building:</span> 24.9s
-<span class=" -Color -Color-Cyan">Building:</span> 25.0s
-<span class=" -Color -Color-Cyan">Building:</span> 25.1s
-<span class=" -Color -Color-Cyan">Building:</span> 25.2s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_addition.hpp:80:21: warning: lambda capture &#39;b&#39; is not used [-Wunused-lambda-capture]
-      [avi = a.vi_, b](const auto&amp; vi) mutable { avi-&gt;adj_ += vi.adj_; });
-                    ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/grad_inc_beta.hpp:45:43: note: in instantiation of function template specialization &#39;stan::math::operator+&lt;int, nullptr&gt;&#39; requested here
-    grad_2F1(dF1, dF2, a + b, var(1.0), a + 1, z);
-                                          ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 25.3s
-<span class=" -Color -Color-Cyan">Building:</span> 25.4s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:28:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/operator_addition.hpp:80:21: warning: lambda capture &#39;b&#39; is not used [-Wunused-lambda-capture]
-      [avi = a.vi_, b](const auto&amp; vi) mutable { avi-&gt;adj_ += vi.adj_; });
-                    ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/fun/trigamma.hpp:63:31: note: in instantiation of function template specialization &#39;stan::math::operator+&lt;double, nullptr&gt;&#39; requested here
-    value = -trigamma_impl(-x + 1.0) + square(pi() / sin(-pi() * x));
-                              ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/trigamma.hpp:23:44: note: in instantiation of function template specialization &#39;stan::math::trigamma_impl&lt;stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-inline var trigamma(const var&amp; u) { return trigamma_impl(u); }
-                                           ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 25.5s
-<span class=" -Color -Color-Cyan">Building:</span> 25.7s
-<span class=" -Color -Color-Cyan">Building:</span> 25.8s
-<span class=" -Color -Color-Cyan">Building:</span> 25.9s
-<span class=" -Color -Color-Cyan">Building:</span> 26.0s
-<span class=" -Color -Color-Cyan">Building:</span> 26.1s
-<span class=" -Color -Color-Cyan">Building:</span> 26.2s
-<span class=" -Color -Color-Cyan">Building:</span> 26.4s
-<span class=" -Color -Color-Cyan">Building:</span> 26.5s
-<span class=" -Color -Color-Cyan">Building:</span> 26.6s
-<span class=" -Color -Color-Cyan">Building:</span> 26.8s
-<span class=" -Color -Color-Cyan">Building:</span> 26.9s
-<span class=" -Color -Color-Cyan">Building:</span> 27.0s
-<span class=" -Color -Color-Cyan">Building:</span> 27.1s
-<span class=" -Color -Color-Cyan">Building:</span> 27.3s
-<span class=" -Color -Color-Cyan">Building:</span> 27.4s
-<span class=" -Color -Color-Cyan">Building:</span> 27.5s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:53:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/profiling.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_2F1_converges.hpp:5:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_not_nan.hpp:5:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/elementwise_check.hpp:153:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;Eigen::EigenBase::Index&#39; (aka &#39;long&#39;) [-Wsign-compare]
-  for (size_t i = 0; i &lt; x.size(); i++) {
-                     ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_not_nan.hpp:28:3: note: in instantiation of function template specialization &#39;stan::math::elementwise_check&lt;(lambda at /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_not_nan.hpp:28:21), Eigen::ArrayWrapper&lt;const Eigen::Map&lt;Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, 0, Eigen::Stride&lt;0, 0&gt;&gt;&gt;, nullptr, nullptr&gt;&#39; requested here
-  elementwise_check([](double x) { return !std::isnan(x); }, function, name, y,
-  ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/normal_lpdf.hpp:62:3: note: in instantiation of function template specialization &#39;stan::math::check_not_nan&lt;Eigen::ArrayWrapper&lt;const Eigen::Map&lt;Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, 0, Eigen::Stride&lt;0, 0&gt;&gt;&gt;&gt;&#39; requested here
-  check_not_nan(function, &quot;Random variable&quot;, y_val);
-  ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:623:24: note: in instantiation of function template specialization &#39;stan::math::normal_lpdf&lt;false, Eigen::Map&lt;Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, 0, Eigen::Stride&lt;0, 0&gt;&gt;, Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, double, nullptr&gt;&#39; requested here
-        lp_accum__.add(normal_lpdf&lt;propto__&gt;(h_obs, h_model, sigma));
-                       ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:974:14: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob_impl&lt;false, false, Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, Eigen::Matrix&lt;int, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-      return log_prob_impl&lt;propto__, jacobian__&gt;(params_r, params_i, pstream);
-             ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_base_crtp.hpp:90:50: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob&lt;false, false, double&gt;&#39; requested here
-    return static_cast&lt;const M*&gt;(this)-&gt;template log_prob&lt;false, false, double&gt;(
-                                                 ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:437:3: note: in instantiation of member function &#39;stan::model::model_base_crtp&lt;model_qsspgd2o_namespace::model_qsspgd2o&gt;::log_prob&#39; requested here
-  ~model_qsspgd2o() { }
-  ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:53:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/profiling.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_2F1_converges.hpp:5:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_not_nan.hpp:5:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/elementwise_check.hpp:153:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;Eigen::EigenBase::Index&#39; (aka &#39;long&#39;) [-Wsign-compare]
-  for (size_t i = 0; i &lt; x.size(); i++) {
-                     ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_finite.hpp:29:3: note: in instantiation of function template specialization &#39;stan::math::elementwise_check&lt;(lambda at /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_finite.hpp:29:21), Eigen::ArrayWrapper&lt;const Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;&gt;, nullptr, nullptr&gt;&#39; requested here
-  elementwise_check([](double x) { return std::isfinite(x); }, function, name,
-  ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/normal_lpdf.hpp:63:3: note: in instantiation of function template specialization &#39;stan::math::check_finite&lt;Eigen::ArrayWrapper&lt;const Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;&gt;&gt;&#39; requested here
-  check_finite(function, &quot;Location parameter&quot;, mu_val);
-  ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:623:24: note: in instantiation of function template specialization &#39;stan::math::normal_lpdf&lt;false, Eigen::Map&lt;Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, 0, Eigen::Stride&lt;0, 0&gt;&gt;, Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, double, nullptr&gt;&#39; requested here
-        lp_accum__.add(normal_lpdf&lt;propto__&gt;(h_obs, h_model, sigma));
-                       ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:974:14: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob_impl&lt;false, false, Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, Eigen::Matrix&lt;int, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-      return log_prob_impl&lt;propto__, jacobian__&gt;(params_r, params_i, pstream);
-             ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_base_crtp.hpp:90:50: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob&lt;false, false, double&gt;&#39; requested here
-    return static_cast&lt;const M*&gt;(this)-&gt;template log_prob&lt;false, false, double&gt;(
-                                                 ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:437:3: note: in instantiation of member function &#39;stan::model::model_base_crtp&lt;model_qsspgd2o_namespace::model_qsspgd2o&gt;::log_prob&#39; requested here
-  ~model_qsspgd2o() { }
-  ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:94:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/lb_constrain.hpp:114:33: warning: lambda capture &#39;lp&#39; is not used [-Wunused-lambda-capture]
-                               [lp, arena_lb = var(lb)](auto&amp; vi) mutable {
-                                ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/io/deserializer.hpp:386:26: note: in instantiation of function template specialization &#39;stan::math::lb_constrain&lt;stan::math::var_value&lt;double, void&gt;, int, nullptr, nullptr&gt;&#39; requested here
-      return stan::math::lb_constrain(this-&gt;read&lt;Ret&gt;(sizes...), lb, lp);
-                         ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:544:28: note: in instantiation of function template specialization &#39;stan::io::deserializer&lt;stan::math::var_value&lt;double, void&gt;&gt;::read_constrain_lb&lt;stan::math::var_value&lt;double, void&gt;, false, int, stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-      A100 = in__.template read_constrain_lb&lt;local_scalar_t__, jacobian__&gt;(0,
-                           ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:974:14: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob_impl&lt;false, false, Eigen::Matrix&lt;stan::math::var_value&lt;double, void&gt;, -1, 1, 0, -1, 1&gt;, Eigen::Matrix&lt;int, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-      return log_prob_impl&lt;propto__, jacobian__&gt;(params_r, params_i, pstream);
-             ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_base_crtp.hpp:95:50: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob&lt;false, false, stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-    return static_cast&lt;const M*&gt;(this)-&gt;template log_prob&lt;false, false&gt;(theta,
-                                                 ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:437:3: note: in instantiation of member function &#39;stan::model::model_base_crtp&lt;model_qsspgd2o_namespace::model_qsspgd2o&gt;::log_prob&#39; requested here
-  ~model_qsspgd2o() { }
-  ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 27.6s
-<span class=" -Color -Color-Cyan">Building:</span> 27.7s
-<span class=" -Color -Color-Cyan">Building:</span> 27.9s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:94:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/lb_constrain.hpp:114:33: warning: lambda capture &#39;lp&#39; is not used [-Wunused-lambda-capture]
-                               [lp, arena_lb = var(lb)](auto&amp; vi) mutable {
-                                ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/io/deserializer.hpp:386:26: note: in instantiation of function template specialization &#39;stan::math::lb_constrain&lt;stan::math::var_value&lt;double, void&gt;, double, nullptr, nullptr&gt;&#39; requested here
-      return stan::math::lb_constrain(this-&gt;read&lt;Ret&gt;(sizes...), lb, lp);
-                         ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:563:32: note: in instantiation of function template specialization &#39;stan::io::deserializer&lt;stan::math::var_value&lt;double, void&gt;&gt;::read_constrain_lb&lt;stan::math::var_value&lt;double, void&gt;, false, double, stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-      max_freq = in__.template read_constrain_lb&lt;local_scalar_t__, jacobian__&gt;(
-                               ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:974:14: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob_impl&lt;false, false, Eigen::Matrix&lt;stan::math::var_value&lt;double, void&gt;, -1, 1, 0, -1, 1&gt;, Eigen::Matrix&lt;int, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-      return log_prob_impl&lt;propto__, jacobian__&gt;(params_r, params_i, pstream);
-             ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_base_crtp.hpp:95:50: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob&lt;false, false, stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-    return static_cast&lt;const M*&gt;(this)-&gt;template log_prob&lt;false, false&gt;(theta,
-                                                 ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:437:3: note: in instantiation of member function &#39;stan::model::model_base_crtp&lt;model_qsspgd2o_namespace::model_qsspgd2o&gt;::log_prob&#39; requested here
-  ~model_qsspgd2o() { }
-  ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 28.0s
-<span class=" -Color -Color-Cyan">Building:</span> 28.1s
-<span class=" -Color -Color-Cyan">Building:</span> 28.2s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:10:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun.hpp:34:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/columns_dot_self.hpp:7:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/dot_self.hpp:28:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;Eigen::EigenBase::Index&#39; (aka &#39;long&#39;) [-Wsign-compare]
-  for (size_t i = 0; i &lt; arena_v.size(); ++i) {
-                     ~ ^ ~~~~~~~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/fun/unit_vector_constrain.hpp:64:15: note: in instantiation of function template specialization &#39;stan::math::dot_self&lt;Eigen::Map&lt;Eigen::Matrix&lt;stan::math::var_value&lt;double, void&gt;, -1, 1, 0, -1, 1&gt;, 0, Eigen::Stride&lt;0, 0&gt;&gt;, nullptr&gt;&#39; requested here
-  lp -= 0.5 * dot_self(y_ref);
-              ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:974:14: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob_impl&lt;false, false, Eigen::Matrix&lt;stan::math::var_value&lt;double, void&gt;, -1, 1, 0, -1, 1&gt;, Eigen::Matrix&lt;int, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-      return log_prob_impl&lt;propto__, jacobian__&gt;(params_r, params_i, pstream);
-             ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_base_crtp.hpp:95:50: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob&lt;false, false, stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-    return static_cast&lt;const M*&gt;(this)-&gt;template log_prob&lt;false, false&gt;(theta,
-                                                 ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:437:3: note: in instantiation of member function &#39;stan::model::model_base_crtp&lt;model_qsspgd2o_namespace::model_qsspgd2o&gt;::log_prob&#39; requested here
-  ~model_qsspgd2o() { }
-  ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 28.3s
-<span class=" -Color -Color-Cyan">Building:</span> 28.5s
-<span class=" -Color -Color-Cyan">Building:</span> 28.6s
-<span class=" -Color -Color-Cyan">Building:</span> 28.7s
-<span class=" -Color -Color-Cyan">Building:</span> 28.8s
-<span class=" -Color -Color-Cyan">Building:</span> 28.9s
-<span class=" -Color -Color-Cyan">Building:</span> 29.0s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:53:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/profiling.hpp:9:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_2F1_converges.hpp:5:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_not_nan.hpp:5:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/elementwise_check.hpp:153:24: warning: comparison of integers of different signs: &#39;size_t&#39; (aka &#39;unsigned long&#39;) and &#39;Eigen::EigenBase::Index&#39; (aka &#39;long&#39;) [-Wsign-compare]
-  for (size_t i = 0; i &lt; x.size(); i++) {
-                     ~ ^ ~~~~~~~~
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_finite.hpp:29:3: note: in instantiation of function template specialization &#39;stan::math::elementwise_check&lt;(lambda at /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/err/check_finite.hpp:29:21), Eigen::Array&lt;double, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-  elementwise_check([](double x) { return std::isfinite(x); }, function, name,
-  ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/prim/prob/normal_lpdf.hpp:63:3: note: in instantiation of function template specialization &#39;stan::math::check_finite&lt;Eigen::Array&lt;double, -1, 1, 0, -1, 1&gt;&gt;&#39; requested here
-  check_finite(function, &quot;Location parameter&quot;, mu_val);
-  ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:623:24: note: in instantiation of function template specialization &#39;stan::math::normal_lpdf&lt;false, Eigen::Map&lt;Eigen::Matrix&lt;double, -1, 1, 0, -1, 1&gt;, 0, Eigen::Stride&lt;0, 0&gt;&gt;, Eigen::Matrix&lt;stan::math::var_value&lt;double, void&gt;, -1, 1, 0, -1, 1&gt;, stan::math::var_value&lt;double, void&gt;, nullptr&gt;&#39; requested here
-        lp_accum__.add(normal_lpdf&lt;propto__&gt;(h_obs, h_model, sigma));
-                       ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:974:14: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob_impl&lt;false, false, Eigen::Matrix&lt;stan::math::var_value&lt;double, void&gt;, -1, 1, 0, -1, 1&gt;, Eigen::Matrix&lt;int, -1, 1, 0, -1, 1&gt;, nullptr, nullptr&gt;&#39; requested here
-      return log_prob_impl&lt;propto__, jacobian__&gt;(params_r, params_i, pstream);
-             ^
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_base_crtp.hpp:95:50: note: in instantiation of function template specialization &#39;model_qsspgd2o_namespace::model_qsspgd2o::log_prob&lt;false, false, stan::math::var_value&lt;double, void&gt;&gt;&#39; requested here
-    return static_cast&lt;const M*&gt;(this)-&gt;template log_prob&lt;false, false&gt;(theta,
-                                                 ^
-/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:437:3: note: in instantiation of member function &#39;stan::model::model_base_crtp&lt;model_qsspgd2o_namespace::model_qsspgd2o&gt;::log_prob&#39; requested here
-  ~model_qsspgd2o() { }
-  ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 29.1s
-<span class=" -Color -Color-Cyan">Building:</span> 29.2s
-<span class=" -Color -Color-Cyan">Building:</span> 29.3s
-<span class=" -Color -Color-Cyan">Building:</span> 29.4s
-<span class=" -Color -Color-Cyan">Building:</span> 29.6s
-<span class=" -Color -Color-Cyan">Building:</span> 29.7s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:4:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math.hpp:19:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev.hpp:8:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core.hpp:58:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/math/rev/core/set_zero_all_adjoints.hpp:14:13: warning: &#39;static&#39; function &#39;set_zero_all_adjoints&#39; declared in header file should be declared &#39;static inline&#39; [-Wunneeded-internal-declaration]
-static void set_zero_all_adjoints() {
-            ^
-In file included from /Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.cpp:2:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/model_header.hpp:17:
-In file included from /Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing.hpp:5:
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/include/stan/model/indexing/assign_varmat.hpp:400:9: warning: unused type alias &#39;pair_type&#39; [-Wunused-local-typedef]
-  using pair_type = std::pair&lt;int, arena_vec&gt;;
-        ^
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 29.8s
-<span class=" -Color -Color-Cyan">Building:</span> 29.9s
-<span class=" -Color -Color-Cyan">Building:</span> 30.0s
-<span class=" -Color -Color-Cyan">Building:</span> 30.1s
-<span class=" -Color -Color-Cyan">Building:</span> 30.2s
-<span class=" -Color -Color-Cyan">Building:</span> 30.3s
-<span class=" -Color -Color-Cyan">Building:</span> 30.4s
-<span class=" -Color -Color-Cyan">Building:</span> 30.5s
-<span class=" -Color -Color-Cyan">Building:</span> 30.6s
-<span class=" -Color -Color-Cyan">Building:</span> 30.8s
-<span class=" -Color -Color-Cyan">Building:</span> 30.9s
-<span class=" -Color -Color-Cyan">Building:</span> 31.0s
-<span class=" -Color -Color-Cyan">Building:</span> 31.1s
-<span class=" -Color -Color-Cyan">Building:</span> 31.2s
-<span class=" -Color -Color-Cyan">Building:</span> 31.3s
-<span class=" -Color -Color-Cyan">Building:</span> 31.5s
-<span class=" -Color -Color-Cyan">Building:</span> 31.6s
-<span class=" -Color -Color-Cyan">Building:</span> 31.7s
-<span class=" -Color -Color-Cyan">Building:</span> 31.8s
-<span class=" -Color -Color-Cyan">Building:</span> 31.9s
-<span class=" -Color -Color-Cyan">Building:</span> 32.0s
-<span class=" -Color -Color-Cyan">Building:</span> 32.2s
-<span class=" -Color -Color-Cyan">Building:</span> 32.3s
-<span class=" -Color -Color-Cyan">Building:</span> 32.4s
-<span class=" -Color -Color-Cyan">Building:</span> 32.6s
-<span class=" -Color -Color-Cyan">Building:</span> 32.7s
-<span class=" -Color -Color-Cyan">Building:</span> 32.8s
-<span class=" -Color -Color-Cyan">Building:</span> 32.9s
-<span class=" -Color -Color-Cyan">Building:</span> 33.1s
-<span class=" -Color -Color-Cyan">Building:</span> 33.2s
-<span class=" -Color -Color-Cyan">Building:</span> 33.3s
-<span class=" -Color -Color-Cyan">Building:</span> 33.4s
-<span class=" -Color -Color-Cyan">Building:</span> 33.5s
-<span class=" -Color -Color-Cyan">Building:</span> 33.6s
-<span class=" -Color -Color-Cyan">Building:</span> 33.7s
-<span class=" -Color -Color-Cyan">Building:</span> 33.8s
-<span class=" -Color -Color-Cyan">Building:</span> 33.9s
-<span class=" -Color -Color-Cyan">Building:</span> 34.0s
-<span class=" -Color -Color-Cyan">Building:</span> 34.2s
-<span class=" -Color -Color-Cyan">Building:</span> 34.3s
-<span class=" -Color -Color-Cyan">Building:</span> 34.4s
-<span class=" -Color -Color-Cyan">Building:</span> 34.5s
-<span class=" -Color -Color-Cyan">Building:</span> 34.6s
-<span class=" -Color -Color-Cyan">Building:</span> 34.7s
-<span class=" -Color -Color-Cyan">Building:</span> 34.8s
-<span class=" -Color -Color-Cyan">Building:</span> 34.9s
-<span class=" -Color -Color-Cyan">Building:</span> 35.1s
-<span class=" -Color -Color-Cyan">Building:</span> 35.2s
-<span class=" -Color -Color-Cyan">Building:</span> 35.3s
-<span class=" -Color -Color-Cyan">Building:</span> 35.4s
-<span class=" -Color -Color-Cyan">Building:</span> 35.5s
-<span class=" -Color -Color-Cyan">Building:</span> 35.6s
-<span class=" -Color -Color-Cyan">Building:</span> 35.7s
-<span class=" -Color -Color-Cyan">Building:</span> 35.8s
-<span class=" -Color -Color-Cyan">Building:</span> 35.9s
-<span class=" -Color -Color-Cyan">Building:</span> 36.1s
-<span class=" -Color -Color-Cyan">Building:</span> 36.2s
-<span class=" -Color -Color-Cyan">Building:</span> 36.3s
-<span class=" -Color -Color-Cyan">Building:</span> 36.4s
-<span class=" -Color -Color-Cyan">Building:</span> 36.5s
-<span class=" -Color -Color-Cyan">Building:</span> 36.6s
-<span class=" -Color -Color-Cyan">Building:</span> 36.7s
-<span class=" -Color -Color-Cyan">Building:</span> 36.8s
-<span class=" -Color -Color-Cyan">Building:</span> 36.9s
-<span class=" -Color -Color-Cyan">Building:</span> 37.0s
-<span class=" -Color -Color-Cyan">Building:</span> 37.2s
-<span class=" -Color -Color-Cyan">Building:</span> 37.3s
-<span class=" -Color -Color-Cyan">Building:</span> 37.4s
-<span class=" -Color -Color-Cyan">Building:</span> 37.5s
-<span class=" -Color -Color-Cyan">Building:</span> 37.6s
-<span class=" -Color -Color-Cyan">Building:</span> 37.7s
-<span class=" -Color -Color-Cyan">Building:</span> 37.8s
-<span class=" -Color -Color-Cyan">Building:</span> 37.9s
-<span class=" -Color -Color-Cyan">Building:</span> 38.1s
-<span class=" -Color -Color-Cyan">Building:</span> 38.2s
-<span class=" -Color -Color-Cyan">Building:</span> 38.3s
-<span class=" -Color -Color-Cyan">Building:</span> 38.4s
-<span class=" -Color -Color-Cyan">Building:</span> 38.5s
-<span class=" -Color -Color-Cyan">Building:</span> 38.6s
-<span class=" -Color -Color-Cyan">Building:</span> 38.8s
-<span class=" -Color -Color-Cyan">Building:</span> 38.9s
-<span class=" -Color -Color-Cyan">Building:</span> 39.0s
-<span class=" -Color -Color-Cyan">Building:</span> 39.1s
-<span class=" -Color -Color-Cyan">Building:</span> 39.2s
-<span class=" -Color -Color-Cyan">Building:</span> 39.3s
-<span class=" -Color -Color-Cyan">Building:</span> 39.4s
-<span class=" -Color -Color-Cyan">Building:</span> 39.5s
-<span class=" -Color -Color-Cyan">Building:</span> 39.6s
-<span class=" -Color -Color-Cyan">Building:</span> 39.8s
-<span class=" -Color -Color-Cyan">Building:</span> 39.9s
-<span class=" -Color -Color-Cyan">Building:</span> 40.0s
-<span class=" -Color -Color-Cyan">Building:</span> 40.1s
-<span class=" -Color -Color-Cyan">Building:</span> 40.2s
-<span class=" -Color -Color-Cyan">Building:</span> 40.3s
-<span class=" -Color -Color-Cyan">Building:</span> 40.4s
-<span class=" -Color -Color-Cyan">Building:</span> 40.6s
-<span class=" -Color -Color-Cyan">Building:</span> 40.7s
-<span class=" -Color -Color-Cyan">Building:</span> 40.8s
-<span class=" -Color -Color-Cyan">Building:</span> 40.9s
-<span class=" -Color -Color-Cyan">Building:</span> 41.1s
-<span class=" -Color -Color-Cyan">Building:</span> 41.2s
-<span class=" -Color -Color-Cyan">Building:</span> 41.3s
-<span class=" -Color -Color-Cyan">Building:</span> 41.4s
-<span class=" -Color -Color-Cyan">Building:</span> 41.5s
-<span class=" -Color -Color-Cyan">Building:</span> 41.6s
-<span class=" -Color -Color-Cyan">Building:</span> 41.7s
-<span class=" -Color -Color-Cyan">Building:</span> 41.9s
-<span class=" -Color -Color-Cyan">Building:</span> 42.0s
-<span class=" -Color -Color-Cyan">Building:</span> 42.2s
-<span class=" -Color -Color-Cyan">Building:</span> 42.3s
-<span class=" -Color -Color-Cyan">Building:</span> 42.4s
-<span class=" -Color -Color-Cyan">Building:</span> 42.5s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>59 warnings generated.
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Cyan">Building:</span> 42.6s
-<span class=" -Color -Color-Cyan">Building:</span> 42.8s
-<span class=" -Color -Color-Cyan">Building:</span> 42.9s
-<span class=" -Color -Color-Cyan">Building:</span> 43.0s
-<span class=" -Color -Color-Cyan">Building:</span> 43.1s
-<span class=" -Color -Color-Cyan">Building:</span> 43.2s
-<span class=" -Color -Color-Cyan">Building:</span> 43.3s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ld: warning: -pie being ignored. It is only used when linking a main executable
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)::Q2&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)::P2&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)::Q1&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j0&lt;long double&gt;(long double)::P1&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::Q2&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::P2&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::Q1&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::P1&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::QS&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::PS&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::QC&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_j1&lt;long double&gt;(long double)::PC&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::igamma_temme_large&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;, boost::integral_constant&lt;int, 64&gt; const*)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;boost::math::tools::promote_args&lt;long double, float, float, float, float, float&gt;::type boost::math::log1pmx&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;)::function&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::igamma_temme_large&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;, boost::integral_constant&lt;int, 64&gt; const*)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;boost::math::tools::promote_args&lt;long double, float, float, float, float, float&gt;::type boost::math::log1pmx&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;)::function&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::igamma_temme_large&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;, boost::integral_constant&lt;int, 64&gt; const*)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;boost::math::tools::promote_args&lt;long double, float, float, float, float, float&gt;::type boost::math::log1pmx&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;)::function&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;void boost::throw_exception&lt;boost::math::evaluation_error&gt;(boost::math::evaluation_error const&amp;)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;typeinfo for boost::wrapexcept&lt;boost::math::evaluation_error&gt;&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;boost::wrapexcept&lt;boost::math::evaluation_error&gt;::rethrow() const&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;typeinfo for boost::wrapexcept&lt;boost::math::evaluation_error&gt;&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)::Q&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)::P&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)::Q&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_k0_imp&lt;long double&gt;(long double const&amp;, boost::integral_constant&lt;int, 64&gt; const&amp;)::P&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.31&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_j0_initializer&lt;long double&gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.31&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_j0_initializer&lt;long double&gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.32&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_j1_initializer&lt;long double&gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.32&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_j1_initializer&lt;long double&gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.33&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::lanczos::lanczos_initializer&lt;boost::math::lanczos::lanczos17m64, long double&gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.33&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::lanczos::lanczos17m64::lanczos_sum_expG_scaled&lt;long double&gt;(long double const&amp;)::denom&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.33&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::lanczos::lanczos17m64::lanczos_sum_expG_scaled&lt;long double&gt;(long double const&amp;)::num&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.33&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::lanczos::lanczos17m64::lanczos_sum&lt;long double&gt;(long double const&amp;)::denom&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.33&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::lanczos::lanczos17m64::lanczos_sum&lt;long double&gt;(long double const&amp;)::num&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.33&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::lanczos::lanczos_initializer&lt;boost::math::lanczos::lanczos17m64, long double&gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.34&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::lgamma_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.34&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::lgamma_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.35&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_y0_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.35&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_y0_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.36&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_y1_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.36&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_y1&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;)::Q1&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.36&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;long double boost::math::detail::bessel_y1&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;(long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; const&amp;)::P1&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.36&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_y1_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.37&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::digamma_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.37&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::digamma_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.38&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::igamma_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.38&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::igamma_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.39&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::lgamma_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.39&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::lgamma_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.40&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::erf_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 53&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.40&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::erf_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 53&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.41&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::expm1_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 53&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.41&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::expm1_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::pole_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::overflow_error&lt;(boost::math::policies::error_policy_type)1&gt;, boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 53&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.42&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::igamma_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.42&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::igamma_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.43&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::erf_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.43&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::erf_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.44&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::expm1_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.44&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::expm1_initializer&lt;long double, boost::math::policies::policy&lt;boost::math::policies::promote_float&lt;false&gt;, boost::math::policies::promote_double&lt;false&gt;, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.45&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_i0_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.45&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_i0_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.46&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_i1_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.46&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_i1_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.47&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::owens_t_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.47&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::owens_t_initializer&lt;double, boost::math::policies::policy&lt;boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy, boost::math::policies::default_policy&gt;, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.48&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_k0_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.48&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_k0_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.49&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_k1_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-ld: warning: direct access in function &#39;___cxx_global_var_init.49&#39; from file &#39;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/httpstan/stan_services.o&#39; to global weak symbol &#39;guard variable for boost::math::detail::bessel_k1_initializer&lt;long double, boost::integral_constant&lt;int, 64&gt; &gt;::initializer&#39; from file &#39;build/temp.macosx-10.9-x86_64-3.9/Users/wfarr/Library/Caches/httpstan/4.6.0/models/qsspgd2o/model_qsspgd2o.o&#39; means the weak symbol cannot be overridden at runtime. This was likely caused by different translation units being compiled with different visibility settings.
-<span class=" -Color -Color-Green">Building:</span> 43.4s, done.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">Building:</span> found in cache, done.
 <span class=" -Color -Color-Cyan">Messages from </span><span class=" -Color -Color-Bold -Color-Bold-Cyan">stanc</span><span class=" -Color -Color-Cyan">:</span>
 Warning in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_zxfqm9oh/model_qsspgd2o.stan&#39;, line 138, column 19: Argument 0.01 suggests there may be parameters that are not unit scale; consider rescaling with a multiplier (see manual section 22.12).
 Warning in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_zxfqm9oh/model_qsspgd2o.stan&#39;, line 16, column 29: The variable fs may not have been assigned a value before its use.
@@ -1769,10 +683,10 @@ Warning: The parameter phi_x has no priors.
 <span class=" -Color -Color-Cyan">Sampling:</span>   0% (3/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>   0% (4/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>   1% (103/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>   3% (202/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>   4% (301/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>   5% (400/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>   6% (500/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>   3% (203/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>   4% (302/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>   5% (401/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>   6% (501/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>   8% (600/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>   9% (700/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  10% (800/8000)
@@ -1799,21 +713,21 @@ Warning: The parameter phi_x has no priors.
 <span class=" -Color -Color-Cyan">Sampling:</span>  36% (2900/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  38% (3000/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  39% (3100/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  40% (3200/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  41% (3300/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  42% (3400/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  40% (3201/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  41% (3301/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  43% (3402/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  44% (3501/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  45% (3602/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  46% (3702/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  48% (3803/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  49% (3903/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  50% (4002/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  45% (3601/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  46% (3700/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  48% (3800/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  49% (3901/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  50% (4001/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  51% (4101/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  52% (4200/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  54% (4301/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  55% (4401/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  56% (4501/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  58% (4601/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  53% (4201/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  54% (4300/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  55% (4400/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  56% (4500/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  58% (4600/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  59% (4700/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  60% (4800/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  61% (4900/8000)
@@ -1830,10 +744,10 @@ Warning: The parameter phi_x has no priors.
 <span class=" -Color -Color-Cyan">Sampling:</span>  75% (6000/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  76% (6100/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  78% (6200/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  79% (6300/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  80% (6400/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  81% (6500/8000)
-<span class=" -Color -Color-Cyan">Sampling:</span>  82% (6600/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  79% (6301/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  80% (6401/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  81% (6501/8000)
+<span class=" -Color -Color-Cyan">Sampling:</span>  83% (6601/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  84% (6700/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  85% (6800/8000)
 <span class=" -Color -Color-Cyan">Sampling:</span>  86% (6900/8000)
@@ -1850,74 +764,22 @@ Warning: The parameter phi_x has no priors.
 <span class=" -Color -Color-Cyan">Sampling:</span> 100% (8000/8000)
 <span class=" -Color -Color-Green">Sampling:</span> 100% (8000/8000), done.
 <span class=" -Color -Color-Cyan">Messages received during sampling:</span>
-  Gradient evaluation took 0.00023 seconds
-  1000 transitions using 10 leapfrog steps per transition would take 2.3 seconds.
+  Gradient evaluation took 0.000112 seconds
+  1000 transitions using 10 leapfrog steps per transition would take 1.12 seconds.
   Adjust your expectations accordingly!
   Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
+  Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
   If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
   but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Gradient evaluation took 0.000182 seconds
-  1000 transitions using 10 leapfrog steps per transition would take 1.82 seconds.
+  Gradient evaluation took 0.000211 seconds
+  1000 transitions using 10 leapfrog steps per transition would take 2.11 seconds.
   Adjust your expectations accordingly!
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is inf, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is -inf, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Gradient evaluation took 0.000197 seconds
-  1000 transitions using 10 leapfrog steps per transition would take 1.97 seconds.
-  Adjust your expectations accordingly!
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
   Gradient evaluation took 0.000205 seconds
   1000 transitions using 10 leapfrog steps per transition would take 2.05 seconds.
   Adjust your expectations accordingly!
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
-  Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-  Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in &#39;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/httpstan_60ciys2i/model_qsspgd2o.stan&#39;, line 131, column 2 to column 33)
-  If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
-  but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
+  Gradient evaluation took 0.000205 seconds
+  1000 transitions using 10 leapfrog steps per transition would take 2.05 seconds.
+  Adjust your expectations accordingly!
 </pre></div>
 </div>
 </div>
@@ -1947,7 +809,7 @@ Warning: The parameter phi_x has no priors.
         &lt;AxesSubplot:title={&#39;center&#39;:&#39;sigma&#39;}&gt;]], dtype=object)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_37_1.svg" src="_images/colored_noise_37_1.svg" /></div>
+<img alt="_images/colored_noise_38_1.svg" src="_images/colored_noise_38_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1962,7 +824,7 @@ Warning: The parameter phi_x has no priors.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Whitened Strain&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_38_1.svg" src="_images/colored_noise_38_1.svg" /></div>
+<img alt="_images/colored_noise_39_1.svg" src="_images/colored_noise_39_1.svg" /></div>
 </div>
 <p>Note: the “real” value of <span class="math notranslate nohighlight">\(M_c\)</span> is <span class="math notranslate nohighlight">\(\sim 30 \, M_\odot\)</span>.</p>
 <div class="cell docutils container">
@@ -1975,7 +837,7 @@ Warning: The parameter phi_x has no priors.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:title={&#39;center&#39;:&#39;Mc&#39;}&gt;
 </pre></div>
 </div>
-<img alt="_images/colored_noise_40_1.svg" src="_images/colored_noise_40_1.svg" /></div>
+<img alt="_images/colored_noise_41_1.svg" src="_images/colored_noise_41_1.svg" /></div>
 </div>
 </div>
 </div>
