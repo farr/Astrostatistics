@@ -25,4 +25,5 @@ dependencies:
     - exoplanet
     - pystan
     - pystan-jupyter
+    - celerite2
 prefix: /Users/wfarr/miniconda3/envs/Astrostatistics688
