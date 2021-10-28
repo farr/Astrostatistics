@@ -265,6 +265,11 @@
    An Example from LIGO
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-space-models">
+   State Space Models
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -284,12 +289,19 @@
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;svg&#39;
 
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+<span class="kn">import</span> <span class="nn">celerite2</span>
+<span class="kn">from</span> <span class="nn">celerite2</span> <span class="kn">import</span> <span class="n">terms</span>
+<span class="kn">from</span> <span class="nn">celerite2.theano</span> <span class="kn">import</span> <span class="n">terms</span> <span class="k">as</span> <span class="n">theano_terms</span>
+<span class="kn">import</span> <span class="nn">celerite2.theano</span>
 <span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">pymc3_ext</span> <span class="k">as</span> <span class="nn">pmx</span>
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
 <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">welch</span><span class="p">,</span> <span class="n">decimate</span>
 <span class="kn">from</span> <span class="nn">scipy.signal.windows</span> <span class="kn">import</span> <span class="n">tukey</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">stan_jupyter</span> <span class="k">as</span> <span class="nn">stan</span>
+<span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="k">as</span> <span class="nn">T</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;ticks&#39;</span><span class="p">)</span>
@@ -838,6 +850,552 @@ Warning: The parameter phi_x has no priors.
 </pre></div>
 </div>
 <img alt="_images/colored_noise_41_1.svg" src="_images/colored_noise_41_1.svg" /></div>
+</div>
+</div>
+<div class="section" id="state-space-models">
+<h2>State Space Models<a class="headerlink" href="#state-space-models" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+
+<span class="n">sigma2</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">def</span> <span class="nf">k</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">xj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sigma2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xi</span><span class="o">-</span><span class="n">xj</span><span class="p">)</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span>
+
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">):</span>
+        <span class="n">Sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">xs</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="n">imshow</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x14bab08e0&gt;
+</pre></div>
+</div>
+<img alt="_images/colored_noise_43_1.svg" src="_images/colored_noise_43_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">Sigma</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/colored_noise_44_0.svg" src="_images/colored_noise_44_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel</span> <span class="o">=</span> <span class="n">terms</span><span class="o">.</span><span class="n">RealTerm</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="n">gp</span> <span class="o">=</span> <span class="n">celerite2</span><span class="o">.</span><span class="n">GaussianProcess</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">1024</span><span class="p">))</span><span class="o">/</span><span class="mi">512</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x14bc79ca0&gt;]
+</pre></div>
+</div>
+<img alt="_images/colored_noise_46_1.svg" src="_images/colored_noise_46_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gp</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/colored_noise_48_0.svg" src="_images/colored_noise_48_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">celerite_model</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">theano_terms</span><span class="o">.</span><span class="n">RealTerm</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">gp</span> <span class="o">=</span> <span class="n">celerite2</span><span class="o">.</span><span class="n">theano</span><span class="o">.</span><span class="n">GaussianProcess</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+    <span class="n">gp</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal</span><span class="p">(</span><span class="s1">&#39;likelihood&#39;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">celerite_model</span><span class="p">:</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py:97: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+  return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [c, a]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='468' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  11.70% [468/4000 00:04<00:32 Sampling 2 chains, 0 divergences]
+</div>
+</div><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+RemoteTraceback                           Traceback (most recent call last)
+RemoteTraceback: 
+&quot;&quot;&quot;
+Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/compile/function/types.py&quot;, line 974, in __call__
+    self.fn()
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 476, in rval
+    r = p(n, [x[0] for x in i], o)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 123, in perform
+    func(*args)
+celerite2.backprop.LinAlgError: failed to factorize or solve matrix
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py&quot;, line 137, in run
+    self._start_loop()
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py&quot;, line 191, in _start_loop
+    point, stats = self._compute_point()
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py&quot;, line 216, in _compute_point
+    point, stats = self._step_method.step(self._point)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/arraystep.py&quot;, line 276, in step
+    apoint, stats = self.astep(array)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/base_hmc.py&quot;, line 168, in astep
+    hmc_step = self._hamiltonian_step(start, p0, step_size)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 184, in _hamiltonian_step
+    divergence_info, turning = tree.extend(direction)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 283, in extend
+    tree, diverging, turning = self._build_subtree(
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 368, in _build_subtree
+    tree2, diverging, turning = self._build_subtree(tree1.right, depth - 1, epsilon)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 362, in _build_subtree
+    return self._single_step(left, epsilon)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 324, in _single_step
+    right = self.integrator.step(epsilon, left)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/integration.py&quot;, line 69, in step
+    return self._step(epsilon, state)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/integration.py&quot;, line 102, in _step
+    logp = self._logp_dlogp_func(q_new, q_new_grad)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/model.py&quot;, line 734, in __call__
+    output = self._theano_function(array)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/compile/function/types.py&quot;, line 987, in __call__
+    raise_with_op(
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/link/utils.py&quot;, line 508, in raise_with_op
+    raise exc_value.with_traceback(exc_trace)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/compile/function/types.py&quot;, line 974, in __call__
+    self.fn()
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 476, in rval
+    r = p(n, [x[0] for x in i], o)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 123, in perform
+    func(*args)
+celerite2.backprop.LinAlgError: failed to factorize or solve matrix
+Apply node that caused the error: _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0})
+Toposort index: 20
+Inputs types: [TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, matrix), TensorType(float64, matrix)]
+Inputs shapes: [(1024,), (1,), (1024,), (1024, 1), (1024, 1)]
+Inputs strides: [(8,), (8,), (8,), (8, 8), (8, 8)]
+Inputs values: [&#39;not shown&#39;, array([1.7029458e-17]), &#39;not shown&#39;, &#39;not shown&#39;, &#39;not shown&#39;]
+Outputs clients: [[_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3), Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}(TensorConstant{(1,) of -0.5}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, TensorConstant{(1,) of 0.5}, Elemwise{Sqr}[(0, 0)].0), Elemwise{Composite{((-i0) / i1)}}(InplaceDimShuffle{0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{TrueDiv}[(0, 0)](Elemwise{Sqr}[(0, 0)].0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{Log}[(0, 0)](_CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0)], [_CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}), _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.1, IncSubtensor{InplaceInc;::, int64}.0), _CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)], [_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)]]
+
+Backtrace when the node is created(use Theano flag traceback__limit=N to make it longer):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3364, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3444, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File &quot;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_75005/81582006.py&quot;, line 7, in &lt;module&gt;
+    gp.compute(ts)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/core.py&quot;, line 316, in compute
+    self._do_compute(quiet)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/celerite2.py&quot;, line 83, in _do_compute
+    self._d, self._W, _ = ops.factor(
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 250, in __call__
+    node = self.make_node(*inputs, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 83, in make_node
+    otypes = [
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 84, in &lt;listcomp&gt;
+    tt.TensorType(
+
+HINT: Use the Theano flag &#39;exception_verbosity=high&#39; for a debugprint and storage map footprint of this apply node.
+&quot;&quot;&quot;
+
+The above exception was the direct cause of the following exception:
+
+LinAlgError                               Traceback (most recent call last)
+LinAlgError: failed to factorize or solve matrix
+Apply node that caused the error: _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0})
+Toposort index: 20
+Inputs types: [TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, matrix), TensorType(float64, matrix)]
+Inputs shapes: [(1024,), (1,), (1024,), (1024, 1), (1024, 1)]
+Inputs strides: [(8,), (8,), (8,), (8, 8), (8, 8)]
+Inputs values: [&#39;not shown&#39;, array([1.7029458e-17]), &#39;not shown&#39;, &#39;not shown&#39;, &#39;not shown&#39;]
+Outputs clients: [[_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3), Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}(TensorConstant{(1,) of -0.5}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, TensorConstant{(1,) of 0.5}, Elemwise{Sqr}[(0, 0)].0), Elemwise{Composite{((-i0) / i1)}}(InplaceDimShuffle{0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{TrueDiv}[(0, 0)](Elemwise{Sqr}[(0, 0)].0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{Log}[(0, 0)](_CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0)], [_CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}), _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.1, IncSubtensor{InplaceInc;::, int64}.0), _CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)], [_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)]]
+
+Backtrace when the node is created(use Theano flag traceback__limit=N to make it longer):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3364, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3444, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File &quot;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_75005/81582006.py&quot;, line 7, in &lt;module&gt;
+    gp.compute(ts)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/core.py&quot;, line 316, in compute
+    self._do_compute(quiet)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/celerite2.py&quot;, line 83, in _do_compute
+    self._d, self._W, _ = ops.factor(
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 250, in __call__
+    node = self.make_node(*inputs, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 83, in make_node
+    otypes = [
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 84, in &lt;listcomp&gt;
+    tt.TensorType(
+
+HINT: Use the Theano flag &#39;exception_verbosity=high&#39; for a debugprint and storage map footprint of this apply node.
+
+The above exception was the direct cause of the following exception:
+
+RuntimeError                              Traceback (most recent call last)
+/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_75005/3804014418.py in &lt;module&gt;
+      1 with celerite_model:
+----&gt; 2     trace = pmx.sample()
+
+~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py in sample(draws, tune, model, step_kwargs, warmup_window, adapt_window, cooldown_window, initial_accept, target_accept, gamma, k, t0, parameter_groups, adapt_type, recompute_interval, regularization_steps, regularization_variance, **kwargs)
+     95     )
+     96 
+---&gt; 97     return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
+
+~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
+    557         _print_step_hierarchy(step)
+    558         try:
+--&gt; 559             trace = _mp_sample(**sample_args, **parallel_args)
+    560         except pickle.PickleError:
+    561             _log.warning(&quot;Could not pickle model, sampling singlethreaded.&quot;)
+
+~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/sampling.py in _mp_sample(draws, tune, step, chains, cores, chain, random_seed, start, progressbar, trace, model, callback, discard_tuned_samples, mp_ctx, pickle_backend, **kwargs)
+   1475         try:
+   1476             with sampler:
+-&gt; 1477                 for draw in sampler:
+   1478                     trace = traces[draw.chain - chain]
+   1479                     if trace.supports_sampler_stats and draw.stats is not None:
+
+~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py in __iter__(self)
+    477 
+    478         while self._active:
+--&gt; 479             draw = ProcessAdapter.recv_draw(self._active)
+    480             proc, is_last, draw, tuning, stats, warns = draw
+    481             self._total_draws += 1
+
+~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py in recv_draw(processes, timeout)
+    357             else:
+    358                 error = RuntimeError(&quot;Chain %s failed.&quot; % proc.chain)
+--&gt; 359             raise error from old_error
+    360         elif msg[0] == &quot;writing_done&quot;:
+    361             proc._readable = True
+
+RuntimeError: Chain 0 failed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Got error No model on context stack. trying to find log_likelihood in translation.
+/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/arviz/data/io_pymc3_3x.py:98: FutureWarning: Using `from_pymc3` without the model will be deprecated in a future release. Not using the model will return less accurate and less useful results. Make sure you use the model argument or call from_pymc3 within a model context.
+  warnings.warn(
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+Got error No model on context stack. trying to find log_likelihood in translation.
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;c&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;c&#39;}&gt;]], dtype=object)
+</pre></div>
+</div>
+<img alt="_images/colored_noise_52_2.svg" src="_images/colored_noise_52_2.svg" /></div>
 </div>
 </div>
 </div>

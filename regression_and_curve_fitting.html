@@ -1311,7 +1311,7 @@ Only one chain was sampled, this makes it impossible to run some convergence che
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div><i>Table length=256</i>
-<table id="table4372257280" class="table-striped table-bordered table-condensed">
+<table id="table5642596992" class="table-striped table-bordered table-condensed">
 <thead><tr><th>JD</th><th>Radial_Velocity</th><th>Radial_Velocity_Uncertainty</th></tr></thead>
 <thead><tr><th>days</th><th>m / s</th><th>m / s</th></tr></thead>
 <thead><tr><th>float64</th><th>float64</th><th>float64</th></tr></thead>
@@ -1320,9 +1320,7 @@ Only one chain was sampled, this makes it impossible to run some convergence che
 <tr><td>2450002.80022</td><td>-60.8</td><td>4.6</td></tr>
 <tr><td>2450002.815961</td><td>-53.3</td><td>5.0</td></tr>
 <tr><td>2450002.954711</td><td>-60.9</td><td>5.5</td></tr>
-<tr><td>2450002.968287</td><td>-57.3</td><td>7.0</td></tr>
 <tr><td>...</td><td>...</td><td>...</td></tr>
-<tr><td>2452173.74912</td><td>-52.7</td><td>5.8</td></tr>
 <tr><td>2452173.779745</td><td>-44.8</td><td>5.9</td></tr>
 <tr><td>2452184.745995</td><td>15.4</td><td>5.5</td></tr>
 <tr><td>2452184.776157</td><td>3.9</td><td>5.5</td></tr>
@@ -2001,16 +1999,205 @@ NUTS: [t0_frac, A, dP, K]
     <span class="n">rv</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r&#39;</span><span class="p">,</span> <span class="n">rv_kepler</span> <span class="o">+</span> <span class="n">rv_linear</span><span class="p">)</span>
     
     <span class="n">_</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s2">&quot;v_r_obs&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">rv</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity_Uncertainty&#39;</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">fopeg_data</span><span class="p">[</span><span class="s1">&#39;Radial_Velocity&#39;</span><span class="p">])</span>
-    
-    <span class="n">basic_rv_linear_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have implemented a linear trend, we can have a situation where the linear part is very poorly fit, and the residual is so large that the Keplerian velocity (which is periodic) gets completely washed out.  To avoid that, we will find the optimal parameter values for <em>subsets</em> of the variables of model, starting with the linear parameters <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> (and holding the Keplerian fixed to its test values):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">xbest</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_40610/281116389.py:26: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-  basic_rv_linear_trace = pm.sample(draws=1000, tune=1000)
-Auto-assigning NUTS sampler...
-Initializing NUTS using jitter+adapt_diag...
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>optimizing logp for variables: [b, a]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='6' class='' max='6' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [6/6 00:00<00:00 logp = -2.070e+03]
+</div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>message: Optimization terminated successfully.
+logp: -2245.2522425983498 -&gt; -2070.0385425373333
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we take that optimal linear fit, and allow the period to adapt and find a new optimum:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">xbest2</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">xbest</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dP</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>optimizing logp for variables: [dP, b, a]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='78' class='' max='78' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [78/78 00:00<00:00 logp = -1.818e+03]
+</div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>message: Desired error not necessarily achieved due to precision loss.
+logp: -2070.0385425373333 -&gt; -1818.3632481191405
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check whether the solution seems in any way reasonable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_data</span><span class="p">(</span><span class="n">P</span><span class="o">=</span><span class="n">P_fop</span><span class="p">)</span>
+<span class="n">plot_rv_curve</span><span class="p">(</span><span class="n">xbest2</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">P</span><span class="o">=</span><span class="n">P_fop</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/regression_and_curve_fitting_96_0.png" src="_images/regression_and_curve_fitting_96_0.png" />
+</div>
+</div>
+<p>It found a reasonable period, but teh phase is wrong; let’s adapt:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">xbest3</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">xbest2</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dP</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">t0_frac</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>optimizing logp for variables: [t0_frac, A, dP, b, a]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='60' class='' max='60' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [60/60 00:00<00:00 logp = -8.437e+02]
+</div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>message: Desired error not necessarily achieved due to precision loss.
+logp: -1818.3632481191405 -&gt; -843.7361388879683
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_data</span><span class="p">(</span><span class="n">P</span><span class="o">=</span><span class="n">P_fop</span><span class="p">)</span>
+<span class="n">plot_rv_curve</span><span class="p">(</span><span class="n">xbest3</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">P</span><span class="o">=</span><span class="n">P_fop</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/regression_and_curve_fitting_99_0.png" src="_images/regression_and_curve_fitting_99_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">xbest4</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">xbest3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>optimizing logp for variables: [t0_frac, A, dP, K, b, a]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='17' class='' max='17' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [17/17 00:00<00:00 logp = -8.429e+02]
+</div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>message: Optimization terminated successfully.
+logp: -843.7361388879683 -&gt; -842.8895196349175
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_data</span><span class="p">(</span><span class="n">P</span><span class="o">=</span><span class="n">P_fop</span><span class="p">)</span>
+<span class="n">plot_rv_curve</span><span class="p">(</span><span class="n">xbest4</span><span class="p">[</span><span class="s1">&#39;v_r&#39;</span><span class="p">],</span> <span class="n">P</span><span class="o">=</span><span class="n">P_fop</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/regression_and_curve_fitting_101_0.png" src="_images/regression_and_curve_fitting_101_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">basic_rv_linear_trace</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">xbest4</span><span class="p">,</span> <span class="n">draws</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py:97: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+  return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
 Multiprocess sampling (2 chains in 2 jobs)
 NUTS: [t0_frac, A, dP, K, b, a]
 </pre></div>
@@ -2030,53 +2217,22 @@ NUTS: [t0_frac, A, dP, K, b, a]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 00:22<00:00 Sampling 2 chains, 0 divergences]
+  100.00% [4000/4000 00:23<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 43 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 35 seconds.
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">basic_rv_linear</span><span class="p">:</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">basic_rv_linear_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;dP&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;t0_frac&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/arviz/data/io_pymc3.py:96: FutureWarning: Using `from_pymc3` without the model will be deprecated in a future release. Not using the model will return less accurate and less useful results. Make sure you use the model argument or call from_pymc3 within a model context.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;b&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;b&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;dP&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;dP&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;K&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;K&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;P&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;A&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;A&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;e&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;omega&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;omega&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;t0_frac&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;t0_frac&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;t0&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;t0&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_kepler&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_kepler&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_linear&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r_linear&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;v_r&#39;}&gt;]], dtype=object)
-</pre></div>
-</div>
-<img alt="_images/regression_and_curve_fitting_91_2.png" src="_images/regression_and_curve_fitting_91_2.png" />
+<img alt="_images/regression_and_curve_fitting_103_0.png" src="_images/regression_and_curve_fitting_103_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2094,7 +2250,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14e474d90&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_92_1.png" src="_images/regression_and_curve_fitting_92_1.png" />
+<img alt="_images/regression_and_curve_fitting_104_1.png" src="_images/regression_and_curve_fitting_104_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2131,9 +2287,9 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{km} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_93_1.png" src="_images/regression_and_curve_fitting_93_1.png" />
-<img alt="_images/regression_and_curve_fitting_93_2.png" src="_images/regression_and_curve_fitting_93_2.png" />
-<img alt="_images/regression_and_curve_fitting_93_3.png" src="_images/regression_and_curve_fitting_93_3.png" />
+<img alt="_images/regression_and_curve_fitting_105_1.png" src="_images/regression_and_curve_fitting_105_1.png" />
+<img alt="_images/regression_and_curve_fitting_105_2.png" src="_images/regression_and_curve_fitting_105_2.png" />
+<img alt="_images/regression_and_curve_fitting_105_3.png" src="_images/regression_and_curve_fitting_105_3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2150,7 +2306,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14ebaad00&gt;
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_94_1.png" src="_images/regression_and_curve_fitting_94_1.png" />
+<img alt="_images/regression_and_curve_fitting_106_1.png" src="_images/regression_and_curve_fitting_106_1.png" />
 </div>
 </div>
 </div>
@@ -2173,7 +2329,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div><i>Table length=70</i>
-<table id="table5710944096" class="table-striped table-bordered table-condensed">
+<table id="table5640143536" class="table-striped table-bordered table-condensed">
 <thead><tr><th>JD</th><th>vr</th><th>sigma_vr</th><th>instrument</th></tr></thead>
 <thead><tr><th>float64</th><th>float64</th><th>float64</th><th>str1</th></tr></thead>
 <tr><td>11200.13355</td><td>-175.78</td><td>1.26</td><td>K</td></tr>
@@ -2181,9 +2337,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <tr><td>11342.85107</td><td>-155.44</td><td>1.47</td><td>K</td></tr>
 <tr><td>11370.81727</td><td>-151.7</td><td>1.44</td><td>K</td></tr>
 <tr><td>11373.83647</td><td>-146.7</td><td>1.77</td><td>K</td></tr>
-<tr><td>11552.15999</td><td>-135.05</td><td>1.28</td><td>K</td></tr>
 <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-<tr><td>15041.84683</td><td>4.8</td><td>1.33</td><td>K</td></tr>
 <tr><td>15042.87063</td><td>8.59</td><td>1.45</td><td>K</td></tr>
 <tr><td>15043.81939</td><td>3.67</td><td>1.33</td><td>K</td></tr>
 <tr><td>15044.79615</td><td>7.78</td><td>1.4</td><td>K</td></tr>
@@ -2204,7 +2358,7 @@ NUTS: [t0_frac, A, dP, K, b, a]
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r / \\mathrm{m} \\, \\mathrm{s}^{-1}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/regression_and_curve_fitting_101_1.png" src="_images/regression_and_curve_fitting_101_1.png" />
+<img alt="_images/regression_and_curve_fitting_113_1.png" src="_images/regression_and_curve_fitting_113_1.png" />
 </div>
 </div>
 </div>
