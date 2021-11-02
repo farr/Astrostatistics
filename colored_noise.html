@@ -334,7 +334,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x13e8d8d30&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1494969a0&gt;]
 </pre></div>
 </div>
 <img alt="_images/colored_noise_5_1.svg" src="_images/colored_noise_5_1.svg" /></div>
@@ -363,7 +363,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x147ec4d00&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x149560eb0&gt;
 </pre></div>
 </div>
 <img alt="_images/colored_noise_7_1.svg" src="_images/colored_noise_7_1.svg" /></div>
@@ -401,7 +401,7 @@ For obvious reasons, this is called the “squared exponential kernel.”  A goo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1480b0a60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1496c1bb0&gt;
 </pre></div>
 </div>
 <img alt="_images/colored_noise_10_1.svg" src="_images/colored_noise_10_1.svg" /></div>
@@ -856,16 +856,17 @@ Warning: The parameter phi_x has no priors.
 <h2>State Space Models<a class="headerlink" href="#state-space-models" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 
 <span class="n">sigma2</span> <span class="o">=</span> <span class="mf">10.0</span>
 <span class="n">tau</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="k">def</span> <span class="nf">k</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">xj</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sigma2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xi</span><span class="o">-</span><span class="n">xj</span><span class="p">)</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span>
 
-<span class="n">Sigma</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">):</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
         <span class="n">Sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">xs</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
 
 <span class="n">imshow</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
@@ -873,7 +874,7 @@ Warning: The parameter phi_x has no priors.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x14bab08e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x14ae52520&gt;
 </pre></div>
 </div>
 <img alt="_images/colored_noise_43_1.svg" src="_images/colored_noise_43_1.svg" /></div>
@@ -888,9 +889,44 @@ Warning: The parameter phi_x has no priors.
 <div class="cell_output docutils container">
 <img alt="_images/colored_noise_44_0.svg" src="_images/colored_noise_44_0.svg" /></div>
 </div>
+<p>Real term corresponds to
+$<span class="math notranslate nohighlight">\(
+\rho(t) = a \exp\left( c t \right)
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\mathrm{d} y}{\mathrm{d} t} + \frac{y}{\tau} = n
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left\langle n \right\rangle = 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left\langle n(t) n(t') \right\rangle = \sigma^2 \delta(t - t')
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P_y(f) \sim \frac{\sigma^2 \tau}{1 + \left( 2 \pi f \tau\right)^2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y(t) = y\left( t_0 \right) \exp\left( -\frac{t-t_0}{\tau} \right) + \int_0^t \mathrm{d} s \, \exp\left( -\frac{t-s}{\tau} \right) n(s)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left\langle y(t) y(t') \right\rangle = \frac{\sigma^2}{\tau} \exp\left( -\frac{\left| t - t' \right|}{\tau} \right)
+\]</div>
+<p>Finite Difference analog:</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i+1} - a y_i = n_{i+1}
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel</span> <span class="o">=</span> <span class="n">terms</span><span class="o">.</span><span class="n">RealTerm</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a_true</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">c_true</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">terms</span><span class="o">.</span><span class="n">RealTerm</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a_true</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c_true</span><span class="p">)</span>
 <span class="n">gp</span> <span class="o">=</span> <span class="n">celerite2</span><span class="o">.</span><span class="n">GaussianProcess</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -904,10 +940,10 @@ Warning: The parameter phi_x has no priors.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x14bc79ca0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x14ada1b50&gt;]
 </pre></div>
 </div>
-<img alt="_images/colored_noise_46_1.svg" src="_images/colored_noise_46_1.svg" /></div>
+<img alt="_images/colored_noise_49_1.svg" src="_images/colored_noise_49_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -924,8 +960,12 @@ Warning: The parameter phi_x has no priors.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/colored_noise_48_0.svg" src="_images/colored_noise_48_0.svg" /></div>
+<img alt="_images/colored_noise_51_0.svg" src="_images/colored_noise_51_0.svg" /></div>
 </div>
+<p>Likelihood:
+$<span class="math notranslate nohighlight">\(
+p\left( \left\{ y_i \mid i = 1, \ldots N \right\} \mid a, c \right) = p\left( y_1 \mid a, c \right) \times p\left( y_2 \mid y_1, a, c \right) \times p\left( y_3 \mid y_2, y_1, a, c\right) \ldots
+\)</span>$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
@@ -1055,179 +1095,104 @@ NUTS: [c, a]
             background: #F44336;
         }
     </style>
-  <progress value='468' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  11.70% [468/4000 00:04<00:32 Sampling 2 chains, 0 divergences]
+  <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [4000/4000 00:13<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
-RemoteTraceback                           Traceback (most recent call last)
-RemoteTraceback: 
-&quot;&quot;&quot;
-Traceback (most recent call last):
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/compile/function/types.py&quot;, line 974, in __call__
-    self.fn()
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 476, in rval
-    r = p(n, [x[0] for x in i], o)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 123, in perform
-    func(*args)
-celerite2.backprop.LinAlgError: failed to factorize or solve matrix
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 29 seconds.
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
 
-During handling of the above exception, another exception occurred:
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
 
-Traceback (most recent call last):
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py&quot;, line 137, in run
-    self._start_loop()
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py&quot;, line 191, in _start_loop
-    point, stats = self._compute_point()
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py&quot;, line 216, in _compute_point
-    point, stats = self._step_method.step(self._point)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/arraystep.py&quot;, line 276, in step
-    apoint, stats = self.astep(array)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/base_hmc.py&quot;, line 168, in astep
-    hmc_step = self._hamiltonian_step(start, p0, step_size)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 184, in _hamiltonian_step
-    divergence_info, turning = tree.extend(direction)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 283, in extend
-    tree, diverging, turning = self._build_subtree(
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 368, in _build_subtree
-    tree2, diverging, turning = self._build_subtree(tree1.right, depth - 1, epsilon)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 362, in _build_subtree
-    return self._single_step(left, epsilon)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/nuts.py&quot;, line 324, in _single_step
-    right = self.integrator.step(epsilon, left)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/integration.py&quot;, line 69, in step
-    return self._step(epsilon, state)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/step_methods/hmc/integration.py&quot;, line 102, in _step
-    logp = self._logp_dlogp_func(q_new, q_new_grad)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/model.py&quot;, line 734, in __call__
-    output = self._theano_function(array)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/compile/function/types.py&quot;, line 987, in __call__
-    raise_with_op(
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/link/utils.py&quot;, line 508, in raise_with_op
-    raise exc_value.with_traceback(exc_trace)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/compile/function/types.py&quot;, line 974, in __call__
-    self.fn()
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 476, in rval
-    r = p(n, [x[0] for x in i], o)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 123, in perform
-    func(*args)
-celerite2.backprop.LinAlgError: failed to factorize or solve matrix
-Apply node that caused the error: _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0})
-Toposort index: 20
-Inputs types: [TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, matrix), TensorType(float64, matrix)]
-Inputs shapes: [(1024,), (1,), (1024,), (1024, 1), (1024, 1)]
-Inputs strides: [(8,), (8,), (8,), (8, 8), (8, 8)]
-Inputs values: [&#39;not shown&#39;, array([1.7029458e-17]), &#39;not shown&#39;, &#39;not shown&#39;, &#39;not shown&#39;]
-Outputs clients: [[_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3), Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}(TensorConstant{(1,) of -0.5}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, TensorConstant{(1,) of 0.5}, Elemwise{Sqr}[(0, 0)].0), Elemwise{Composite{((-i0) / i1)}}(InplaceDimShuffle{0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{TrueDiv}[(0, 0)](Elemwise{Sqr}[(0, 0)].0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{Log}[(0, 0)](_CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0)], [_CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}), _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.1, IncSubtensor{InplaceInc;::, int64}.0), _CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)], [_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)]]
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
 
-Backtrace when the node is created(use Theano flag traceback__limit=N to make it longer):
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3364, in run_ast_nodes
-    if (await self.run_code(code, result,  async_=asy)):
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3444, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File &quot;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_75005/81582006.py&quot;, line 7, in &lt;module&gt;
-    gp.compute(ts)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/core.py&quot;, line 316, in compute
-    self._do_compute(quiet)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/celerite2.py&quot;, line 83, in _do_compute
-    self._d, self._W, _ = ops.factor(
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 250, in __call__
-    node = self.make_node(*inputs, **kwargs)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 83, in make_node
-    otypes = [
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 84, in &lt;listcomp&gt;
-    tt.TensorType(
+ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
+ERROR (theano.graph.opt): TRACEBACK:
+ERROR (theano.graph.opt): Traceback (most recent call last):
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 2017, in process_node
+    replacements = lopt.transform(fgraph, node)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4181, in local_join_empty
+    ret = tt.patternbroadcast(ret, node.outputs[0].broadcastable)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/basic.py&quot;, line 4181, in patternbroadcast
+    return theano.tensor.opt.apply_rebroadcast_opt(rval)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4103, in apply_rebroadcast_opt
+    rval2 = local_rebroadcast_lift.transform(None, rval.owner)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/opt.py&quot;, line 1209, in transform
+    return self.fn(*args, **kwargs)
+  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/tensor/opt.py&quot;, line 4046, in local_rebroadcast_lift
+    if len(fgraph.clients[input]) == 1:
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
 
-HINT: Use the Theano flag &#39;exception_verbosity=high&#39; for a debugprint and storage map footprint of this apply node.
-&quot;&quot;&quot;
-
-The above exception was the direct cause of the following exception:
-
-LinAlgError                               Traceback (most recent call last)
-LinAlgError: failed to factorize or solve matrix
-Apply node that caused the error: _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0})
-Toposort index: 20
-Inputs types: [TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, vector), TensorType(float64, matrix), TensorType(float64, matrix)]
-Inputs shapes: [(1024,), (1,), (1024,), (1024, 1), (1024, 1)]
-Inputs strides: [(8,), (8,), (8,), (8, 8), (8, 8)]
-Inputs values: [&#39;not shown&#39;, array([1.7029458e-17]), &#39;not shown&#39;, &#39;not shown&#39;, &#39;not shown&#39;]
-Outputs clients: [[_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3), Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}(TensorConstant{(1,) of -0.5}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, TensorConstant{(1,) of 0.5}, Elemwise{Sqr}[(0, 0)].0), Elemwise{Composite{((-i0) / i1)}}(InplaceDimShuffle{0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{TrueDiv}[(0, 0)](Elemwise{Sqr}[(0, 0)].0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0), Elemwise{Log}[(0, 0)](_CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0)], [_CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}), _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Rebroadcast{?,0}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, TensorConstant{[[-0.52539..00782597]]}, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;solve_lower_fwd&#39;, quiet=False}.1, IncSubtensor{InplaceInc;::, int64}.0), _CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)], [_CeleriteOp{name=&#39;factor_rev&#39;, quiet=False}(TensorConstant{[0.0014975...99701957]}, Rebroadcast{0}.0, Alloc.0, Rebroadcast{?,0}.0, TensorConstant{(1024, 1) of 1.0}, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.0, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.1, _CeleriteOp{name=&#39;factor_fwd&#39;, quiet=False}.2, Elemwise{Composite{((i0 / i1) + ((i2 * i3) / sqr(i1)))}}.0, _CeleriteOp{name=&#39;solve_lower_rev&#39;, quiet=False}.3)]]
-
-Backtrace when the node is created(use Theano flag traceback__limit=N to make it longer):
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3364, in run_ast_nodes
-    if (await self.run_code(code, result,  async_=asy)):
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;, line 3444, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File &quot;/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_75005/81582006.py&quot;, line 7, in &lt;module&gt;
-    gp.compute(ts)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/core.py&quot;, line 316, in compute
-    self._do_compute(quiet)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/celerite2.py&quot;, line 83, in _do_compute
-    self._d, self._W, _ = ops.factor(
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/theano/graph/op.py&quot;, line 250, in __call__
-    node = self.make_node(*inputs, **kwargs)
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 83, in make_node
-    otypes = [
-  File &quot;/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/celerite2/theano/ops.py&quot;, line 84, in &lt;listcomp&gt;
-    tt.TensorType(
-
-HINT: Use the Theano flag &#39;exception_verbosity=high&#39; for a debugprint and storage map footprint of this apply node.
-
-The above exception was the direct cause of the following exception:
-
-RuntimeError                              Traceback (most recent call last)
-/var/folders/35/vcq24mtj2_g5wk96mbck0cw400018s/T/ipykernel_75005/3804014418.py in &lt;module&gt;
-      1 with celerite_model:
-----&gt; 2     trace = pmx.sample()
-
-~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py in sample(draws, tune, model, step_kwargs, warmup_window, adapt_window, cooldown_window, initial_accept, target_accept, gamma, k, t0, parameter_groups, adapt_type, recompute_interval, regularization_steps, regularization_variance, **kwargs)
-     95     )
-     96 
----&gt; 97     return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
-
-~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
-    557         _print_step_hierarchy(step)
-    558         try:
---&gt; 559             trace = _mp_sample(**sample_args, **parallel_args)
-    560         except pickle.PickleError:
-    561             _log.warning(&quot;Could not pickle model, sampling singlethreaded.&quot;)
-
-~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/sampling.py in _mp_sample(draws, tune, step, chains, cores, chain, random_seed, start, progressbar, trace, model, callback, discard_tuned_samples, mp_ctx, pickle_backend, **kwargs)
-   1475         try:
-   1476             with sampler:
--&gt; 1477                 for draw in sampler:
-   1478                     trace = traces[draw.chain - chain]
-   1479                     if trace.supports_sampler_stats and draw.stats is not None:
-
-~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py in __iter__(self)
-    477 
-    478         while self._active:
---&gt; 479             draw = ProcessAdapter.recv_draw(self._active)
-    480             proc, is_last, draw, tuning, stats, warns = draw
-    481             self._total_draws += 1
-
-~/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3/parallel_sampling.py in recv_draw(processes, timeout)
-    357             else:
-    358                 error = RuntimeError(&quot;Chain %s failed.&quot; % proc.chain)
---&gt; 359             raise error from old_error
-    360         elif msg[0] == &quot;writing_done&quot;:
-    361             proc._readable = True
-
-RuntimeError: Chain 0 failed.
+The acceptance probability does not match the target. It is 0.9599042519267924, but should be close to 0.9. Try to increase the number of tuning steps.
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">celerite_model</span><span class="p">:</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{},</span> <span class="n">a_true</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="p">{},</span> <span class="n">c_true</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Got error No model on context stack. trying to find log_likelihood in translation.
-/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/arviz/data/io_pymc3_3x.py:98: FutureWarning: Using `from_pymc3` without the model will be deprecated in a future release. Not using the model will return less accurate and less useful results. Make sure you use the model argument or call from_pymc3 within a model context.
-  warnings.warn(
-ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
 ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
 ERROR (theano.graph.opt): TRACEBACK:
 ERROR (theano.graph.opt): Traceback (most recent call last):
@@ -1307,7 +1272,6 @@ ERROR (theano.graph.opt): Traceback (most recent call last):
     if len(fgraph.clients[input]) == 1:
 AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
 
-Got error No model on context stack. trying to find log_likelihood in translation.
 ERROR (theano.graph.opt): Optimization failure due to: local_join_empty
 ERROR (theano.graph.opt): node: Join(TensorConstant{0}, Elemwise{exp,no_inplace}.0, TensorConstant{[]}, TensorConstant{[]})
 ERROR (theano.graph.opt): TRACEBACK:
@@ -1389,14 +1353,132 @@ ERROR (theano.graph.opt): Traceback (most recent call last):
 AttributeError: &#39;NoneType&#39; object has no attribute &#39;clients&#39;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;a&#39;}&gt;],
-       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;c&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;c&#39;}&gt;]], dtype=object)
+<img alt="_images/colored_noise_56_1.svg" src="_images/colored_noise_56_1.svg" /></div>
+</div>
+<div class="math notranslate nohighlight">
+\[
+\prod_{i=1}^p \left[ \frac{\mathrm{d}}{\mathrm{d} t} - r_i \right] y(t) = \prod_{j=1}^q \left[ \frac{\mathrm{d} }{\mathrm{d} t} - b_i \right] n(t)
+\]</div>
+<p>Recall:
+$<span class="math notranslate nohighlight">\(
+q &lt; p
+\)</span>$
+for finite variance.</p>
+<div class="math notranslate nohighlight">
+\[
+P_y(f) = \sigma^2 \frac{\prod_{j=1}^q \left| \left(2\pi i f\right) - b_j \right|^2}{\prod_{i=1}^p \left| \left(2 \pi i f \right) - r_i \right|^2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P_y \to \frac{1}{f^{2p - 2q}}
+\]</div>
+<p>as
+$<span class="math notranslate nohighlight">\(
+f \to \infty
+\)</span>$</p>
+<p>CARMA(<span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[
+r_i = \gamma + 2\pi i f
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Q = \frac{\pi f}{\gamma}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omegas</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">Qs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">variances</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">terms</span><span class="o">.</span><span class="n">SHOTerm</span><span class="p">(</span><span class="n">Q</span><span class="o">=</span><span class="n">Qs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variances</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">w0</span><span class="o">=</span><span class="n">omegas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">gp</span> <span class="o">=</span> <span class="n">celerite2</span><span class="o">.</span><span class="n">GaussianProcess</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/colored_noise_52_2.svg" src="_images/colored_noise_52_2.svg" /></div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dts</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rand</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">cumsum</span><span class="p">(</span><span class="n">dts</span><span class="p">)</span>
+<span class="n">gp</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x14afb3d00&gt;]
+</pre></div>
+</div>
+<img alt="_images/colored_noise_61_1.svg" src="_images/colored_noise_61_1.svg" /></div>
+</div>
+<div class="math notranslate nohighlight">
+\[
+p\left( y_1 \mid \vec{A}, \vec{Q}, \vec{\omega}_0 \right) \times p\left( y_2 \mid y_1, \vec{A}, \vec{Q}, \vec{\omega}_0 \right) \times p\left( y_3 \mid y_2, y_1, \vec{A}, \vec{Q}, \vec{\omega}_0 \right) \times \ldots
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_1 \right) \times N\left[ \mu\left( t_2 \mid y_1 \right), \Sigma\left(t_2 - t_1 \mid \vec{A}, \vec{Q}, \vec{\omega}_0  \right) \right]\left( y_2 \right) \times N\left[ \mu\left( t_3 \mid y_2, y_1 \right), \Sigma\left(t_3 - t_2 \mid \vec{A}, \vec{Q}, \vec{\omega}_0  \right) \right]\left( y_3 \right) \times \ldots
+\]</div>
+<p><a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2014ApJ...788...33K/abstract">Kelly, et al. (2014)</a> or <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2017AJ....154..220F/abstract">Foreman-Mackey, et al. (2017)</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">kernel</span><span class="o">.</span><span class="n">get_psd</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$P_y(f)$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$P_y(f)$&#39;)
+</pre></div>
+</div>
+<img alt="_images/colored_noise_63_1.svg" src="_images/colored_noise_63_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var</span><span class="p">(</span><span class="n">ys</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">variances</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.9372381767218398, 2.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Nmode</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">sho_model</span><span class="p">:</span>
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;sigmas&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Nmode</span><span class="p">)</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Nmode</span><span class="p">)</span>
+    <span class="n">Qs</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;Qs&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Nmode</span><span class="p">)</span>
+    
+    <span class="n">gp</span> <span class="o">=</span> <span class="n">celerite2</span><span class="o">.</span><span class="n">theano</span><span class="o">.</span><span class="n">GaussianProcess</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">theano_terms</span><span class="o">.</span><span class="n">SHOTerm</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">sigmas</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">Q</span><span class="o">=</span><span class="n">Qs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">w0</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">fs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nmode</span><span class="p">)]))</span>
+    <span class="n">gp</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal</span><span class="p">(</span><span class="s1">&#39;likelihood&#39;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">sho_model</span><span class="p">:</span>
+    <span class="n">sho_trace</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2018ApJ...865L..20F/abstract">Farr, et al. (2018)</a></p>
 </div>
 </div>
 
