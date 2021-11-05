@@ -1559,7 +1559,8 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 
 <span class="n">ts_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sorted_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">mu_Hz_day</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span>
 
-<span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="c1"># uniform in log from ~1/100 of nu_max to 100*nu_max</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">linspace</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span> <span class="n">log</span><span class="p">(</span><span class="mf">100.0</span><span class="p">),</span> <span class="mi">1024</span><span class="p">))</span>
 
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">aldeb_model</span><span class="p">:</span>
     <span class="n">Aosc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;Aosc&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1584,7 +1585,8 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
     
     <span class="n">dvr0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;dvr0&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Ninst</span><span class="p">)</span>
     <span class="n">vr0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;vr0&#39;</span><span class="p">,</span> <span class="n">instrument_mean_rvs</span> <span class="o">+</span> <span class="n">instrument_std_rvs</span><span class="o">*</span><span class="n">dvr0</span><span class="p">)</span>
-    <span class="n">funcert</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;funcert&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Ninst</span><span class="p">)</span>
+    <span class="n">log_funcert</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">2</span><span class="p">)(</span><span class="s1">&#39;log_funcert&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Ninst</span><span class="p">)</span>
+    <span class="n">funcert</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;funcert&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_funcert</span><span class="p">))</span>
     
     <span class="n">orbit</span> <span class="o">=</span> <span class="n">xo</span><span class="o">.</span><span class="n">orbits</span><span class="o">.</span><span class="n">KeplerianOrbit</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">P</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="n">t0</span><span class="p">,</span> <span class="n">ecc</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="n">omega</span><span class="p">)</span>
     
@@ -1618,7 +1620,7 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py:97: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
 Multiprocess sampling (2 chains in 2 jobs)
-NUTS: [funcert, dvr0, phi0_vec, A, P, K, taugran, Agran, fmax, Qosc, Aosc]
+NUTS: [log_funcert, dvr0, phi0_vec, A, P, K, taugran, Agran, fmax, Qosc, Aosc]
 </pre></div>
 </div>
 <div class="output text_html">
@@ -1636,12 +1638,11 @@ NUTS: [funcert, dvr0, phi0_vec, A, P, K, taugran, Agran, fmax, Qosc, Aosc]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 01:53<00:00 Sampling 2 chains, 73 divergences]
+  100.00% [4000/4000 01:49<00:00 Sampling 2 chains, 68 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 129 seconds.
-There were 42 divergences after tuning. Increase `target_accept` or reparameterize.
-There were 31 divergences after tuning. Increase `target_accept` or reparameterize.
-The number of effective samples is smaller than 25% for some parameters.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 135 seconds.
+There were 28 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 40 divergences after tuning. Increase `target_accept` or reparameterize.
 </pre></div>
 </div>
 </div>
@@ -1687,302 +1688,302 @@ The number of effective samples is smaller than 25% for some parameters.
   <tbody>
     <tr>
       <th>P</th>
-      <td>628.671</td>
-      <td>1.821</td>
-      <td>625.522</td>
-      <td>632.196</td>
-      <td>0.058</td>
-      <td>0.041</td>
-      <td>1009.0</td>
-      <td>944.0</td>
+      <td>628.743</td>
+      <td>1.947</td>
+      <td>624.994</td>
+      <td>632.116</td>
+      <td>0.050</td>
+      <td>0.035</td>
+      <td>1520.0</td>
+      <td>1265.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[0]</th>
-      <td>-0.053</td>
-      <td>0.156</td>
-      <td>-0.343</td>
-      <td>0.233</td>
+      <td>-0.052</td>
+      <td>0.162</td>
+      <td>-0.337</td>
+      <td>0.254</td>
       <td>0.005</td>
-      <td>0.003</td>
-      <td>1186.0</td>
-      <td>1147.0</td>
+      <td>0.006</td>
+      <td>1086.0</td>
+      <td>689.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[1]</th>
       <td>-0.067</td>
-      <td>0.119</td>
-      <td>-0.287</td>
-      <td>0.161</td>
-      <td>0.003</td>
-      <td>0.003</td>
-      <td>1164.0</td>
-      <td>627.0</td>
-      <td>1.00</td>
+      <td>0.124</td>
+      <td>-0.293</td>
+      <td>0.170</td>
+      <td>0.004</td>
+      <td>0.005</td>
+      <td>1181.0</td>
+      <td>575.0</td>
+      <td>1.01</td>
     </tr>
     <tr>
       <th>dvr0[2]</th>
-      <td>-0.032</td>
-      <td>0.255</td>
-      <td>-0.487</td>
-      <td>0.459</td>
-      <td>0.009</td>
+      <td>-0.045</td>
+      <td>0.240</td>
+      <td>-0.488</td>
+      <td>0.429</td>
       <td>0.007</td>
-      <td>856.0</td>
-      <td>984.0</td>
+      <td>0.006</td>
+      <td>1302.0</td>
+      <td>953.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[3]</th>
       <td>-0.034</td>
-      <td>0.150</td>
-      <td>-0.308</td>
-      <td>0.260</td>
+      <td>0.148</td>
+      <td>-0.314</td>
+      <td>0.231</td>
       <td>0.004</td>
-      <td>0.004</td>
-      <td>1443.0</td>
-      <td>1194.0</td>
+      <td>0.003</td>
+      <td>1426.0</td>
+      <td>1209.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[4]</th>
-      <td>-0.866</td>
-      <td>0.646</td>
-      <td>-2.168</td>
-      <td>0.258</td>
-      <td>0.022</td>
+      <td>-0.846</td>
+      <td>0.671</td>
+      <td>-2.024</td>
+      <td>0.468</td>
       <td>0.016</td>
-      <td>882.0</td>
-      <td>1385.0</td>
+      <td>0.011</td>
+      <td>1848.0</td>
+      <td>1372.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[5]</th>
-      <td>-0.064</td>
-      <td>0.143</td>
-      <td>-0.324</td>
-      <td>0.207</td>
+      <td>-0.063</td>
+      <td>0.149</td>
+      <td>-0.321</td>
+      <td>0.225</td>
       <td>0.004</td>
-      <td>0.003</td>
+      <td>0.006</td>
       <td>1246.0</td>
-      <td>1093.0</td>
+      <td>669.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[6]</th>
       <td>0.466</td>
-      <td>0.193</td>
-      <td>0.104</td>
-      <td>0.836</td>
+      <td>0.191</td>
+      <td>0.113</td>
+      <td>0.812</td>
       <td>0.005</td>
       <td>0.004</td>
-      <td>1441.0</td>
-      <td>1194.0</td>
+      <td>1425.0</td>
+      <td>1257.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[7]</th>
-      <td>-0.127</td>
-      <td>0.226</td>
-      <td>-0.553</td>
-      <td>0.268</td>
-      <td>0.007</td>
-      <td>0.007</td>
-      <td>948.0</td>
-      <td>855.0</td>
+      <td>-0.126</td>
+      <td>0.221</td>
+      <td>-0.531</td>
+      <td>0.264</td>
+      <td>0.006</td>
+      <td>0.006</td>
+      <td>1269.0</td>
+      <td>462.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>Aosc</th>
-      <td>56.220</td>
-      <td>2.905</td>
-      <td>50.971</td>
-      <td>61.610</td>
-      <td>0.071</td>
-      <td>0.050</td>
-      <td>1705.0</td>
-      <td>1236.0</td>
+      <td>55.975</td>
+      <td>3.008</td>
+      <td>50.710</td>
+      <td>61.990</td>
+      <td>0.086</td>
+      <td>0.061</td>
+      <td>1233.0</td>
+      <td>1002.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>Qosc</th>
-      <td>3.005</td>
-      <td>0.547</td>
-      <td>1.940</td>
-      <td>3.970</td>
-      <td>0.016</td>
-      <td>0.011</td>
-      <td>1275.0</td>
-      <td>1158.0</td>
+      <td>3.009</td>
+      <td>0.567</td>
+      <td>2.009</td>
+      <td>4.052</td>
+      <td>0.015</td>
+      <td>0.010</td>
+      <td>1500.0</td>
+      <td>1028.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>fmax</th>
-      <td>2.272</td>
+      <td>2.275</td>
       <td>0.084</td>
-      <td>2.116</td>
-      <td>2.422</td>
+      <td>2.118</td>
+      <td>2.432</td>
       <td>0.002</td>
       <td>0.001</td>
-      <td>1610.0</td>
-      <td>1375.0</td>
-      <td>1.00</td>
+      <td>1608.0</td>
+      <td>1329.0</td>
+      <td>1.01</td>
     </tr>
     <tr>
       <th>Agran</th>
-      <td>73.434</td>
-      <td>9.301</td>
-      <td>58.505</td>
-      <td>91.950</td>
-      <td>0.304</td>
-      <td>0.215</td>
-      <td>953.0</td>
-      <td>1043.0</td>
+      <td>74.806</td>
+      <td>9.317</td>
+      <td>58.738</td>
+      <td>91.592</td>
+      <td>0.256</td>
+      <td>0.186</td>
+      <td>1420.0</td>
+      <td>1574.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>K</th>
-      <td>124.679</td>
-      <td>13.192</td>
-      <td>99.828</td>
-      <td>148.214</td>
-      <td>0.440</td>
-      <td>0.311</td>
-      <td>886.0</td>
-      <td>1018.0</td>
+      <td>124.419</td>
+      <td>13.298</td>
+      <td>101.525</td>
+      <td>151.664</td>
+      <td>0.363</td>
+      <td>0.257</td>
+      <td>1346.0</td>
+      <td>1231.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>e</th>
-      <td>0.161</td>
+      <td>0.162</td>
       <td>0.069</td>
-      <td>0.021</td>
-      <td>0.278</td>
+      <td>0.028</td>
+      <td>0.285</td>
       <td>0.002</td>
       <td>0.001</td>
-      <td>1048.0</td>
-      <td>676.0</td>
+      <td>1365.0</td>
+      <td>1365.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>omega</th>
-      <td>-1.350</td>
-      <td>0.852</td>
-      <td>-2.722</td>
-      <td>-0.092</td>
-      <td>0.026</td>
-      <td>0.022</td>
-      <td>843.0</td>
-      <td>1165.0</td>
+      <td>-1.345</td>
+      <td>0.906</td>
+      <td>-3.020</td>
+      <td>-0.206</td>
+      <td>0.027</td>
+      <td>0.024</td>
+      <td>935.0</td>
+      <td>709.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>t0</th>
-      <td>146.017</td>
-      <td>25.905</td>
-      <td>97.782</td>
-      <td>194.393</td>
-      <td>0.881</td>
-      <td>0.623</td>
-      <td>865.0</td>
-      <td>930.0</td>
+      <td>146.734</td>
+      <td>27.487</td>
+      <td>91.277</td>
+      <td>192.169</td>
+      <td>0.874</td>
+      <td>0.620</td>
+      <td>993.0</td>
+      <td>1222.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[0]</th>
-      <td>1.579</td>
-      <td>0.930</td>
-      <td>0.276</td>
-      <td>3.173</td>
-      <td>0.034</td>
-      <td>0.024</td>
-      <td>752.0</td>
-      <td>1177.0</td>
+      <td>1.516</td>
+      <td>0.855</td>
+      <td>0.251</td>
+      <td>3.025</td>
+      <td>0.026</td>
+      <td>0.019</td>
+      <td>988.0</td>
+      <td>655.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[1]</th>
-      <td>1.021</td>
-      <td>0.571</td>
-      <td>0.082</td>
-      <td>2.115</td>
-      <td>0.020</td>
-      <td>0.014</td>
-      <td>886.0</td>
-      <td>648.0</td>
+      <td>1.011</td>
+      <td>0.539</td>
+      <td>0.136</td>
+      <td>1.934</td>
+      <td>0.016</td>
+      <td>0.011</td>
+      <td>660.0</td>
+      <td>317.0</td>
       <td>1.01</td>
     </tr>
     <tr>
       <th>funcert[2]</th>
-      <td>1.007</td>
-      <td>0.735</td>
-      <td>0.058</td>
-      <td>2.321</td>
+      <td>1.040</td>
+      <td>0.756</td>
+      <td>0.137</td>
+      <td>2.458</td>
       <td>0.019</td>
       <td>0.013</td>
-      <td>1131.0</td>
-      <td>452.0</td>
+      <td>1231.0</td>
+      <td>785.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[3]</th>
-      <td>0.099</td>
-      <td>0.059</td>
-      <td>0.016</td>
-      <td>0.204</td>
+      <td>0.231</td>
+      <td>0.092</td>
+      <td>0.136</td>
+      <td>0.387</td>
       <td>0.002</td>
-      <td>0.001</td>
-      <td>1224.0</td>
-      <td>1166.0</td>
-      <td>1.01</td>
+      <td>0.002</td>
+      <td>1153.0</td>
+      <td>876.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[4]</th>
-      <td>0.645</td>
-      <td>0.031</td>
-      <td>0.591</td>
-      <td>0.705</td>
+      <td>0.644</td>
+      <td>0.032</td>
+      <td>0.579</td>
+      <td>0.697</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>1149.0</td>
-      <td>636.0</td>
+      <td>1415.0</td>
+      <td>1052.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[5]</th>
-      <td>1.695</td>
+      <td>1.711</td>
       <td>1.269</td>
-      <td>0.035</td>
-      <td>3.956</td>
-      <td>0.040</td>
-      <td>0.028</td>
-      <td>875.0</td>
-      <td>658.0</td>
+      <td>0.139</td>
+      <td>4.055</td>
+      <td>0.039</td>
+      <td>0.031</td>
+      <td>1126.0</td>
+      <td>741.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[6]</th>
-      <td>0.062</td>
-      <td>0.040</td>
-      <td>0.010</td>
-      <td>0.131</td>
+      <td>0.182</td>
+      <td>0.051</td>
+      <td>0.135</td>
+      <td>0.265</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>638.0</td>
-      <td>514.0</td>
+      <td>927.0</td>
+      <td>617.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[7]</th>
-      <td>1.298</td>
-      <td>0.661</td>
-      <td>0.127</td>
-      <td>2.416</td>
-      <td>0.035</td>
-      <td>0.030</td>
-      <td>445.0</td>
-      <td>421.0</td>
+      <td>1.273</td>
+      <td>0.619</td>
+      <td>0.136</td>
+      <td>2.306</td>
+      <td>0.019</td>
+      <td>0.013</td>
+      <td>830.0</td>
+      <td>433.0</td>
       <td>1.00</td>
     </tr>
   </tbody>
@@ -2038,7 +2039,7 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x159c312b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15bdfe2e0&gt;
 </pre></div>
 </div>
 <img alt="_images/colored_noise_80_1.svg" src="_images/colored_noise_80_1.svg" /></div>
