@@ -1513,29 +1513,52 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 </div>
 </div>
 </div>
+<p>Observations of Aldebaran come from several different instruments over several tens of years:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">fn</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fnames</span><span class="p">,</span> <span class="n">dataframes</span><span class="p">):</span>
-    <span class="n">errorbar</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">]),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv_uncert&#39;</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">dsnames</span><span class="p">[</span><span class="n">fn</span><span class="p">])</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;BJD (d)&#39;</span><span class="p">)</span>
-<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r$ ($\mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$)&#39;</span><span class="p">)</span>
-<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataframes</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;husl&#39;</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="n">Ns</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">fn</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fnames</span><span class="p">,</span> <span class="n">dataframes</span><span class="p">):</span>
+        <span class="n">errorbar</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">]),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv_uncert&#39;</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">dsnames</span><span class="p">[</span><span class="n">fn</span><span class="p">])</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;BJD (d)&#39;</span><span class="p">)</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r$ ($\mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$)&#39;</span><span class="p">)</span>
+    <span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15379ec10&gt;
-</pre></div>
+<img alt="_images/colored_noise_73_0.svg" src="_images/colored_noise_73_0.svg" /></div>
 </div>
-<img alt="_images/colored_noise_72_1.svg" src="_images/colored_noise_72_1.svg" /></div>
-</div>
+<p>It is customary to give asteroseismic frequencies in micro-Hz; <span class="math notranslate nohighlight">\(1 \, \mu\mathrm{Hz} \simeq 1 / \left( 12 \, \mathrm{d} \right)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_Hz_day</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3600.0</span> <span class="o">*</span> <span class="mf">24.0</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span>
+<span class="n">mu_Hz_day</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11.574074074074073
 </pre></div>
 </div>
 </div>
 </div>
+<p>Here we build the model that we discussed in class.  The RV measured at instrument <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(t_j\)</span> is modeled as a sum of a Keplerian RV from a high-mass planet orbiting Aldebaran, a GP with two terms in the kernel—an exponential term for granulation noise on very long timescales, and an SHO term representing an un-resolved superposition of asteroseismic modes whose amplitude peaks at some frequency <span class="math notranslate nohighlight">\(\nu_\mathrm{max}\)</span>—for the stellar surface motion, a site-dependent constant RV offset, and a measurement noise:
+$<span class="math notranslate nohighlight">\(
+v_{r,i}\left( t_j \right) = v_{r,\mathrm{Kepler}}\left( t_j \right) + v_{r, \mathrm{stellar}}\left( t_j \right) + v_{0,i} + \epsilon_{ij}
+\)</span><span class="math notranslate nohighlight">\(
+where 
+\)</span><span class="math notranslate nohighlight">\(
+\epsilon_{ij} \sim N\left( 0, f_i \sigma_i\left( t_j \right) \right)
+\)</span><span class="math notranslate nohighlight">\(
+is the measurement noise term, assumed to be a zero-mean Gaussian with s.d. given by a site-dependent scale factor \)</span>f_i<span class="math notranslate nohighlight">\( times the reported measurement uncertainty for site \)</span>i<span class="math notranslate nohighlight">\( at time \)</span>j$.</p>
+<p>Doing a minor bit of algebra, we have
+$<span class="math notranslate nohighlight">\(
+v_{r, \mathrm{stellar}}\left( t_j \right) + \epsilon_{ij} = v_{r,i}\left( t_j \right) - v_{r,\mathrm{Kepler}}\left( t_j \right) - v_{0,i},
+\)</span><span class="math notranslate nohighlight">\(
+which isolates the &quot;stochastic&quot; terms on the left from the &quot;deterministic&quot; terms on the right.  `celerite2` is capable of handling the combined covariance matrix for the LHS, which consists of the sum of an exponential kernel, an SHO kernel, and a diagonal (a &quot;white&quot; kernel) covariance \)</span>\sim \epsilon^2$.</p>
+<p>As usual, we re-center the measurement time series on the median sampled time for better stability in the fit (otherwise we are inferring the time of the pericentre passage closest to Julian day 0 (Monday, 1 January 4713 BC!), which is not a thing that is well-constrained, generating horrible degeneracies with the period—tiny changes in the period couple to tiny shifts in the time of percentre passage observed at Stonehenge near the end of the neolithic era to produce the same RV curve we see today!).</p>
+<p>Because our RV measurements are a mix of “intrinsic” and “site-specific” effects, we compute some index gymnastics to keep track of which site is associated to each RV measurement below; then we feed a (sorted) array of times, RVs, measurement uncertainty, and site indices to the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ninst</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataframes</span><span class="p">)</span>
@@ -1557,54 +1580,78 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 <span class="n">instrument_mean_rvs</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dataframes</span><span class="p">])</span>
 <span class="n">instrument_std_rvs</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="n">std</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dataframes</span><span class="p">])</span>
 
-<span class="n">ts_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sorted_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">mu_Hz_day</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ts_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">sorted_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu_Hz_day</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># uniform in log from ~1/100 of nu_max to 100*nu_max</span>
 <span class="n">fs</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">linspace</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span> <span class="n">log</span><span class="p">(</span><span class="mf">100.0</span><span class="p">),</span> <span class="mi">1024</span><span class="p">))</span>
 
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">aldeb_model</span><span class="p">:</span>
+    <span class="c1"># Aosc in m/s is the RMS amplitude of the mode superposition.</span>
     <span class="n">Aosc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;Aosc&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">Qosc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">)(</span><span class="s1">&#39;Qosc&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># fmax (== nu_max) in muHz</span>
     <span class="n">fmax</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;fmax&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
     
+    <span class="c1"># Agran in m/s is the RMS amplitude of the granulation signal</span>
     <span class="n">Agran</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;Agran&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="c1"># In days!  (For no good reason---just because I was sloppy in class.)</span>
     <span class="n">taugran</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;taugran&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
+    <span class="c1"># RV semi-amplitude in m/s</span>
     <span class="n">K</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">150</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Period in days</span>
     <span class="n">P</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">630</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     
-    <span class="c1"># Eccentricity vector:</span>
+    <span class="c1"># Eccentricity vector gives e = |A|, omega = arg(A):</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">UnitDisk</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
     <span class="n">e</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="n">omega</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;omega&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
+    <span class="c1"># The &quot;phase&quot; of t0.  This is a trick: if we choose a 2D vector with N(0, 1) </span>
+    <span class="c1"># prior on each component, then its angles will be uniformly distributed, but </span>
+    <span class="c1"># with the correct topology: angles crossing from -pi to +pi will be near each </span>
+    <span class="c1"># other in this parameter space, while the obvious definition </span>
+    <span class="c1"># phi0 = pm.Uniform(&#39;phi0&#39;, 0, 2*pi) has a discontinuity there.</span>
     <span class="n">phi0_vec</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;phi0_vec&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">testval</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
     <span class="n">phi0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;phi0&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">phi0_vec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">phi0_vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
     <span class="n">t0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;t0&quot;</span><span class="p">,</span> <span class="n">P</span><span class="o">*</span><span class="n">phi0</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">))</span>
     
+    <span class="c1"># RV offset at each site, in units of that site&#39;s RV s.d., about the mean of the observed RVs.</span>
     <span class="n">dvr0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;dvr0&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Ninst</span><span class="p">)</span>
+    <span class="c1"># Actual RV offset in m/s</span>
     <span class="n">vr0</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;vr0&#39;</span><span class="p">,</span> <span class="n">instrument_mean_rvs</span> <span class="o">+</span> <span class="n">instrument_std_rvs</span><span class="o">*</span><span class="n">dvr0</span><span class="p">)</span>
-    <span class="n">log_funcert</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">2</span><span class="p">)(</span><span class="s1">&#39;log_funcert&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Ninst</span><span class="p">)</span>
-    <span class="n">funcert</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;funcert&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_funcert</span><span class="p">))</span>
     
+    <span class="c1"># RV measurement error scaling factor for each site.</span>
+    <span class="n">funcert</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;funcert&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">Ninst</span><span class="p">)</span>
+    
+    <span class="c1"># Construct the orbit.</span>
     <span class="n">orbit</span> <span class="o">=</span> <span class="n">xo</span><span class="o">.</span><span class="n">orbits</span><span class="o">.</span><span class="n">KeplerianOrbit</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">P</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="n">t0</span><span class="p">,</span> <span class="n">ecc</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">omega</span><span class="o">=</span><span class="n">omega</span><span class="p">)</span>
     
+    <span class="c1"># The Kepler part of the RV signal.</span>
     <span class="n">rv_kepler</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s2">&quot;v_r_kepler&quot;</span><span class="p">,</span> <span class="n">orbit</span><span class="o">.</span><span class="n">get_radial_velocity</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="p">))</span>
 
+    <span class="c1"># Construct the GP with two terms in the kernel.</span>
     <span class="n">gp</span> <span class="o">=</span> <span class="n">celerite2</span><span class="o">.</span><span class="n">theano</span><span class="o">.</span><span class="n">GaussianProcess</span><span class="p">(</span><span class="n">theano_terms</span><span class="o">.</span><span class="n">RealTerm</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">Agran</span><span class="o">*</span><span class="n">Agran</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">taugran</span><span class="p">)</span> <span class="o">+</span>
                                           <span class="n">theano_terms</span><span class="o">.</span><span class="n">SHOTerm</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">Aosc</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="n">Qosc</span><span class="p">,</span> <span class="n">w0</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">fmax</span><span class="o">/</span><span class="n">mu_Hz_day</span><span class="p">))</span>
+    
+    <span class="c1"># Factorize the GP covariance matrix, including the diagonal measurement error term (scaled by the site-specific factor)</span>
     <span class="n">gp</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">sorted_raw_rv_uncerts</span><span class="o">*</span><span class="n">funcert</span><span class="p">[</span><span class="n">sorted_indexes</span><span class="p">])</span>
     
+    <span class="c1"># This is the &quot;stochastic&quot; part of the RV signal; note the index tricks to apply the constant RV offset</span>
     <span class="n">rv_residual</span> <span class="o">=</span> <span class="n">sorted_raw_rvs</span> <span class="o">-</span> <span class="n">rv_kepler</span> <span class="o">-</span> <span class="n">vr0</span><span class="p">[</span><span class="n">sorted_indexes</span><span class="p">]</span>
+    
+    <span class="n">rv_stellar_mean</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_stellar_mean&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">rv_residual</span><span class="p">))</span>
+    
+    <span class="c1"># Here is the likelihood function:</span>
     <span class="n">_</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal</span><span class="p">(</span><span class="s1">&#39;stellar_rv_likelihood&#39;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">rv_residual</span><span class="p">)</span>
     
+    <span class="c1"># Now we output a bunch of derived quantities.</span>
+    <span class="c1"># First the PSD:</span>
     <span class="n">psd</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;psd&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">get_psd</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">fs</span><span class="o">/</span><span class="n">mu_Hz_day</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="n">mu_Hz_day</span><span class="p">)</span>
-    <span class="n">rv_stellar</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_stellar&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">rv_residual</span><span class="p">))</span>
-    <span class="n">resid</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_resid&#39;</span><span class="p">,</span> <span class="n">rv_residual</span> <span class="o">-</span> <span class="n">rv_stellar</span><span class="p">)</span>
     
+    <span class="c1"># We also record the keplerian and expected stellar component on a dense grid of times for plotting later</span>
     <span class="n">rv_kepler_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_kepler_pred&#39;</span><span class="p">,</span> <span class="n">orbit</span><span class="o">.</span><span class="n">get_radial_velocity</span><span class="p">(</span><span class="n">ts_pred</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="p">))</span>
-    <span class="n">rv_stellar_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_stellar_pred&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">rv_residual</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">ts_pred</span><span class="p">))</span>
+    <span class="n">rv_stellar_pred_mean</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;v_r_stellar_pred_mean&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">rv_residual</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">ts_pred</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1620,7 +1667,7 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py:97: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
 Multiprocess sampling (2 chains in 2 jobs)
-NUTS: [log_funcert, dvr0, phi0_vec, A, P, K, taugran, Agran, fmax, Qosc, Aosc]
+NUTS: [funcert, dvr0, phi0_vec, A, P, K, taugran, Agran, fmax, Qosc, Aosc]
 </pre></div>
 </div>
 <div class="output text_html">
@@ -1638,11 +1685,12 @@ NUTS: [log_funcert, dvr0, phi0_vec, A, P, K, taugran, Agran, fmax, Qosc, Aosc]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 01:49<00:00 Sampling 2 chains, 68 divergences]
+  100.00% [4000/4000 01:57<00:00 Sampling 2 chains, 62 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 135 seconds.
-There were 28 divergences after tuning. Increase `target_accept` or reparameterize.
-There were 40 divergences after tuning. Increase `target_accept` or reparameterize.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 140 seconds.
+There were 24 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 38 divergences after tuning. Increase `target_accept` or reparameterize.
+The number of effective samples is smaller than 25% for some parameters.
 </pre></div>
 </div>
 </div>
@@ -1688,308 +1736,309 @@ There were 40 divergences after tuning. Increase `target_accept` or reparameteri
   <tbody>
     <tr>
       <th>P</th>
-      <td>628.743</td>
-      <td>1.947</td>
-      <td>624.994</td>
-      <td>632.116</td>
-      <td>0.050</td>
-      <td>0.035</td>
-      <td>1520.0</td>
-      <td>1265.0</td>
+      <td>628.754</td>
+      <td>1.883</td>
+      <td>625.329</td>
+      <td>632.269</td>
+      <td>0.057</td>
+      <td>0.040</td>
+      <td>1111.0</td>
+      <td>967.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[0]</th>
-      <td>-0.052</td>
-      <td>0.162</td>
-      <td>-0.337</td>
-      <td>0.254</td>
+      <td>-0.059</td>
+      <td>0.161</td>
+      <td>-0.353</td>
+      <td>0.243</td>
       <td>0.005</td>
-      <td>0.006</td>
-      <td>1086.0</td>
-      <td>689.0</td>
+      <td>0.004</td>
+      <td>1240.0</td>
+      <td>754.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[1]</th>
-      <td>-0.067</td>
-      <td>0.124</td>
-      <td>-0.293</td>
-      <td>0.170</td>
-      <td>0.004</td>
-      <td>0.005</td>
-      <td>1181.0</td>
-      <td>575.0</td>
-      <td>1.01</td>
+      <td>-0.066</td>
+      <td>0.123</td>
+      <td>-0.291</td>
+      <td>0.174</td>
+      <td>0.003</td>
+      <td>0.003</td>
+      <td>1305.0</td>
+      <td>870.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[2]</th>
-      <td>-0.045</td>
-      <td>0.240</td>
-      <td>-0.488</td>
-      <td>0.429</td>
+      <td>-0.029</td>
+      <td>0.251</td>
+      <td>-0.536</td>
+      <td>0.440</td>
       <td>0.007</td>
       <td>0.006</td>
-      <td>1302.0</td>
-      <td>953.0</td>
+      <td>1401.0</td>
+      <td>985.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[3]</th>
-      <td>-0.034</td>
-      <td>0.148</td>
-      <td>-0.314</td>
-      <td>0.231</td>
+      <td>-0.030</td>
+      <td>0.156</td>
+      <td>-0.326</td>
+      <td>0.245</td>
+      <td>0.005</td>
       <td>0.004</td>
-      <td>0.003</td>
-      <td>1426.0</td>
-      <td>1209.0</td>
+      <td>1056.0</td>
+      <td>680.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[4]</th>
-      <td>-0.846</td>
-      <td>0.671</td>
-      <td>-2.024</td>
-      <td>0.468</td>
-      <td>0.016</td>
-      <td>0.011</td>
-      <td>1848.0</td>
-      <td>1372.0</td>
-      <td>1.00</td>
+      <td>-0.860</td>
+      <td>0.665</td>
+      <td>-2.078</td>
+      <td>0.406</td>
+      <td>0.019</td>
+      <td>0.013</td>
+      <td>1299.0</td>
+      <td>959.0</td>
+      <td>1.01</td>
     </tr>
     <tr>
       <th>dvr0[5]</th>
-      <td>-0.063</td>
-      <td>0.149</td>
-      <td>-0.321</td>
-      <td>0.225</td>
+      <td>-0.065</td>
+      <td>0.148</td>
+      <td>-0.340</td>
+      <td>0.215</td>
       <td>0.004</td>
-      <td>0.006</td>
-      <td>1246.0</td>
-      <td>669.0</td>
+      <td>0.004</td>
+      <td>1337.0</td>
+      <td>737.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[6]</th>
-      <td>0.466</td>
-      <td>0.191</td>
-      <td>0.113</td>
-      <td>0.812</td>
+      <td>0.471</td>
+      <td>0.200</td>
+      <td>0.088</td>
+      <td>0.825</td>
+      <td>0.006</td>
       <td>0.005</td>
-      <td>0.004</td>
-      <td>1425.0</td>
-      <td>1257.0</td>
+      <td>1053.0</td>
+      <td>680.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>dvr0[7]</th>
-      <td>-0.126</td>
-      <td>0.221</td>
-      <td>-0.531</td>
-      <td>0.264</td>
+      <td>-0.121</td>
+      <td>0.230</td>
+      <td>-0.525</td>
+      <td>0.326</td>
       <td>0.006</td>
-      <td>0.006</td>
-      <td>1269.0</td>
-      <td>462.0</td>
+      <td>0.005</td>
+      <td>1330.0</td>
+      <td>739.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>Aosc</th>
-      <td>55.975</td>
-      <td>3.008</td>
-      <td>50.710</td>
-      <td>61.990</td>
-      <td>0.086</td>
-      <td>0.061</td>
-      <td>1233.0</td>
-      <td>1002.0</td>
+      <td>56.166</td>
+      <td>2.877</td>
+      <td>50.887</td>
+      <td>61.653</td>
+      <td>0.079</td>
+      <td>0.056</td>
+      <td>1298.0</td>
+      <td>970.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>Qosc</th>
-      <td>3.009</td>
-      <td>0.567</td>
-      <td>2.009</td>
-      <td>4.052</td>
+      <td>2.970</td>
+      <td>0.578</td>
+      <td>1.882</td>
+      <td>3.984</td>
       <td>0.015</td>
-      <td>0.010</td>
-      <td>1500.0</td>
-      <td>1028.0</td>
+      <td>0.011</td>
+      <td>1363.0</td>
+      <td>1020.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>fmax</th>
-      <td>2.275</td>
-      <td>0.084</td>
-      <td>2.118</td>
-      <td>2.432</td>
+      <td>2.272</td>
+      <td>0.082</td>
+      <td>2.123</td>
+      <td>2.426</td>
       <td>0.002</td>
-      <td>0.001</td>
-      <td>1608.0</td>
-      <td>1329.0</td>
-      <td>1.01</td>
+      <td>0.002</td>
+      <td>1195.0</td>
+      <td>1184.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>Agran</th>
-      <td>74.806</td>
-      <td>9.317</td>
-      <td>58.738</td>
-      <td>91.592</td>
-      <td>0.256</td>
-      <td>0.186</td>
-      <td>1420.0</td>
-      <td>1574.0</td>
+      <td>73.348</td>
+      <td>9.298</td>
+      <td>57.518</td>
+      <td>90.331</td>
+      <td>0.282</td>
+      <td>0.206</td>
+      <td>1212.0</td>
+      <td>1117.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>K</th>
-      <td>124.419</td>
-      <td>13.298</td>
-      <td>101.525</td>
-      <td>151.664</td>
-      <td>0.363</td>
-      <td>0.257</td>
-      <td>1346.0</td>
-      <td>1231.0</td>
+      <td>125.074</td>
+      <td>13.101</td>
+      <td>98.087</td>
+      <td>147.738</td>
+      <td>0.407</td>
+      <td>0.288</td>
+      <td>1033.0</td>
+      <td>1232.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>e</th>
-      <td>0.162</td>
-      <td>0.069</td>
-      <td>0.028</td>
-      <td>0.285</td>
+      <td>0.166</td>
+      <td>0.070</td>
+      <td>0.036</td>
+      <td>0.292</td>
       <td>0.002</td>
-      <td>0.001</td>
-      <td>1365.0</td>
-      <td>1365.0</td>
+      <td>0.002</td>
+      <td>1201.0</td>
+      <td>803.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>omega</th>
-      <td>-1.345</td>
-      <td>0.906</td>
-      <td>-3.020</td>
-      <td>-0.206</td>
-      <td>0.027</td>
-      <td>0.024</td>
-      <td>935.0</td>
-      <td>709.0</td>
+      <td>-1.367</td>
+      <td>0.849</td>
+      <td>-2.919</td>
+      <td>-0.200</td>
+      <td>0.028</td>
+      <td>0.023</td>
+      <td>742.0</td>
+      <td>627.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>t0</th>
-      <td>146.734</td>
-      <td>27.487</td>
-      <td>91.277</td>
-      <td>192.169</td>
-      <td>0.874</td>
-      <td>0.620</td>
-      <td>993.0</td>
-      <td>1222.0</td>
+      <td>146.445</td>
+      <td>27.314</td>
+      <td>96.073</td>
+      <td>200.094</td>
+      <td>1.121</td>
+      <td>0.825</td>
+      <td>608.0</td>
+      <td>565.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[0]</th>
-      <td>1.516</td>
-      <td>0.855</td>
-      <td>0.251</td>
-      <td>3.025</td>
-      <td>0.026</td>
-      <td>0.019</td>
-      <td>988.0</td>
-      <td>655.0</td>
+      <td>1.760</td>
+      <td>1.084</td>
+      <td>0.326</td>
+      <td>3.936</td>
+      <td>0.031</td>
+      <td>0.022</td>
+      <td>959.0</td>
+      <td>1113.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[1]</th>
-      <td>1.011</td>
-      <td>0.539</td>
-      <td>0.136</td>
-      <td>1.934</td>
-      <td>0.016</td>
-      <td>0.011</td>
-      <td>660.0</td>
-      <td>317.0</td>
-      <td>1.01</td>
+      <td>0.911</td>
+      <td>0.654</td>
+      <td>0.002</td>
+      <td>2.047</td>
+      <td>0.020</td>
+      <td>0.014</td>
+      <td>811.0</td>
+      <td>804.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[2]</th>
-      <td>1.040</td>
-      <td>0.756</td>
-      <td>0.137</td>
-      <td>2.458</td>
-      <td>0.019</td>
-      <td>0.013</td>
-      <td>1231.0</td>
-      <td>785.0</td>
+      <td>0.821</td>
+      <td>0.881</td>
+      <td>0.002</td>
+      <td>2.540</td>
+      <td>0.023</td>
+      <td>0.016</td>
+      <td>1129.0</td>
+      <td>1048.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[3]</th>
-      <td>0.231</td>
-      <td>0.092</td>
-      <td>0.136</td>
-      <td>0.387</td>
-      <td>0.002</td>
-      <td>0.002</td>
-      <td>1153.0</td>
-      <td>876.0</td>
+      <td>0.031</td>
+      <td>0.025</td>
+      <td>0.000</td>
+      <td>0.074</td>
+      <td>0.001</td>
+      <td>0.001</td>
+      <td>957.0</td>
+      <td>735.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[4]</th>
       <td>0.644</td>
       <td>0.032</td>
-      <td>0.579</td>
-      <td>0.697</td>
+      <td>0.587</td>
+      <td>0.706</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>1415.0</td>
-      <td>1052.0</td>
+      <td>1283.0</td>
+      <td>1029.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[5]</th>
-      <td>1.711</td>
-      <td>1.269</td>
-      <td>0.139</td>
-      <td>4.055</td>
-      <td>0.039</td>
-      <td>0.031</td>
-      <td>1126.0</td>
-      <td>741.0</td>
+      <td>1.793</td>
+      <td>1.602</td>
+      <td>0.003</td>
+      <td>4.885</td>
+      <td>0.057</td>
+      <td>0.040</td>
+      <td>554.0</td>
+      <td>185.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[6]</th>
-      <td>0.182</td>
-      <td>0.051</td>
-      <td>0.135</td>
-      <td>0.265</td>
+      <td>0.020</td>
+      <td>0.015</td>
+      <td>0.000</td>
+      <td>0.047</td>
       <td>0.001</td>
-      <td>0.001</td>
-      <td>927.0</td>
-      <td>617.0</td>
+      <td>0.000</td>
+      <td>1054.0</td>
+      <td>469.0</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>funcert[7]</th>
-      <td>1.273</td>
-      <td>0.619</td>
-      <td>0.136</td>
-      <td>2.306</td>
-      <td>0.019</td>
-      <td>0.013</td>
-      <td>830.0</td>
-      <td>433.0</td>
+      <td>1.140</td>
+      <td>0.774</td>
+      <td>0.004</td>
+      <td>2.393</td>
+      <td>0.034</td>
+      <td>0.024</td>
+      <td>417.0</td>
+      <td>364.0</td>
       <td>1.00</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<p>Here is the traceplot; the model seems to have a lot of “divergences” (places where the ball rolling around the bowl has somehow shot off to “infinity” because it hit a bump or the sampler otherwise failed to accurately integrate the trajectory).  These seem (?) to be associated to small <code class="docutils literal notranslate"><span class="pre">funcert</span></code> (for site 3 and site 6, which are the McDonald 2.7m and 2.1m, the measurement uncertainty scaling factors are <span class="math notranslate nohighlight">\(\lesssim 0.1\)</span>, indicating something very strange about those measurements—they are “too good?”)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">aldeb_model</span><span class="p">:</span>
@@ -1998,40 +2047,13 @@ There were 40 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/colored_noise_77_0.svg" src="_images/colored_noise_77_0.svg" /></div>
+<img alt="_images/colored_noise_81_0.svg" src="_images/colored_noise_81_0.svg" /></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errorbar</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_resid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">sorted_indexes</span><span class="p">]</span><span class="o">*</span><span class="n">sorted_raw_rv_uncerts</span><span class="p">)</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t-t_\mathrm</span><span class="si">{med}</span><span class="s1">$ ($\mathrm</span><span class="si">{BJD}</span><span class="s1">$)&#39;</span><span class="p">)</span>
-<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r - v_{r,\mathrm</span><span class="si">{pred}</span><span class="s1">}$ ($\mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$)&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r - v_{r,\\mathrm{pred}}$ ($\\mathrm{m} \\, \\mathrm{s}^{-1}$)&#39;)
-</pre></div>
-</div>
-<img alt="_images/colored_noise_78_1.svg" src="_images/colored_noise_78_1.svg" /></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errorbar</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_resid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">sorted_indexes</span><span class="p">]</span><span class="o">/</span><span class="n">sorted_raw_rv_uncerts</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">ones_like</span><span class="p">(</span><span class="n">sorted_times</span><span class="p">))</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t-t_\mathrm</span><span class="si">{med}</span><span class="s1">$ ($\mathrm</span><span class="si">{BJD}</span><span class="s1">$)&#39;</span><span class="p">)</span>
-<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\left(v_r - v_{r,\mathrm</span><span class="si">{pred}</span><span class="s1">} \right) / \sigma_</span><span class="si">{v_r}</span><span class="s1">$&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$\\left(v_r - v_{r,\\mathrm{pred}} \\right) / \\sigma_{v_r}$&#39;)
-</pre></div>
-</div>
-<img alt="_images/colored_noise_79_1.svg" src="_images/colored_noise_79_1.svg" /></div>
-</div>
+<p>Normally we would make a residual plot to consider whether the model has correctly “whitened” the residuals.  But for performance reasons, we have only output the <em>mean</em> GP prediction for the stellar RV timeseries, which is not the same thing as a fair draw from the GP—it will be more “centrally concentrated,” so the residuals will look <em>too good</em>.  Instead, we will show the mean of the means GP (whew!) and the mean Keplerian signal below.  Note the “regression to the mean” of the GP between observations—without observations to inform the state space model, the GP mean decays away to zero:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">ts_pred</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_kepler_pred&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Keplerian&#39;</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">ts_pred</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_stellar_pred&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stellar GP Mean&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ts_pred</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_stellar_pred_mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stellar GP Mean&#39;</span><span class="p">)</span>
 <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t - t_\mathrm</span><span class="si">{ref}</span><span class="s1">$ ($\mathrm</span><span class="si">{BJD}</span><span class="s1">$)&#39;</span><span class="p">)</span>
 <span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r$ ($\mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$)&#39;</span><span class="p">)</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
@@ -2039,30 +2061,31 @@ There were 40 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15bdfe2e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14fc75a60&gt;
 </pre></div>
 </div>
-<img alt="_images/colored_noise_80_1.svg" src="_images/colored_noise_80_1.svg" /></div>
+<img alt="_images/colored_noise_83_1.svg" src="_images/colored_noise_83_1.svg" /></div>
 </div>
+<p>Here we plot the Keplerian plus the GP mean against the data for one random draw from the chain (remember—the GP mean will pass “too close” to the data compared to a fair draw from the GP).  Every time this cell is executed a different curve will appear.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">Nt</span> <span class="o">=</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">i</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">Nt</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">df</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">fu</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dataframes</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;vr0&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:]):</span>
-    <span class="n">errorbar</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">tmid</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">v0</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv_uncert&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">fu</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">ts_pred</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_stellar_pred&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_kepler_pred&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t - t_\mathrm</span><span class="si">{med}</span><span class="s1">$ ($\mathrm</span><span class="si">{BDJ}</span><span class="s1">$)&#39;</span><span class="p">)</span>
-<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r$ ($\mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$)&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Nt</span> <span class="o">=</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Ns</span> <span class="o">=</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;husl&#39;</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="n">Ns</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">Nt</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">df</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">fu</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dataframes</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;vr0&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:]):</span>
+        <span class="n">errorbar</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">tmid</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">v0</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;rv_uncert&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">fu</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">ts_pred</span><span class="p">,</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_stellar_pred_mean&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;v_r_kepler_pred&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t - t_\mathrm</span><span class="si">{med}</span><span class="s1">$ ($\mathrm</span><span class="si">{BDJ}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$v_r$ ($\mathrm</span><span class="si">{m}</span><span class="s1"> \, \mathrm</span><span class="si">{s}</span><span class="s1">^{-1}$)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$v_r$ ($\\mathrm{m} \\, \\mathrm{s}^{-1}$)&#39;)
-</pre></div>
+<img alt="_images/colored_noise_85_0.svg" src="_images/colored_noise_85_0.svg" /></div>
 </div>
-<img alt="_images/colored_noise_81_1.svg" src="_images/colored_noise_81_1.svg" /></div>
-</div>
+<p>Here is the PSD of the stellar GP, clearly showing a peak around <span class="math notranslate nohighlight">\(2 \, \mu\mathrm{Hz}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="p">,</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">fs</span><span class="o">*</span><span class="n">median</span><span class="p">(</span><span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;psd&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
@@ -2079,19 +2102,47 @@ There were 40 divergences after tuning. Increase `target_accept` or reparameteri
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$f P(f)$ ($\\mathrm{m}^2 \\, \\mathrm{s}^{-2}$)&#39;)
 </pre></div>
 </div>
-<img alt="_images/colored_noise_82_1.svg" src="_images/colored_noise_82_1.svg" /></div>
+<img alt="_images/colored_noise_87_1.svg" src="_images/colored_noise_87_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">271</span><span class="o">-</span><span class="mi">207</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the inferred peak value: <span class="math notranslate nohighlight">\(\nu_\mathrm{max} = 2.28^{+0.102}_{-0.064} \, \mu\mathrm{Hz}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">aldeb_model</span><span class="p">:</span>
-    <span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">aldeb_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="s1">&#39;fmax&#39;</span><span class="p">,</span> <span class="n">point_estimate</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">round_to</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">hdi_prob</span><span class="o">=</span><span class="mf">0.68</span><span class="p">)</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">aldeb_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="s1">&#39;fmax&#39;</span><span class="p">,</span> <span class="n">point_estimate</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">round_to</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">hdi_prob</span><span class="o">=</span><span class="mf">0.68</span><span class="p">)</span>
     <span class="n">title</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\nu_\mathrm</span><span class="si">{max}</span><span class="s1">$ ($\mu\mathrm</span><span class="si">{Hz}</span><span class="s1">$)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/colored_noise_83_0.svg" src="_images/colored_noise_83_0.svg" /></div>
+<img alt="_images/colored_noise_90_0.svg" src="_images/colored_noise_90_0.svg" /></div>
+</div>
+<p>Something very strange is going on with the errorbars in the McDonald instrument—our model would prefer then to be something like 1% of the quoted uncertainty….  We also see that the Song telescope appears to be a bit pessisimistic about its uncertainty (inflated by ~30% relative to what the model would prefer).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;husl&#39;</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fnames</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">dsnames</span><span class="p">[</span><span class="n">fn</span><span class="p">]</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">aldeb_trace</span><span class="p">[</span><span class="s1">&#39;funcert&#39;</span><span class="p">][:,</span><span class="n">i</span><span class="p">],</span> <span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f_\mathrm</span><span class="si">{uncert}</span><span class="s1">$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/colored_noise_92_0.svg" src="_images/colored_noise_92_0.svg" /></div>
 </div>
 </div>
 </div>
