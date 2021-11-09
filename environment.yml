@@ -18,6 +18,7 @@ dependencies:
   - astropy
   - mkl
   - h5py
+  - nodejs
   - pip:
     - jupyter-book
     - daft

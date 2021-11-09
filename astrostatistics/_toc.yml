@@ -8,7 +8,6 @@ chapters:
 - file: syllabus
 - file: regression_and_curve_fitting
 - file: colored_noise
-- file: gaussian_processes
 - file: populations
 - file: selection_effects
 - file: special_methods
