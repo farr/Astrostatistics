@@ -53,7 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Gaussian Processes" href="gaussian_processes.html" />
+    <link rel="next" title="Populations and Catalogs" href="populations.html" />
     <link rel="prev" title="Regression and Curve Fitting" href="regression_and_curve_fitting.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -114,11 +114,6 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Colored Noise
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_processes.html">
-   Gaussian Processes
   </a>
  </li>
  <li class="toctree-l1">
@@ -1491,7 +1486,7 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 </div>
 <div class="section" id="keplerian-and-asteroseismology-in-rv">
 <h2>Keplerian and Asteroseismology in RV<a class="headerlink" href="#keplerian-and-asteroseismology-in-rv" title="Permalink to this headline">¶</a></h2>
-<p>Here we will reproduce the results of <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2018ApJ...865L..20F/abstract">Farr, et al. (2018)</a>.  The data for that paper live <a class="reference external" href="https://github.com/farr/Aldebaran">here</a>; I have downloaded them and present them here:</p>
+<p>Here we will reproduce the results of <span id="id4">[<a class="reference internal" href="bibliography.html#id15">Farr <em>et al.</em>, 2018</a>]</span>.  The data for that paper live <a class="reference external" href="https://github.com/farr/Aldebaran">here</a>; I have downloaded them and present them here:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsnames</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s2">&quot;table3.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;CFHT&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;table4.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;DAO&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;table5.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;McDonald 2.1m&quot;</span><span class="p">),</span> 
@@ -1543,20 +1538,23 @@ N\left[ 0, \Sigma\left(\vec{A}, \vec{Q}, \vec{\omega}_0 \right) \right]\left( y_
 </div>
 </div>
 </div>
-<p>Here we build the model that we discussed in class.  The RV measured at instrument <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(t_j\)</span> is modeled as a sum of a Keplerian RV from a high-mass planet orbiting Aldebaran, a GP with two terms in the kernel—an exponential term for granulation noise on very long timescales, and an SHO term representing an un-resolved superposition of asteroseismic modes whose amplitude peaks at some frequency <span class="math notranslate nohighlight">\(\nu_\mathrm{max}\)</span>—for the stellar surface motion, a site-dependent constant RV offset, and a measurement noise:
-$<span class="math notranslate nohighlight">\(
+<p>Here we build the model that we discussed in class.  The RV measured at instrument <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(t_j\)</span> is modeled as a sum of a Keplerian RV from a high-mass planet orbiting Aldebaran, a GP with two terms in the kernel—an exponential term for granulation noise on very long timescales, and an SHO term representing an un-resolved superposition of asteroseismic modes whose amplitude peaks at some frequency <span class="math notranslate nohighlight">\(\nu_\mathrm{max}\)</span>—for the stellar surface motion, a site-dependent constant RV offset, and a measurement noise:</p>
+<div class="math notranslate nohighlight">
+\[
 v_{r,i}\left( t_j \right) = v_{r,\mathrm{Kepler}}\left( t_j \right) + v_{r, \mathrm{stellar}}\left( t_j \right) + v_{0,i} + \epsilon_{ij}
-\)</span><span class="math notranslate nohighlight">\(
-where 
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
 \epsilon_{ij} \sim N\left( 0, f_i \sigma_i\left( t_j \right) \right)
-\)</span><span class="math notranslate nohighlight">\(
-is the measurement noise term, assumed to be a zero-mean Gaussian with s.d. given by a site-dependent scale factor \)</span>f_i<span class="math notranslate nohighlight">\( times the reported measurement uncertainty for site \)</span>i<span class="math notranslate nohighlight">\( at time \)</span>j$.</p>
-<p>Doing a minor bit of algebra, we have
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>is the measurement noise term, assumed to be a zero-mean Gaussian with s.d. given by a site-dependent scale factor <span class="math notranslate nohighlight">\(f_i\)</span> times the reported measurement uncertainty for site <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<p>Doing a minor bit of algebra, we have</p>
+<div class="math notranslate nohighlight">
+\[
 v_{r, \mathrm{stellar}}\left( t_j \right) + \epsilon_{ij} = v_{r,i}\left( t_j \right) - v_{r,\mathrm{Kepler}}\left( t_j \right) - v_{0,i},
-\)</span><span class="math notranslate nohighlight">\(
-which isolates the &quot;stochastic&quot; terms on the left from the &quot;deterministic&quot; terms on the right.  `celerite2` is capable of handling the combined covariance matrix for the LHS, which consists of the sum of an exponential kernel, an SHO kernel, and a diagonal (a &quot;white&quot; kernel) covariance \)</span>\sim \epsilon^2$.</p>
+\]</div>
+<p>which isolates the “stochastic” terms on the left from the “deterministic” terms on the right.  <code class="docutils literal notranslate"><span class="pre">celerite2</span></code> is capable of handling the combined covariance matrix for the LHS, which consists of the sum of an exponential kernel, an SHO kernel, and a diagonal (a “white” kernel) covariance <span class="math notranslate nohighlight">\(\sim \epsilon^2\)</span>.</p>
 <p>As usual, we re-center the measurement time series on the median sampled time for better stability in the fit (otherwise we are inferring the time of the pericentre passage closest to Julian day 0 (Monday, 1 January 4713 BC!), which is not a thing that is well-constrained, generating horrible degeneracies with the period—tiny changes in the period couple to tiny shifts in the time of percentre passage observed at Stonehenge near the end of the neolithic era to produce the same RV curve we see today!).</p>
 <p>Because our RV measurements are a mix of “intrinsic” and “site-specific” effects, we compute some index gymnastics to keep track of which site is associated to each RV measurement below; then we feed a (sorted) array of times, RVs, measurement uncertainty, and site indices to the model.</p>
 <div class="cell docutils container">
@@ -2186,10 +2184,10 @@ The number of effective samples is smaller than 25% for some parameters.
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="gaussian_processes.html" title="next page">
+        <a class="right-next" href="populations.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Gaussian Processes</p>
+                <p class="prevnext-title">Populations and Catalogs</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
