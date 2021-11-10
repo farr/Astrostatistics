@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -274,6 +276,7 @@
 <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="kn">import</span> <span class="nn">pymc3_ext</span> <span class="k">as</span> <span class="nn">pmx</span>
 <span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="k">as</span> <span class="nn">tt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
@@ -627,20 +630,47 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1530d6ca0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x156324a30&gt;
 </pre></div>
 </div>
 <img alt="_images/populations_5_1.svg" src="_images/populations_5_1.svg" /></div>
 </div>
+<p>In class we derived the inhomogeneous Poisson likelihood.  For stars that occur with a I.H.P. rate (aka “intensity”)
+$<span class="math notranslate nohighlight">\(
+\frac{\mathrm{d} N}{\mathrm{d} m} 
+\)</span><span class="math notranslate nohighlight">\(
+the likelihood for observations \)</span>m_i<span class="math notranslate nohighlight">\( is 
+\)</span><span class="math notranslate nohighlight">\(
+p\left( \left\{ m_i \mid i = 1, \ldots, n \right\} \mid \ldots \right) = \exp\left( - N \right) \prod_{i=1}^n \frac{\mathrm{d} N}{\mathrm{d} m_i };
+\)</span><span class="math notranslate nohighlight">\(
+here the \)</span>\ldots$ stand in for whatever parameters we need to specify the intensity.</p>
+<p>Let’s fit a power-law intensity to the <span class="math notranslate nohighlight">\(m\)</span> estimates from <span id="id2">[<a class="reference internal" href="bibliography.html#id16">Schneider <em>et al.</em>, 2018</a>]</span>.  We will parameterize the power law by
+$<span class="math notranslate nohighlight">\(
+\frac{\mathrm{d} N}{\mathrm{d} m} = \frac{A}{m_\mathrm{min}} \left( \frac{m}{m_\mathrm{min}} \right)^{-\alpha}.
+\)</span><span class="math notranslate nohighlight">\(
+Here \)</span>A<span class="math notranslate nohighlight">\(, an &quot;amplitude&quot; parameter, corresponds to the differential star formation rate *per (natural) log mass* at \)</span>m = m_\mathrm{min}<span class="math notranslate nohighlight">\(:
+\)</span><span class="math notranslate nohighlight">\(
+\left. m \frac{\mathrm{d} N}{\mathrm{d} m} \right|_{m = m_\mathrm{min}} = \left. \frac{\mathrm{d} N}{\mathrm{d} \ln m} \right|_{m = m_\mathrm{min}} = A
+\)</span><span class="math notranslate nohighlight">\(
+the &quot;power law slope&quot; is \)</span>-\alpha<span class="math notranslate nohighlight">\(.  We will fix \)</span>m_\mathrm{min} = 20 , M_\odot<span class="math notranslate nohighlight">\( is our analysis because we are not yet ready to face the selection effects plaguing lower masses (lower mass stars are dimmer, and therefore harder to obtain spectra for, and therefore appear under-represented in the above data set), and it looks like the observations are approximately power-law for \)</span>m &gt; 20 , M_\odot$.</p>
+<p>We will need the integral of the intensity:
+$<span class="math notranslate nohighlight">\(
+\Lambda \equiv \int_{m_\mathrm{min}}^\infty \mathrm{d} m \, \frac{\mathrm{d}N}{\mathrm{d} m} = \frac{A}{\alpha-1}
+\)</span><span class="math notranslate nohighlight">\(
+as long as \)</span>\alpha &gt; 1<span class="math notranslate nohighlight">\(.  As long as \)</span>\alpha \simeq 1<span class="math notranslate nohighlight">\(, we expect that \)</span>A<span class="math notranslate nohighlight">\( will be comparable to the total number of observations (\)</span>\sim 500<span class="math notranslate nohighlight">\( in total, though only about 140 with masses above \)</span>20 , M_\odot$).</p>
+<p>In order to make nice plots, we produce <span class="math notranslate nohighlight">\(\mathrm{d} N/\mathrm{d} m\)</span> on a grid of masses as a deterministic output of the model (we could produce this after the fact, but doing it this way ensures that the output <span class="math notranslate nohighlight">\(\mathrm{d}N/\mathrm{d}m\)</span> and the inferred shape function are consistent, including the normalization term).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MMin</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">masses</span> <span class="o">=</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span>
 <span class="n">masses</span> <span class="o">=</span> <span class="n">masses</span><span class="p">[(</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">masses</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">masses</span> <span class="o">&gt;</span> <span class="n">MMin</span><span class="p">)]</span>
+
+<span class="n">mgrid</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">arange</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="p">),</span> <span class="n">log</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="mf">0.01</span><span class="p">))</span>
+
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">salp_model</span><span class="p">:</span>
     <span class="c1"># dN/dm = (A/20)*(m/20)^-alpha</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">140</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">log_dNdm</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="p">)</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="p">))</span>
@@ -650,6 +680,8 @@
     <span class="c1"># sum(log(dN/dm_i)) - Lambda</span>
     <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;likelihood&#39;</span><span class="p">,</span> <span class="n">tt</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">log_dNdm</span><span class="p">(</span><span class="n">masses</span><span class="p">)))</span>
     <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;normalization&#39;</span><span class="p">,</span> <span class="o">-</span><span class="n">Lambda</span><span class="p">)</span>
+    
+    <span class="n">dNdm_grid</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">,</span> <span class="n">exp</span><span class="p">(</span><span class="n">log_dNdm</span><span class="p">(</span><span class="n">mgrid</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -683,9 +715,9 @@ NUTS: [A, alpha]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 00:06<00:00 Sampling 2 chains, 0 divergences]
+  100.00% [4000/4000 00:05<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 18 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 25 seconds.
 </pre></div>
 </div>
 </div>
@@ -693,12 +725,42 @@ NUTS: [A, alpha]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">salp_model</span><span class="p">:</span>
-    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">)</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;Lambda&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/populations_8_0.svg" src="_images/populations_8_0.svg" /></div>
+<img alt="_images/populations_9_0.svg" src="_images/populations_9_0.svg" /></div>
+</div>
+<p>Let’s plot the inferred intensity and compare to the observed intensity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_valid_masses</span> <span class="o">=</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span>
+<span class="n">all_valid_masses</span> <span class="o">=</span> <span class="n">all_valid_masses</span><span class="p">[</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">)]</span>
+<span class="n">logm_density</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">))</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">)</span><span class="o">*</span><span class="n">logm_density</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">mgrid</span><span class="p">)),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+
+<span class="n">l</span><span class="p">,</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">median</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fit&#39;</span><span class="p">)</span>
+<span class="n">fill_between</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+<span class="n">fill_between</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.975</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.025</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+
+<span class="n">axis</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$m / M_\odot$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$m \mathrm</span><span class="si">{d}</span><span class="s1"> N / \mathrm</span><span class="si">{d}</span><span class="s1"> m$&#39;</span><span class="p">)</span>
+
+<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1551d0ac0&gt;
+</pre></div>
+</div>
+<img alt="_images/populations_11_1.svg" src="_images/populations_11_1.svg" /></div>
 </div>
 </div>
 
