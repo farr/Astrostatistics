@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Populations and Catalogs &#8212; Astrostatistics</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
@@ -56,7 +56,10 @@
     <link rel="next" title="Selection Effects" href="selection_effects.html" />
     <link rel="prev" title="Colored Noise" href="colored_noise.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -762,6 +765,114 @@ NUTS: [A, alpha]
 </div>
 <img alt="_images/populations_11_1.svg" src="_images/populations_11_1.svg" /></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MMin</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">MMin</span><span class="p">)</span>
+<span class="n">obs_masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+<span class="n">sigma_masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d+Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d-Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+
+<span class="n">mgrid</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">arange</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="p">),</span> <span class="n">log</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="mf">0.01</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">salp_model_hier</span><span class="p">:</span>
+    <span class="c1"># dN/dm = (A/20)*(m/20)^-alpha</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">140</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">true_masses</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Flat</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="n">MMin</span><span class="p">)(</span><span class="s1">&#39;true_masses&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">obs_masses</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">log_dNdm</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="p">)</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="p">))</span>
+    
+    <span class="n">Lambda</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;Lambda&#39;</span><span class="p">,</span> <span class="n">A</span><span class="o">/</span><span class="p">(</span><span class="n">alpha</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># sum(log(dN/dm_i)) - Lambda</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;likelihood&#39;</span><span class="p">,</span> <span class="n">tt</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">log_dNdm</span><span class="p">(</span><span class="n">true_masses</span><span class="p">)))</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;normalization&#39;</span><span class="p">,</span> <span class="o">-</span><span class="n">Lambda</span><span class="p">)</span>
+    
+    <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;obs_likelihood&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">true_masses</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_masses</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">obs_masses</span><span class="p">)</span>
+    
+    <span class="n">dNdm_grid</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">,</span> <span class="n">exp</span><span class="p">(</span><span class="n">log_dNdm</span><span class="p">(</span><span class="n">mgrid</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">salp_model_hier</span><span class="p">:</span>
+    <span class="n">salp_trace_hier</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;true_masses&#39;</span><span class="p">:</span> <span class="n">obs_masses</span><span class="p">},</span> <span class="n">adapt_type</span><span class="o">=</span><span class="s1">&#39;diag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py:97: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+  return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [true_masses, A, alpha]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [4000/4000 00:10<00:00 Sampling 2 chains, 0 divergences]
+</div>
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 18 seconds.
+The number of effective samples is smaller than 25% for some parameters.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">salp_model_hier</span><span class="p">:</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;true_masses&#39;</span><span class="p">],</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;true_masses_dim_0&#39;</span><span class="p">:</span> <span class="mi">104</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/populations_14_0.svg" src="_images/populations_14_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_valid_masses</span> <span class="o">=</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span>
+<span class="n">all_valid_masses</span> <span class="o">=</span> <span class="n">all_valid_masses</span><span class="p">[</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">)]</span>
+<span class="n">logm_density</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">))</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">)</span><span class="o">*</span><span class="n">logm_density</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">mgrid</span><span class="p">)),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+
+<span class="n">l</span><span class="p">,</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">median</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fit&#39;</span><span class="p">)</span>
+<span class="n">fill_between</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+<span class="n">fill_between</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.975</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.025</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+
+<span class="n">axis</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$m / M_\odot$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$m \mathrm</span><span class="si">{d}</span><span class="s1"> N / \mathrm</span><span class="si">{d}</span><span class="s1"> m$&#39;</span><span class="p">)</span>
+
+<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15aafc5b0&gt;
+</pre></div>
+</div>
+<img alt="_images/populations_15_1.svg" src="_images/populations_15_1.svg" /></div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -787,31 +898,22 @@ NUTS: [A, alpha]
               </div>
               
         
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="colored_noise.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Colored Noise</p>
-            </div>
-        </a>
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="colored_noise.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Colored Noise</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="selection_effects.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Selection Effects</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="selection_effects.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Selection Effects</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
         
         </div>
@@ -832,8 +934,7 @@ NUTS: [A, alpha]
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>
