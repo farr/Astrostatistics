@@ -633,7 +633,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x156324a30&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x14534cc70&gt;
 </pre></div>
 </div>
 <img alt="_images/populations_5_1.svg" src="_images/populations_5_1.svg" /></div>
@@ -720,7 +720,7 @@ NUTS: [A, alpha]
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
   100.00% [4000/4000 00:05<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 25 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 23 seconds.
 </pre></div>
 </div>
 </div>
@@ -760,11 +760,12 @@ NUTS: [A, alpha]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1551d0ac0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x147961ee0&gt;
 </pre></div>
 </div>
 <img alt="_images/populations_11_1.svg" src="_images/populations_11_1.svg" /></div>
 </div>
+<p>Now let’s take into account that the masses are <em>estimated</em> with uncertanty; the <em>unknown</em> true masses will follow a power law, with the observed masses related to the true masses by a Gaussian likelihood:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MMin</span> <span class="o">=</span> <span class="mi">20</span>
@@ -826,9 +827,9 @@ NUTS: [true_masses, A, alpha]
         }
     </style>
   <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [4000/4000 00:10<00:00 Sampling 2 chains, 0 divergences]
+  100.00% [4000/4000 00:18<00:00 Sampling 2 chains, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 18 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 35 seconds.
 The number of effective samples is smaller than 25% for some parameters.
 </pre></div>
 </div>
@@ -837,12 +838,12 @@ The number of effective samples is smaller than 25% for some parameters.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">salp_model_hier</span><span class="p">:</span>
-    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;true_masses&#39;</span><span class="p">],</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;true_masses_dim_0&#39;</span><span class="p">:</span> <span class="mi">104</span><span class="p">})</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/populations_14_0.svg" src="_images/populations_14_0.svg" /></div>
+<img alt="_images/populations_15_0.svg" src="_images/populations_15_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -850,7 +851,10 @@ The number of effective samples is smaller than 25% for some parameters.
 <span class="n">all_valid_masses</span> <span class="o">=</span> <span class="n">all_valid_masses</span><span class="p">[</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">)]</span>
 <span class="n">logm_density</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">))</span>
 
+<span class="n">logm_true_density</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;true_masses&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
+
 <span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_valid_masses</span><span class="p">)</span><span class="o">*</span><span class="n">logm_density</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">mgrid</span><span class="p">)),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">obs_masses</span><span class="p">)</span><span class="o">*</span><span class="n">logm_true_density</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">mgrid</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Inferred Masses&#39;</span><span class="p">)</span>
 
 <span class="n">l</span><span class="p">,</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">median</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fit&#39;</span><span class="p">)</span>
 <span class="n">fill_between</span><span class="p">(</span><span class="n">mgrid</span><span class="p">,</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">mgrid</span><span class="o">*</span><span class="n">quantile</span><span class="p">(</span><span class="n">salp_trace_hier</span><span class="p">[</span><span class="s1">&#39;dNdm_grid&#39;</span><span class="p">],</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
@@ -868,10 +872,32 @@ The number of effective samples is smaller than 25% for some parameters.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x15aafc5b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x151ca1dc0&gt;
 </pre></div>
 </div>
-<img alt="_images/populations_15_1.svg" src="_images/populations_15_1.svg" /></div>
+<img alt="_images/populations_16_1.svg" src="_images/populations_16_1.svg" /></div>
+</div>
+<p>Next steps:</p>
+<ul class="simple">
+<li><p>Broken power law.</p></li>
+<li><p><em><strong>Selection Effects</strong></em> (handle the mass boundary appropriately).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">])</span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="mi">10</span><span class="o">**</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;logL&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+<span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$M / M_\odot$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$L / L_\odot$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$L / L_\\odot$&#39;)
+</pre></div>
+</div>
+<img alt="_images/populations_18_1.svg" src="_images/populations_18_1.svg" /></div>
 </div>
 </div>
 
