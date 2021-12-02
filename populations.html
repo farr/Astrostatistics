@@ -279,6 +279,7 @@
 <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="kn">import</span> <span class="nn">pymc3_ext</span> <span class="k">as</span> <span class="nn">pmx</span>
 <span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="k">as</span> <span class="nn">tt</span>
+<span class="kn">import</span> <span class="nn">theano.tensor.extra_ops</span> <span class="k">as</span> <span class="nn">tte</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -898,9 +899,9 @@ The number of effective samples is smaller than 25% for some parameters.
 </ul>
 <p>Here we will account for the finite and <em>mass-dependent</em> stellar lifetime that reduces the number of high-mass stars in our sample, and therefore steepens the slope.  We assume that stars form in a Poisson process in <em>mass</em> and in <em>time</em> via
 $<span class="math notranslate nohighlight">\(
-\frac{\mathrm{d} N}{\mathrm{d} m \mathrm{d} t} = \frac{A}{m} \left( \frac{m}{m_\mathrm{min}} \right)^{-\alpha} \exp\left( - \frac{\left( t - \mu_t\right)^2}{2 \sigma_t^2} \right).
+\frac{\mathrm{d} N}{\mathrm{d} m \mathrm{d} t} = \frac{A}{m} \left( \frac{m}{m_\mathrm{min}} \right)^{-\left(\alpha-1\right)} \exp\left( - \frac{\left( t - \mu_t\right)^2}{2 \sigma_t^2} \right).
 \)</span><span class="math notranslate nohighlight">\(
-Here \)</span>A<span class="math notranslate nohighlight">\( is the number of stars formed per natural log mass per time at \)</span>m = m_\mathrm{min}<span class="math notranslate nohighlight">\( and \)</span>t = \mu_t$ (that is, at time of the peak star formation rate).</p>
+Here \)</span>A<span class="math notranslate nohighlight">\( is the number of stars formed per natural log mass per time at \)</span>m = m_\mathrm{min}<span class="math notranslate nohighlight">\( and \)</span>t = \mu_t<span class="math notranslate nohighlight">\( (that is, at time of the peak star formation rate).  (Note that our rate definition is slightly different here---we have pulled one power of \)</span>m<span class="math notranslate nohighlight">\( out of the expression in parenthesis so that we can get the units right or, equivalently, write the intensity as \)</span>\mathrm{d} N / \mathrm{d} \log m \mathrm{d} t<span class="math notranslate nohighlight">\(, but we have adjusted \)</span>\alpha$ accordingly so its meaning is the same as in the previous models.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
@@ -926,20 +927,6 @@ Here \)</span>A<span class="math notranslate nohighlight">\( is the number of st
 <img alt="_images/populations_20_1.svg" src="_images/populations_20_1.svg" /></div>
 </div>
 <p>If we zoom in on the lower-mass part of the plot here, we see that for sufficiently low masses, there is a one-to-one relationship between the mass and the age; this is a result of the giant branch: for these low-mass stars, they can only be seen when they are in the giant phase, which is quite short, so there is one, definite formation time that puts the star on the giant branch today.  We want to cut out these stars, since they do not give us a continuous picture of the mass and time evolution of the star formation; we can accomplish this by cutting out stars below <span class="math notranslate nohighlight">\(\sim 15 \, M_\odot\)</span>.</p>
-<p>A crucial parameter is the maximum age of any star at a given mass before it becomes a compact remnant.  This can be found in <span id="id3">[<a class="reference internal" href="bibliography.html#id17">Farr and Mandel, 2018</a>]</span>; their fitting formula for the main-sequence lifetime as a function of mass is
-$<span class="math notranslate nohighlight">\(
-\log \frac{\tau\left( M \right)}{\mathrm{Myr}} = 9.1973 - 3.8955 \log \frac{M}{M_\odot} + 0.6107 \left( \log \frac{M}{M_\odot} \right)^2 - 0.0332 \left( \log \frac{M}{M_\odot} \right)^3.
-\)</span>$
-The full lifetime is 10% longer than the main sequence lifetime to account for the post-main-sequence helium burning in these massive stars.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lifetime</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mf">1.1</span><span class="o">*</span><span class="n">tt</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">9.1973</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mf">3.8955</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">0.6107</span> <span class="o">-</span> <span class="n">x</span><span class="o">*</span><span class="mf">0.0332</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scatter</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observations&#39;</span><span class="p">)</span>
@@ -960,7 +947,207 @@ The full lifetime is 10% longer than the main sequence lifetime to account for t
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$t / \\mathrm{Myr}$&#39;)
 </pre></div>
 </div>
-<img alt="_images/populations_24_1.svg" src="_images/populations_24_1.svg" /></div>
+<img alt="_images/populations_22_1.svg" src="_images/populations_22_1.svg" /></div>
+</div>
+<p>A crucial parameter is the maximum age of any star at a given mass before it becomes a compact remnant.  This can be found in <span id="id3">[<a class="reference internal" href="bibliography.html#id17">Farr and Mandel, 2018</a>]</span>; their fitting formula for the main-sequence lifetime as a function of mass is
+$<span class="math notranslate nohighlight">\(
+\log \frac{\tau\left( M \right)}{\mathrm{Myr}} = 9.1973 - 3.8955 \log \frac{M}{M_\odot} + 0.6107 \left( \log \frac{M}{M_\odot} \right)^2 - 0.0332 \left( \log \frac{M}{M_\odot} \right)^3.
+\)</span>$
+The full lifetime is 10% longer than the main sequence lifetime to account for the post-main-sequence helium burning in these massive stars.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lifetime</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">1.1</span><span class="o">*</span><span class="n">tt</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">9.1973</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mf">3.8955</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">0.6107</span> <span class="o">-</span> <span class="n">x</span><span class="o">*</span><span class="mf">0.0332</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we will learn in class today, to account for</p>
+<ol class="simple">
+<li><p>Selection effects on lifetime (i.e. a “parameter” of each system) AND</p></li>
+<li><p>Selection effects on the observed mass (i.e. “data” for each system)
+we will need to compute integrals of the form</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-n-exp">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-n-exp" title="Permalink to this equation">¶</a></span>\[
+N_\mathrm{exp} = \int \mathrm{d} M \, \mathrm{d} t \, \frac{\mathrm{d} N}{\mathrm{d} M \mathrm{d} t} \Theta\left( t &lt; \tau\left( M \right) \right) P\left( M_\mathrm{obs} &gt; M_\mathrm{threshold} \mid M \right).
+\]</div>
+<p>Our class discussion tracks very closely with <span id="id4">[<a class="reference internal" href="bibliography.html#id18">Mandel <em>et al.</em>, 2019</a>]</span>; to my knowledge, the first correct derivation of this approach can be found in <span id="id5">[<a class="reference internal" href="bibliography.html#id19">Loredo, 2004</a>]</span> (!).  <span id="id6">[<a class="reference internal" href="bibliography.html#id20">Youdin, 2011</a>]</span> also provides a nice derivation of the correct method.</p>
+<p>In order to implement this, we need to know what the distribution <span class="math notranslate nohighlight">\(M_\mathrm{obs}\)</span> will be given <span class="math notranslate nohighlight">\(M\)</span>.  In other words, we will need to know what sort of uncertainty we can expect on measurements of <span class="math notranslate nohighlight">\(M\)</span> when the true mass is <span class="math notranslate nohighlight">\(M\)</span>.  Here we plot <span class="math notranslate nohighlight">\(\sigma_M\)</span> versus <span class="math notranslate nohighlight">\(M\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scatter</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">],</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d+Mini&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d-Mini&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">])</span>
+<span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$M / M_\odot$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\sigma_M / M$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$\\sigma_M / M$&#39;)
+</pre></div>
+</div>
+<img alt="_images/populations_26_1.svg" src="_images/populations_26_1.svg" /></div>
+</div>
+<p>In the regime of interest (for masses around 10-20 solar masses), the uncertainty is about 5%, so that’s what we are going to use.  We will assume that, in general,</p>
+<div class="math notranslate nohighlight">
+\[
+M_\mathrm{obs} \sim N\left( M, 0.05M \right),
+\]</div>
+<p>so that</p>
+<div class="math notranslate nohighlight">
+\[
+\DeclareMathOperator{\erf}{erf}
+P\left( M_\mathrm{obs} &gt; M_\mathrm{threshold} \mid M \right) = \frac{1}{2} \left( 1 + \erf\left( \frac{10 \sqrt{2} \left( M - M_\mathrm{threshold} \right)}{M} \right) \right)
+\]</div>
+<p>The integral over <span class="math notranslate nohighlight">\(t\)</span> in Eq. <a class="reference internal" href="#equation-eq-n-exp">(10)</a> is also analytically solvable, resulting in</p>
+<div class="math notranslate nohighlight">
+\[
+N_\mathrm{exp} = \sqrt{\frac{\pi}{2}} \frac{\sigma_t}{2} \int \mathrm{d} M \, \left( 1 + \erf\left( \frac{10 \sqrt{2} \left( M - M_\mathrm{threshold} \right)}{M} \right) \right) \frac{A}{M} \left( \frac{M}{M_\mathrm{threshold}} \right)^{-\alpha} \left( \erf\left( \frac{\mu_t}{\sqrt{2} \sigma_t} \right) - \erf\left( \frac{\mu_t - \tau(M)}{\sqrt{2} \sigma_t} \right) \right)
+\]</div>
+<p>This integral is not analytically tractible, so we need to compute it numerically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_log_dNdMdt</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mu_t</span><span class="p">,</span> <span class="n">sigma_t</span><span class="p">,</span> <span class="n">MMin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log_dNdMdt</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span><span class="o">/</span><span class="n">M</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">alpha</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">M</span><span class="o">/</span><span class="n">MMin</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">tt</span><span class="o">.</span><span class="n">square</span><span class="p">((</span><span class="n">t</span> <span class="o">-</span> <span class="n">mu_t</span><span class="p">)</span><span class="o">/</span><span class="n">sigma_t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">log_dNdMdt</span>
+    
+<span class="k">def</span> <span class="nf">dNdMdt_norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mu_t</span><span class="p">,</span> <span class="n">sigma_t</span><span class="p">,</span> <span class="n">MMin</span><span class="p">):</span>
+    <span class="n">logMs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">MMin</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span> <span class="c1"># The largest observed mass is ~200 MSun, so this grid goes well beyond that</span>
+    <span class="n">Ms</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logMs</span><span class="p">)</span>
+    <span class="n">integrand</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sigma_t</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tt</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Ms</span> <span class="o">-</span> <span class="n">MMin</span><span class="p">)</span><span class="o">/</span><span class="n">Ms</span><span class="p">))</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="n">Ms</span><span class="o">/</span><span class="n">MMin</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">alpha</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">tt</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">mu_t</span><span class="o">/</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sigma_t</span><span class="p">))</span> <span class="o">-</span> <span class="n">tt</span><span class="o">.</span><span class="n">erf</span><span class="p">((</span><span class="n">mu_t</span><span class="o">-</span><span class="n">lifetime</span><span class="p">(</span><span class="n">Ms</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sigma_t</span><span class="p">)))</span>
+    
+    <span class="c1"># Trapz:</span>
+    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">tt</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">tte</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">logMs</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">integrand</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">integrand</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we’re going to build our model; based on the mass versus age plot above, we set the minimum mass to <span class="math notranslate nohighlight">\(15 \, M_\odot\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MMin</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">MMin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]))</span>
+<span class="n">obs_masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+<span class="n">sigma_masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d+Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d-Mini&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+<span class="n">obs_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+<span class="n">sigma_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d+Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_30dor</span><span class="p">[</span><span class="s1">&#39;d-Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
+
+<span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">mass_age_model</span><span class="p">:</span>
+    <span class="c1"># dN/dm = (A/20)*(m/20)^-alpha</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">140</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mu_t</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="s1">&#39;mu_t&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">sigma_t</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Lognormal</span><span class="p">(</span><span class="s1">&#39;sigma_t&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">true_masses</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Flat</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="n">MMin</span><span class="o">*</span><span class="mf">0.85</span><span class="p">)(</span><span class="s1">&#39;true_masses&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">obs_masses</span><span class="p">))</span>
+    <span class="n">true_ages</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bound</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Flat</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="s1">&#39;true_ages&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">obs_times</span><span class="p">))</span>
+    
+    <span class="n">log_dNdm</span> <span class="o">=</span> <span class="n">make_log_dNdMdt</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mu_t</span><span class="p">,</span> <span class="n">sigma_t</span><span class="p">,</span> <span class="n">MMin</span><span class="p">)</span>
+    
+    <span class="n">Lambda</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;Lambda&#39;</span><span class="p">,</span> <span class="n">dNdMdt_norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mu_t</span><span class="p">,</span> <span class="n">sigma_t</span><span class="p">,</span> <span class="n">MMin</span><span class="p">))</span>
+    
+    <span class="c1"># sum(log(dN/dm_i)) - Lambda</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;likelihood&#39;</span><span class="p">,</span> <span class="n">tt</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">log_dNdm</span><span class="p">(</span><span class="n">true_masses</span><span class="p">,</span> <span class="n">true_ages</span><span class="p">)))</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;normalization&#39;</span><span class="p">,</span> <span class="o">-</span><span class="n">Lambda</span><span class="p">)</span>
+    
+    <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;mass_likelihood&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">true_masses</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_masses</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">obs_masses</span><span class="p">)</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;age_likelihood&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">true_ages</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_times</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">obs_times</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">mass_age_model</span><span class="p">:</span>
+    <span class="n">mass_age_trace</span> <span class="o">=</span> <span class="n">pmx</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;true_masses&#39;</span><span class="p">:</span> <span class="n">obs_masses</span><span class="p">,</span> <span class="s1">&#39;true_ages&#39;</span><span class="p">:</span> <span class="n">obs_times</span><span class="p">},</span> <span class="n">adapt_type</span><span class="o">=</span><span class="s1">&#39;diag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/wfarr/miniconda3/envs/Astrostatistics688/lib/python3.9/site-packages/pymc3_ext/sampling/sampling.py:97: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+  return pm.sample(draws=draws, tune=tune, model=model, step=step, **kwargs)
+Multiprocess sampling (2 chains in 2 jobs)
+NUTS: [true_ages, true_masses, sigma_t, mu_t, A, alpha]
+</pre></div>
+</div>
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='4000' class='' max='4000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [4000/4000 00:30<00:00 Sampling 2 chains, 0 divergences]
+</div>
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 48 seconds.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">mass_age_model</span><span class="p">:</span>
+    <span class="n">pm</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">mass_age_trace</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;mu_t&#39;</span><span class="p">,</span> <span class="s1">&#39;sigma_t&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/populations_32_0.svg" src="_images/populations_32_0.svg" /></div>
+</div>
+<p>Salpeter was right again!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">mass_age_trace</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
+<span class="n">axvline</span><span class="p">(</span><span class="mf">2.35</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\alpha$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;$\\alpha$&#39;)
+</pre></div>
+</div>
+<img alt="_images/populations_34_1.svg" src="_images/populations_34_1.svg" /></div>
+</div>
+<p>Now we also infer the SFR; it peaked around <span class="math notranslate nohighlight">\(4 \, \mathrm{Mya}\)</span> with a width of around <span class="math notranslate nohighlight">\(2 \, \mathrm{Myr}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sfr_at_mmin</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">mu_t</span><span class="p">,</span> <span class="n">sigma_t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">square</span><span class="p">((</span><span class="n">ts</span><span class="o">-</span><span class="n">mu_t</span><span class="p">)</span><span class="o">/</span><span class="n">sigma_t</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">sfrs</span> <span class="o">=</span> <span class="n">sfr_at_mmin</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="n">newaxis</span><span class="p">,:],</span> <span class="n">mass_age_trace</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">][:,</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">mass_age_trace</span><span class="p">[</span><span class="s1">&#39;mu_t&#39;</span><span class="p">][:,</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">mass_age_trace</span><span class="p">[</span><span class="s1">&#39;sigma_t&#39;</span><span class="p">][:,</span><span class="n">newaxis</span><span class="p">])</span>
+
+<span class="n">l</span><span class="p">,</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">median</span><span class="p">(</span><span class="n">sfrs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">fill_between</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">quantile</span><span class="p">(</span><span class="n">sfrs</span><span class="p">,</span> <span class="mf">0.84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">quantile</span><span class="p">(</span><span class="n">sfrs</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+<span class="n">fill_between</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">quantile</span><span class="p">(</span><span class="n">sfrs</span><span class="p">,</span> <span class="mf">0.975</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">quantile</span><span class="p">(</span><span class="n">sfrs</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+
+<span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t / \mathrm</span><span class="si">{Myr}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\left. \mathrm</span><span class="si">{d}</span><span class="s1"> N / \mathrm</span><span class="si">{d}</span><span class="s1"> \log M \mathrm</span><span class="si">{d}</span><span class="s1"> t \right|_{M = 15 \, M_\odot} / \mathrm</span><span class="si">{Myr}</span><span class="s1">$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$\\left. \\mathrm{d} N / \\mathrm{d} \\log M \\mathrm{d} t \\right|_{M = 15 \\, M_\\odot} / \\mathrm{Myr}$&#39;)
+</pre></div>
+</div>
+<img alt="_images/populations_37_1.svg" src="_images/populations_37_1.svg" /></div>
 </div>
 </div>
 
